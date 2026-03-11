@@ -16,6 +16,7 @@ import { ProjectTabs } from "@/features/projects/components/project-tabs";
 import { ProjectMethodology } from "@/features/projects/lib/project-schema";
 import { Badge } from "@/components/ui/badge";
 import { KanbanBoard } from "@/features/projects/components/kanban-board";
+import { TaskListView } from "@/features/projects/components/task-list-view";
 import { Task } from "@/features/projects/lib/task-schema";
 
 // Mock data for project recovery
@@ -169,6 +170,8 @@ export default function ProjectPage() {
             <div className="flex-1 overflow-hidden">
                 {activeTab === "kanban" ? (
                     <KanbanBoard tasks={MOCK_TASKS} />
+                ) : activeTab === "list" ? (
+                    <TaskListView tasks={MOCK_TASKS} />
                 ) : (
                     <div className="p-8 h-full overflow-auto">
                         <div className="rounded-xl border-2 border-dashed border-border h-full flex flex-col items-center justify-center text-center p-12 space-y-4">
