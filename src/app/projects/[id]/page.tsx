@@ -18,6 +18,7 @@ import { Badge } from "@/components/ui/badge";
 import { KanbanBoard } from "@/features/projects/components/kanban-board";
 import { TaskListView } from "@/features/projects/components/task-list-view";
 import { Task } from "@/features/projects/lib/task-schema";
+import { ProjectChat } from "@/features/chat/components/project-chat";
 
 // Mock data for project recovery
 const mockProjects: Record<string, { name: string, methodology: ProjectMethodology, description: string, status: string }> = {
@@ -115,80 +116,85 @@ export default function ProjectPage() {
     }, [projectData.methodology]);
 
     return (
-        <div className="flex flex-col h-full bg-background/50">
-            {/* Project Header */}
-            <div className="px-8 pt-8 pb-6 border-b border-border bg-background">
-                <div className="flex items-start justify-between mb-6">
-                    <div className="space-y-1">
-                        <div className="flex items-center gap-3">
-                            <h1 className="text-2xl font-mono font-bold tracking-tight">{projectData.name}</h1>
-                            <Button variant="ghost" size="icon-sm" className="text-muted-foreground hover:text-yellow-500">
-                                <Star className="size-4" />
-                            </Button>
-                            <Badge variant={projectData.status === "Crítico" ? "destructive" : "secondary"}>
-                                {projectData.status}
-                            </Badge>
+        <div className="flex h-full bg-background overflow-hidden">
+            {/* Main Content: Header + View */}
+            <div className="flex-1 flex flex-col min-w-0 bg-background/50">
+                {/* Project Header */}
+                <div className="px-8 pt-8 pb-6 border-b border-border bg-background">
+                    <div className="flex items-start justify-between mb-6">
+                        <div className="space-y-1">
+                            <div className="flex items-center gap-3">
+                                <h1 className="text-2xl font-mono font-bold tracking-tight">{projectData.name}</h1>
+                                <Button variant="ghost" size="icon-sm" className="text-muted-foreground hover:text-yellow-500">
+                                    <Star className="size-4" />
+                                </Button>
+                                <Badge variant={projectData.status === "Crítico" ? "destructive" : "secondary"}>
+                                    {projectData.status}
+                                </Badge>
+                            </div>
+                            <p className="text-muted-foreground text-sm max-w-2xl leading-relaxed">
+                                {projectData.description}
+                            </p>
                         </div>
-                        <p className="text-muted-foreground text-sm max-w-2xl leading-relaxed">
-                            {projectData.description}
-                        </p>
+
+                        <div className="flex items-center gap-2">
+                            <div className="flex -space-x-2 mr-4">
+                                {[1, 2, 3].map((i) => (
+                                    <Avatar key={i} className="size-8 border-2 border-background">
+                                        <AvatarImage src={`https://avatar.vercel.sh/${i}`} />
+                                        <AvatarFallback>U{i}</AvatarFallback>
+                                    </Avatar>
+                                ))}
+                                <Button variant="outline" size="icon-sm" className="size-8 rounded-full border-dashed bg-muted/50">
+                                    <Plus className="size-3" />
+                                </Button>
+                            </div>
+                            <Button variant="outline" size="sm" className="gap-2">
+                                <Share2 className="size-4" />
+                                Compartilhar
+                            </Button>
+                            <Button variant="outline" size="icon-sm">
+                                <Settings2 className="size-4" />
+                            </Button>
+                        </div>
                     </div>
 
-                    <div className="flex items-center gap-2">
-                        <div className="flex -space-x-2 mr-4">
-                            {[1, 2, 3].map((i) => (
-                                <Avatar key={i} className="size-8 border-2 border-background">
-                                    <AvatarImage src={`https://avatar.vercel.sh/${i}`} />
-                                    <AvatarFallback>U{i}</AvatarFallback>
-                                </Avatar>
-                            ))}
-                            <Button variant="outline" size="icon-sm" className="size-8 rounded-full border-dashed bg-muted/50">
-                                <Plus className="size-3" />
-                            </Button>
-                        </div>
-                        <Button variant="outline" size="sm" className="gap-2">
-                            <Share2 className="size-4" />
-                            Compartilhar
-                        </Button>
-                        <Button variant="outline" size="icon-sm">
-                            <Settings2 className="size-4" />
-                        </Button>
-                        <Button variant="outline" size="icon-sm">
-                            <MoreHorizontal className="size-4" />
-                        </Button>
-                    </div>
+                    <ProjectTabs
+                        methodology={projectData.methodology}
+                        activeTab={activeTab}
+                        onTabChange={setActiveTab}
+                    />
                 </div>
 
-                <ProjectTabs
-                    methodology={projectData.methodology}
-                    activeTab={activeTab}
-                    onTabChange={setActiveTab}
-                />
+                {/* Tab Content */}
+                <div className="flex-1 overflow-hidden">
+                    {activeTab === "kanban" ? (
+                        <KanbanBoard tasks={MOCK_TASKS} />
+                    ) : activeTab === "list" ? (
+                        <TaskListView tasks={MOCK_TASKS} />
+                    ) : (
+                        <div className="p-8 h-full overflow-auto">
+                            <div className="rounded-xl border-2 border-dashed border-border h-full flex flex-col items-center justify-center text-center p-12 space-y-4">
+                                <div className="size-12 rounded-full bg-muted flex items-center justify-center">
+                                    <Settings2 className="size-6 text-muted-foreground" />
+                                </div>
+                                <div>
+                                    <h2 className="text-lg font-mono font-semibold">Módulo {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} em construção</h2>
+                                    <p className="text-muted-foreground text-sm max-w-xs mx-auto">
+                                        Este módulo faz parte da {projectData.methodology} e será implementado nos próximos sprints.
+                                    </p>
+                                </div>
+                                <Button variant="secondary">Saiba mais sobre {projectData.methodology}</Button>
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
 
-            {/* Tab Content */}
-            <div className="flex-1 overflow-hidden">
-                {activeTab === "kanban" ? (
-                    <KanbanBoard tasks={MOCK_TASKS} />
-                ) : activeTab === "list" ? (
-                    <TaskListView tasks={MOCK_TASKS} />
-                ) : (
-                    <div className="p-8 h-full overflow-auto">
-                        <div className="rounded-xl border-2 border-dashed border-border h-full flex flex-col items-center justify-center text-center p-12 space-y-4">
-                            <div className="size-12 rounded-full bg-muted flex items-center justify-center">
-                                <Settings2 className="size-6 text-muted-foreground" />
-                            </div>
-                            <div>
-                                <h2 className="text-lg font-mono font-semibold">Módulo {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} em construção</h2>
-                                <p className="text-muted-foreground text-sm max-w-xs mx-auto">
-                                    Este módulo faz parte da {projectData.methodology} e será implementado nos próximos sprints.
-                                </p>
-                            </div>
-                            <Button variant="secondary">Saiba mais sobre {projectData.methodology}</Button>
-                        </div>
-                    </div>
-                )}
-            </div>
+            {/* Chat Sidebar Area */}
+            <aside className="hidden lg:flex w-[350px] xl:w-[450px] shrink-0 flex-col bg-background border-l border-border h-full">
+                <ProjectChat />
+            </aside>
         </div>
     );
 }
