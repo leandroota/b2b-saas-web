@@ -116,7 +116,8 @@ Ele não pode parecer um hub genérico nem uma coleção solta de abas.
 - acesso à atividade;
 - acesso à wiki;
 - acesso ao chat;
-- acesso ao Copilot contextual.
+- acesso ao Copilot contextual;
+- acesso a Gantt quando houver necessidade de planejamento temporal e dependências.
 
 ### Ação principal
 Executar trabalho no contexto correto.
@@ -127,7 +128,8 @@ Executar trabalho no contexto correto.
 - mover tarefa;
 - abrir thread;
 - consultar wiki;
-- pedir resumo ao Copilot.
+- pedir resumo ao Copilot;
+- abrir Gantt para visualizar marcos, fases e dependências.
 
 ### Gatilhos de retorno
 - mudança em tarefa;
@@ -146,7 +148,7 @@ Executar trabalho no contexto correto.
 ### Anti-padrões
 - muitas abas sem papel claro;
 - mesmas informações replicadas em várias views;
-- board, backlog e sprint sem diferença real;
+- board, backlog, sprint e gantt sem diferença real;
 - chat escondido;
 - wiki desconectada do fluxo.
 
@@ -163,12 +165,13 @@ Executar trabalho no contexto correto.
 - tabs devem refletir papel real da metodologia;
 - contexto do projeto deve permanecer visível;
 - cada view precisa ter CTA primário claro;
-- projeto arquivado deve ser somente leitura.
+- projeto arquivado deve ser somente leitura;
+- Gantt deve existir como view de planejamento e coordenação, não como substituto universal da execução.
 
 ### Componentes esperados
 - header de projeto;
 - tabs/view switcher;
-- board/list/backlog/sprint/timeline/activity/wiki/chat;
+- board/list/backlog/sprint/timeline/gantt/activity/wiki/chat;
 - painel lateral opcional do Copilot;
 - indicadores leves de saúde do projeto.
 
