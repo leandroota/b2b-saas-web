@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import {
     Home,
@@ -5,13 +7,14 @@ import {
     MessageSquare,
     Activity,
     BookText,
-    Sparkles,
+    Zap,
     Settings,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useAppStore } from '@/store/use-app-store'; // Added useAppStore import
 
 const navItems = [
     { icon: Home, label: "Home", href: "/" },
@@ -22,6 +25,8 @@ const navItems = [
 ];
 
 export function Sidebar() {
+    const { toggleCopilot } = useAppStore(); // Destructure toggleCopilot
+
     return (
         <aside className="w-64 border-r border-sidebar-border bg-sidebar flex flex-col h-full shrink-0">
             {/* Workspace Header */}
@@ -54,12 +59,15 @@ export function Sidebar() {
                     <div className="px-3 text-xs font-mono font-semibold text-sidebar-foreground/50 mb-2">
                         COPILOT
                     </div>
+                    {/* Updated Copilot Button */}
                     <Button
-                        variant="ghost"
-                        className="w-full justify-start gap-3 h-auto py-2 px-3 text-sidebar-foreground/70 hover:text-primary hover:bg-primary/10"
+                        variant="outline" // Changed variant
+                        size="sm" // Changed size
+                        className="w-full justify-start border-primary/20 text-primary hover:bg-primary/10 gap-2 font-medium" // Updated className
+                        onClick={toggleCopilot} // Added onClick handler
                     >
-                        <Sparkles className="size-4 text-primary" />
-                        Nova Análise
+                        <Zap className="h-4 w-4" /> {/* Changed icon to Zap */}
+                        Activar Copilot {/* Changed text */}
                     </Button>
                 </div>
             </nav>
