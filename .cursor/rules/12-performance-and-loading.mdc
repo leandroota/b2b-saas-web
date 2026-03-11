@@ -1,0 +1,481 @@
+---
+description: Regras de performance percebida, carregamento, degradação controlada e responsividade operacional para toda a plataforma.
+globs: *
+---
+# 12-performance-and-loading.mdc
+
+## Objetivo
+Definir regras de performance percebida, carregamento, degradação controlada e responsividade operacional para toda a plataforma.
+
+## Regra-mãe
+A plataforma deve parecer rápida, estável e previsível mesmo quando estiver carregando dados complexos, módulos pesados ou contextos amplos.
+
+---
+
+# 1. PRINCÍPIOS GERAIS
+
+## 1. Performance percebida importa tanto quanto performance real
+O usuário precisa sentir que o sistema responde rápido, mesmo em operações assíncronas.
+
+## 2. Carregar por prioridade
+Primeiro o que ajuda o usuário a se orientar.  
+Depois o que aprofunda contexto.
+
+## 3. Preferir degradação parcial a bloqueio total
+Se um módulo falhar, o resto da experiência deve continuar funcional quando possível.
+
+## 4. Não esconder lentidão com truques ruins
+Spinners infinitos, telas vazias piscando e travamentos mascarados prejudicam confiança.
+
+## 5. Cada tela deve ter estratégia de loading própria
+Home, Projeto, Chat, Feed, Wiki, Dashboard, Copilot e Gantt têm necessidades diferentes.
+
+---
+
+# 2. HIERARQUIA DE CARREGAMENTO
+
+## Prioridade 1 — Estrutura e orientação
+Carregar primeiro:
+- layout principal;
+- navegação;
+- contexto da tela;
+- header;
+- nome do projeto/Space;
+- tabs principais;
+- filtros visíveis.
+
+## Prioridade 2 — Conteúdo principal da tarefa atual
+Carregar em seguida:
+- timeline da Home;
+- view ativa do projeto;
+- mensagens do chat;
+- página da wiki;
+- cards do dashboard;
+- resposta do Copilot.
+
+## Prioridade 3 — Conteúdo secundário
+Carregar depois:
+- painéis laterais;
+- históricos longos;
+- métricas complementares;
+- sugestões secundárias;
+- blocos auxiliares.
+
+## Regra
+Usuário deve conseguir se orientar antes de conseguir ver tudo.
+
+---
+
+# 3. LOADING STRATEGY
+
+## Regras gerais
+- usar skeleton para conteúdo estrutural;
+- usar spinner apenas para ações localizadas ou curtas;
+- não bloquear a tela inteira quando apenas um bloco está carregando;
+- manter layout estável durante loading;
+- evitar layout shift desnecessário.
+
+## Regras de UX
+- loading deve parecer parte natural da tela;
+- skeleton precisa respeitar a estrutura real do conteúdo;
+- nunca usar loading genérico quando o contexto pode ser específico;
+- não remover controles principais enquanto dados secundários carregam.
+
+---
+
+# 4. PARTIAL LOADING E DEGRADAÇÃO CONTROLADA
+
+## Regra
+Sempre que possível, cada módulo deve carregar e falhar de forma independente.
+
+## Exemplos
+- Home carrega timeline antes do bloco lateral;
+- Projeto abre estrutura e tabs antes da view completa;
+- Chat carrega histórico recente antes do histórico antigo;
+- Wiki carrega navegação antes do conteúdo completo;
+- Dashboard carrega cards principais antes de gráficos detalhados;
+- Gantt pode carregar a estrutura temporal antes das dependências detalhadas.
+
+## Benefícios
+- orientação rápida;
+- menor sensação de travamento;
+- mais resiliência;
+- melhor percepção de qualidade.
+
+---
+
+# 5. ESTADOS DE REVALIDAÇÃO E ATUALIZAÇÃO
+
+## Regras
+- revalidação não deve derrubar a interface inteira;
+- usar indicadores sutis para refresh de dados;
+- preservar contexto visual durante atualização;
+- evitar resetar scroll ou seleção sem motivo;
+- usar optimistic UI com critério.
+
+## Exemplos de uso
+- atualizar timeline sem resetar filtro;
+- atualizar tarefa no board sem refazer a tela toda;
+- salvar wiki e manter página aberta;
+- enviar mensagem no chat com feedback imediato;
+- reaplicar resumo do Copilot sem recarregar tudo.
+
+---
+
+# 6. OPTIMISTIC UI
+
+## Pode usar em
+- envio de mensagem;
+- favoritar post;
+- salvar aprendizado;
+- mudar status de tarefa;
+- pequenas edições locais.
+
+## Usar com cautela em
+- criação de projeto;
+- promoção para wiki;
+- mudanças estruturais;
+- operações complexas com múltiplas entidades.
+
+## Regras
+- só usar quando rollback for possível e claro;
+- sempre refletir falha se a confirmação não vier;
+- não criar sensação de sucesso definitivo antes de confirmação em ações críticas.
+
+---
+
+# 7. PERFORMANCE POR MÓDULO
+
+## Home
+### Prioridade
+- header
+- sidebar
+- filtro de timeline
+- cards principais
+
+### Regras
+- carregar feed em blocos;
+- não esperar métricas secundárias para exibir a Home;
+- priorizar “o que mudou” antes de widgets menos importantes.
+
+### Evitar
+- Home carregando como dashboard pesado;
+- excesso de queries iniciais paralelas sem prioridade.
+
+---
+
+## Projeto
+### Prioridade
+- header do projeto
+- metodologia
+- tabs
+- view principal ativa
+
+### Regras
+- a view principal deve carregar primeiro;
+- views secundárias podem ser lazy;
+- manter header e navegação disponíveis durante loading;
+- não bloquear todas as tabs por falha de uma só view.
+
+### Evitar
+- carregar todas as views do projeto de uma vez;
+- recomputar tudo ao trocar de tab.
+
+---
+
+## Chat
+### Prioridade
+- lista de conversas/canais
+- cabeçalho da conversa
+- últimas mensagens
+- composer
+
+### Regras
+- mostrar contexto da conversa cedo;
+- carregar histórico recente primeiro;
+- paginação/recovery para histórico mais antigo;
+- envio de mensagem com feedback imediato;
+- falha de atualização em tempo real não deve apagar histórico já carregado.
+
+### Evitar
+- recarregar toda a conversa a cada nova mensagem;
+- congelar input enquanto histórico carrega.
+
+---
+
+## Feed
+### Prioridade
+- filtro
+- primeiros cards relevantes
+- contexto dos posts
+
+### Regras
+- paginação/infinite loading controlado;
+- não carregar feed inteiro upfront;
+- manter ações rápidas responsivas;
+- contexto do post deve aparecer junto com conteúdo.
+
+### Evitar
+- feed muito pesado com mídia e metadata carregando sem prioridade;
+- scroll quebrando em revalidação.
+
+---
+
+## Wiki
+### Prioridade
+- navegação lateral
+- título da página
+- conteúdo principal
+- metadados
+- páginas relacionadas
+
+### Regras
+- manter editor ou visualização acessível cedo;
+- autosave futuro deve ser discreto e resiliente;
+- salvar não pode congelar a tela inteira;
+- páginas longas devem carregar de forma estável.
+
+### Evitar
+- editor travando por re-render excessivo;
+- perda de conteúdo em falha simples.
+
+---
+
+## Dashboard
+### Prioridade
+- KPIs resumidos
+- status dos projetos
+- gargalos principais
+- atividade recente
+
+### Regras
+- primeiro dar leitura resumida;
+- gráficos detalhados podem vir depois;
+- estados parciais precisam ser explícitos;
+- dados incompletos devem ser sinalizados.
+
+### Evitar
+- dashboard depender de todos os blocos para aparecer;
+- gráficos pesados carregando antes dos indicadores essenciais.
+
+---
+
+## Copilot
+### Prioridade
+- painel/modal
+- intenção selecionada
+- estado de geração
+- resposta estruturada
+
+### Regras
+- loading do Copilot deve ser local;
+- falha da IA não pode bloquear a tela principal;
+- resposta deve aparecer assim que estiver pronta, sem dependências extras;
+- indicar contexto lido logo no início.
+
+### Evitar
+- congelar a tela ao abrir Copilot;
+- depender de carregamento global para usar IA.
+
+---
+
+## Gantt
+### Prioridade
+- header temporal
+- linhas principais
+- marcos básicos
+- barras principais
+- dependências depois
+
+### Regras
+- priorizar legibilidade;
+- carregar primeiro a estrutura macro;
+- dependências visuais podem entrar depois;
+- zoom e navegação temporal devem continuar fluidos;
+- em projetos grandes, usar segmentação, virtualização ou lazy rendering.
+
+### Evitar
+- renderizar tudo de uma vez em projetos grandes;
+- recalcular todas as barras em qualquer microinteração;
+- fazer o Gantt bloquear o projeto inteiro.
+
+---
+
+# 8. LAZY LOADING E CODE SPLITTING
+
+## Regras
+- views secundárias devem ser lazy quando fizer sentido;
+- módulos pesados como Gantt, dashboard analítico e Copilot podem carregar sob demanda;
+- não enviar JS desnecessário para telas que não usam o módulo;
+- componentes cliente pesados devem ser isolados.
+
+## Casos recomendados
+- Gantt
+- gráficos complexos
+- editores ricos
+- painéis avançados do Copilot
+- blocos analíticos secundários
+
+---
+
+# 9. STREAMING E SERVER RENDERING
+
+## Regras
+- usar rendering progressivo quando fizer sentido;
+- entregar estrutura cedo;
+- permitir que blocos complementares apareçam depois;
+- separar conteúdo crítico de conteúdo auxiliar.
+
+## Preferir
+- header/tabs renderizados cedo;
+- listas iniciais renderizadas cedo;
+- detalhes adicionais chegando progressivamente.
+
+## Evitar
+- esperar por todos os dados para renderizar a primeira interface visível.
+
+---
+
+# 10. PAGINAÇÃO, INFINITE SCROLL E VIRTUALIZAÇÃO
+
+## Regras gerais
+- não carregar listas longas integralmente;
+- usar paginação ou infinite loading com critério;
+- usar virtualização quando houver alta densidade de itens.
+
+## Aplicações
+### Chat
+- histórico antigo paginado ou incremental.
+
+### Feed
+- infinite loading controlado.
+
+### Lista/Backlog
+- virtualização quando necessário.
+
+### Gantt
+- virtualização horizontal/vertical em cenários densos.
+
+## Regra de UX
+Paginação não pode confundir estado atual do usuário nem quebrar contexto.
+
+---
+
+# 11. CACHE E REUSO DE DADOS
+
+## Regras
+- reutilizar dados de contexto quando possível;
+- evitar refetch desnecessário ao navegar entre views relacionadas;
+- preservar dados recentes com política clara de revalidação;
+- preferir cache contextual a refetch agressivo.
+
+## Exemplos
+- alternar entre tabs do projeto sem recarregar header;
+- voltar da wiki para o board sem perder contexto;
+- manter lista recente de chats disponível.
+
+---
+
+# 12. SCROLL, POSIÇÃO E CONTINUIDADE
+
+## Regras
+- preservar posição quando fizer sentido;
+- evitar resetar scroll em navegações locais;
+- manter foco contextual após ações;
+- em tabs do projeto, não jogar o usuário para o topo sem necessidade.
+
+## Casos importantes
+- feed;
+- chat;
+- wiki longa;
+- lista/backlog;
+- Gantt com navegação horizontal.
+
+---
+
+# 13. GESTÃO DE ERRO RELACIONADA À PERFORMANCE
+
+## Regra
+Toda degradação relevante deve ser visível e recuperável.
+
+## Exemplos
+- feed parcial indisponível;
+- chat sem atualização em tempo real mas com histórico carregado;
+- wiki salva localmente, mas falha ao persistir;
+- Gantt sem dependências carregadas inicialmente;
+- Copilot indisponível sem bloquear tarefa manual.
+
+## Estratégia
+- erro local;
+- retry local;
+- fallback funcional;
+- persistência de contexto.
+
+---
+
+# 14. METAS DE EXPERIÊNCIA
+
+## Regra
+O time deve definir metas de experiência, mesmo que não sejam números finais de SLA.
+
+## Exemplos desejáveis
+- Home perceptivelmente pronta em poucos segundos;
+- projeto orientado visualmente quase imediato;
+- envio de mensagem com resposta instantânea perceptível;
+- troca de tab fluida;
+- abertura do Copilot sem travar a tela;
+- Gantt utilizável sem sensação de colapso.
+
+## Regra
+Mesmo sem números finais, a plataforma deve ser projetada para parecer rápida e contínua.
+
+---
+
+# 15. DARK MODE PREMIUM E PERFORMANCE VISUAL
+
+## Regras
+- skeletons devem respeitar estética dark premium;
+- estados de loading não podem gerar brilho excessivo;
+- animações devem ser sutis;
+- gráficos e barras do Gantt devem permanecer legíveis e leves.
+
+## Evitar
+- shimmer agressivo;
+- excesso de glow;
+- loading visualmente poluído.
+
+---
+
+# 16. ANTI-PADRÕES
+
+Evitar:
+- spinner global para qualquer ação;
+- bloquear tela inteira por carga de um bloco secundário;
+- recarregar toda a página após salvar item local;
+- invalidar dados demais a cada mutação;
+- renderizar todas as views do projeto ao mesmo tempo;
+- Gantt sem virtualização em cenários extensos;
+- feed e chat resetando contexto em revalidação;
+- Copilot dependente de render completo do projeto.
+
+---
+
+# 17. CHECKLIST DE IMPLEMENTAÇÃO
+
+Antes de lançar qualquer tela ou módulo, validar:
+
+- O que precisa carregar primeiro?
+- O que pode carregar depois?
+- Existe skeleton apropriado?
+- Existe partial loading?
+- Existe retry local?
+- A tela continua útil com falha parcial?
+- A navegação mantém contexto?
+- Há refetchs desnecessários?
+- O módulo pode ser lazy?
+- O scroll/foco é preservado?
+- Em listas grandes, há paginação ou virtualização?
+- O Gantt continua utilizável em cenários densos?
+
+## Regra final
+Se uma tela só funciona bem quando tudo carrega perfeitamente ao mesmo tempo, ela não está pronta.
