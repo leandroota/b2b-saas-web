@@ -1,0 +1,362 @@
+---
+description: Princípios inegociáveis do produto para garantir coerência entre estratégia, UX, UI, engenharia e IA
+globs: *
+---
+# 01-product-principles.mdc
+
+## Objetivo
+Definir os princípios inegociáveis do produto para garantir coerência entre estratégia, UX, UI, engenharia e IA.
+
+## Regra-mãe
+A plataforma deve centralizar execução, comunicação, contexto e conhecimento em uma experiência coesa, clara e útil.
+
+---
+
+# 1. VISÃO DO PRODUTO
+
+## O que estamos construindo
+Uma plataforma SaaS B2B de trabalho unificado que combina:
+- gestão de projetos e tarefas;
+- comunicação em tempo real;
+- timeline de atualizações e aprendizado;
+- wiki viva de projetos;
+- copiloto de IA contextual.
+
+## Problema que resolvemos
+Hoje o trabalho está fragmentado entre várias ferramentas.  
+Isso gera:
+- perda de contexto;
+- retrabalho;
+- desalinhamento;
+- baixa retenção de conhecimento;
+- dificuldade de acompanhar o avanço real do projeto.
+
+## Tese central
+Se execução, conversa, atualização e memória do projeto coexistirem no mesmo ambiente, então times trabalham com mais continuidade, clareza e reaproveitamento de conhecimento.
+
+---
+
+# 2. PILARES DO PRODUTO
+
+## Pilar 1 — Clareza operacional
+O usuário deve entender rapidamente:
+- onde está;
+- o que mudou;
+- o que precisa fazer;
+- como agir.
+
+### Implicações
+- navegação previsível;
+- contexto sempre visível;
+- labels simples;
+- hierarquia forte;
+- separação clara entre superfícies.
+
+---
+
+## Pilar 2 — Progresso visível
+O sistema deve tornar o avanço perceptível.
+
+### Implicações
+- status legíveis;
+- progresso de sprint/iniciativa;
+- marcos;
+- feedback imediato;
+- bloqueios evidentes.
+
+---
+
+## Pilar 3 — Colaboração útil
+A plataforma deve incentivar comportamentos que ajudem o trabalho.
+
+### Implicações
+- compartilhar aprendizado;
+- registrar decisão;
+- atualizar status;
+- reconhecer contribuição;
+- transformar conversa em ação.
+
+---
+
+## Pilar 4 — Conhecimento reaproveitável
+Tudo que for valioso deve poder virar memória útil do projeto.
+
+### Implicações
+- salvar aprendizado;
+- promover conteúdo para wiki;
+- resumir discussões;
+- registrar decisões;
+- conectar fonte e destino do conteúdo.
+
+---
+
+## Pilar 5 — IA que reduz esforço
+A IA deve simplificar trabalho, não competir por atenção.
+
+### Implicações
+- resumir;
+- estruturar;
+- sugerir;
+- recuperar contexto;
+- apoiar publicação e documentação.
+
+---
+
+# 3. PAPÉIS INEQUÍVOCOS DOS MÓDULOS
+
+## Home
+Papel: ser o hub diário do usuário.
+
+## Projeto
+Papel: ser o núcleo operacional do trabalho.
+
+## Chat
+Papel: coordenação rápida e contextual.
+
+## Feed
+Papel: atualização assíncrona e visibilidade do trabalho.
+
+## Wiki
+Papel: memória viva e estruturada do projeto.
+
+## Copilot
+Papel: síntese, apoio e redução de carga cognitiva.
+
+## Regra obrigatória
+Nenhum módulo deve duplicar o papel central de outro.
+
+---
+
+# 4. SEPARAÇÃO DE RESPONSABILIDADES
+
+## Chat
+Usar para:
+- conversa rápida;
+- alinhamento imediato;
+- dúvidas operacionais;
+- coordenação do dia a dia.
+
+Não usar como:
+- repositório principal de decisões;
+- documentação permanente;
+- substituto de tarefa.
+
+## Feed
+Usar para:
+- updates;
+- aprendizados;
+- decisões relevantes;
+- marcos;
+- bloqueios;
+- reconhecimento contextual.
+
+Não usar como:
+- conversa síncrona;
+- mural irrelevante;
+- rede social casual.
+
+## Tarefa
+Usar para:
+- execução rastreável;
+- priorização;
+- responsabilidade;
+- status.
+
+Não usar como:
+- thread de conversa extensa;
+- substituto de documentação.
+
+## Wiki
+Usar para:
+- visão geral;
+- decisões;
+- documentação funcional;
+- documentação técnica;
+- FAQ;
+- aprendizados consolidados.
+
+Não usar como:
+- arquivo morto;
+- editor solto sem contexto.
+
+## Copilot
+Usar para:
+- resumir;
+- extrair ações;
+- gerar rascunhos;
+- apoiar wiki;
+- encontrar contexto.
+
+Não usar como:
+- agente autônomo;
+- autoridade final;
+- substituto de julgamento humano.
+
+---
+
+# 5. PRINCÍPIOS DE UX
+
+## 1. Contexto sempre explícito
+Toda tela deve deixar claro:
+- workspace;
+- Space;
+- projeto;
+- grupo;
+- conversa;
+- sprint, quando existir.
+
+## 2. Próxima ação evidente
+Toda tela deve comunicar o próximo passo provável.
+
+## 3. Menos interpretação, mais ação
+O usuário não deve precisar “decifrar” a interface.
+
+## 4. Progresso percebido em segundos
+O sistema deve tornar claro:
+- o que avançou;
+- o que travou;
+- o que mudou;
+- o que exige atenção.
+
+## 5. Reaproveitamento é parte do UX
+Conteúdo útil deve poder evoluir de:
+- chat → tarefa
+- tarefa → update
+- update → aprendizado
+- aprendizado → wiki
+
+## 6. Centralização com sentido
+A plataforma deve reduzir troca de ferramenta sem virar super app confuso.
+
+---
+
+# 6. PRINCÍPIOS DE ENGAJAMENTO
+
+## Engajamento desejado
+Queremos reforçar:
+- clareza;
+- continuidade;
+- colaboração;
+- documentação;
+- progresso.
+
+## Engajamento indesejado
+Devemos evitar:
+- ruído;
+- volume sem valor;
+- competição vazia;
+- gamificação superficial;
+- automação artificial.
+
+## Regra
+Engajamento deve nascer de utilidade real no trabalho.
+
+---
+
+# 7. FLOW STATE
+
+## Definição prática
+O usuário deve conseguir entrar, entender o contexto, agir e sentir progresso sem fricção desnecessária.
+
+## Condições obrigatórias
+- objetivo claro;
+- contexto visível;
+- feedback rápido;
+- baixo atrito;
+- interrupções controladas;
+- continuidade entre módulos.
+
+## Anti-padrões
+- notificações excessivas;
+- excesso de views;
+- múltiplas ações principais concorrentes;
+- IA intrusiva;
+- telas sem prioridade visual.
+
+---
+
+# 8. PRINCÍPIOS DE CONTEÚDO E MICROCOPY
+
+## O tom do produto deve ser
+- claro;
+- profissional;
+- direto;
+- útil;
+- confiável.
+
+## O tom do produto não deve ser
+- infantilizado;
+- excessivamente informal;
+- vago;
+- inflado;
+- motivacional artificial.
+
+## Regras
+- usar linguagem orientada à ação;
+- explicar erros com clareza;
+- sempre indicar próximo passo quando possível;
+- evitar jargão desnecessário;
+- manter consistência entre módulos.
+
+---
+
+# 9. ESTADOS OBRIGATÓRIOS
+
+Toda tela, módulo ou componente crítico deve prever:
+- loading
+- empty
+- error
+- success
+- disabled
+
+## Regra
+Nenhuma tela crítica pode existir sem definição explícita desses estados.
+
+---
+
+# 10. ACESSIBILIDADE E CONSISTÊNCIA
+
+## Toda experiência deve garantir
+- foco visível;
+- navegação por teclado;
+- labels claros;
+- contraste adequado;
+- hierarquia semântica;
+- feedback perceptível.
+
+## Regra
+Acessibilidade não é opcional nem etapa posterior.
+
+---
+
+# 11. DECISÕES DE PRODUTO PARA MVP
+
+## Prioridade de valor
+1. Centralização com contexto
+2. Execução conectada à comunicação
+3. Memória viva do projeto
+4. IA assistiva
+5. Engajamento útil
+
+## Regra de escopo
+Se uma feature não reforça clareza, progresso, colaboração útil ou conhecimento reaproveitável, ela deve ser questionada.
+
+---
+
+# 12. CHECKLIST DE AVALIAÇÃO DE QUALQUER NOVA FEATURE
+
+Antes de aprovar uma nova feature, responder:
+
+- Ela resolve qual problema real?
+- Ela reforça qual pilar do produto?
+- Ela pertence a qual módulo?
+- Ela conflita com Chat, Feed, Wiki, Tarefa ou Copilot?
+- Ela reduz ou aumenta carga cognitiva?
+- Ela melhora clareza ou cria ruído?
+- Ela ajuda o usuário a agir?
+- Ela preserva contexto?
+- Ela gera valor recorrente?
+- Ela cabe no MVP ou é pós-MVP?
+
+## Regra final
+Se a feature adicionar complexidade sem aumentar clareza, progresso ou reaproveitamento de conhecimento, ela não deve entrar.
