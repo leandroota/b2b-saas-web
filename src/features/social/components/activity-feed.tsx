@@ -7,13 +7,19 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
-    CheckCircle2,
-    PlusCircle,
-    MessageSquare,
-    UserPlus,
-    Trophy,
     Clock,
-    ExternalLink,
+    CheckCircle2,
+    MessageSquare,
+    Link as LinkIcon,
+    UserPlus,
+    ShieldCheck,
+    AlertCircle,
+    TrendingUp,
+    Plus,
+    Rocket,
+    ArrowUpRight,
+    PlusCircle,
+    Trophy,
     ThumbsUp,
     Repeat2
 } from "lucide-react";
@@ -139,30 +145,58 @@ export function ActivityFeed() {
                                 <CardContent className="p-4 space-y-3">
                                     <div className="flex items-start justify-between gap-4">
                                         <div className="flex items-center gap-3">
-                                            <Avatar className="size-8 border border-border">
-                                                <AvatarImage src={`https://avatar.vercel.sh/${activity.userId}`} />
-                                                <AvatarFallback>U</AvatarFallback>
+                                            <Avatar className="size-8 ring-2 ring-primary/10">
+                                                <AvatarImage src={`https://i.pravatar.cc/100?u=${activity.user.id}`} />
+                                                <AvatarFallback>{activity.user.name[0]}</AvatarFallback>
                                             </Avatar>
-                                            <div className="flex flex-col">
-                                                <span className="text-[11px] font-bold font-mono uppercase tracking-wide text-foreground">
-                                                    {activity.userName}
-                                                </span>
-                                                <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground font-medium uppercase tracking-wider">
-                                                    <Clock className="size-3" />
-                                                    {mounted ? formatDistanceToNow(new Date(activity.createdAt), { addSuffix: true, locale: ptBR }) : "--:--"}
+                                            <div className="space-y-0.5">
+                                                <p className="text-[11px] font-black text-foreground uppercase tracking-tight">{activity.user.name}</p>
+                                                <div className="flex items-center gap-2">
+                                                    <span className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest">{activity.user.role} • {formatDistanceToNow(new Date(activity.createdAt), { addSuffix: true, locale: ptBR })}</span>
                                                 </div>
                                             </div>
                                         </div>
-                                        {activity.projectName && (
-                                            <Badge variant="outline" className="text-[10px] font-mono h-5 bg-muted/20 border-border/50 text-muted-foreground">
-                                                {activity.projectName}
-                                            </Badge>
+
+                                        {activity.type === 'DEPLOY' && (
+                                            <Badge className="bg-emerald-500/10 text-emerald-500 border-emerald-500/20 text-[8px] font-black tracking-widest px-2 py-0.5 rounded-lg">NOVO DEPLOY</Badge>
+                                        )}
+                                        {activity.type === 'BUG_FIX' && (
+                                            <Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20 text-[8px] font-black tracking-widest px-2 py-0.5 rounded-lg">BUG CORRIGIDO</Badge>
                                         )}
                                     </div>
 
-                                    <p className="text-sm leading-relaxed text-foreground/90">
-                                        <span className="text-muted-foreground font-medium">{activity.content}</span>
-                                    </p>
+                                    <div className="mt-4 text-xs font-medium leading-relaxed text-foreground/80 pl-11 border-l-2 border-primary/10 ml-4">
+                                        {activity.content}
+                                    </div>
+
+                                    {/* Activity Contextual Assets (Stats, Code, etc.) */}
+                                    {activity.type === 'DEPLOY' && (
+                                        <div className="mt-4 ml-11 p-4 rounded-2xl bg-muted/30 border border-border/50 flex items-center justify-between group/deploy cursor-pointer hover:bg-muted/50 transition-all">
+                                            <div className="flex items-center gap-4">
+                                                <div className="p-2 rounded-xl bg-primary text-white shadow-lg shadow-primary/20">
+                                                    <Rocket className="size-4" />
+                                                </div>
+                                                <div>
+                                                    <p className="text-[10px] font-black font-mono uppercase text-foreground">v2.4.0-production-build</p>
+                                                    <p className="text-[9px] font-bold text-muted-foreground uppercase">Pipeline finalizado com sucesso</p>
+                                                </div>
+                                            </div>
+                                            <ArrowUpRight className="size-4 text-muted-foreground opacity-0 group-hover/deploy:opacity-100 group-hover/deploy:translate-x-1 group-hover/deploy:-translate-y-1 transition-all" />
+                                        </div>
+                                    )}
+
+                                    {activity.type === 'BUG_FIX' && (
+                                        <div className="mt-4 ml-11 grid grid-cols-2 gap-4">
+                                            <div className="p-4 rounded-2xl bg-emerald-500/5 border border-emerald-500/10 text-center space-y-1">
+                                                <p className="text-xl font-black font-mono text-emerald-500">428</p>
+                                                <p className="text-[8px] font-black uppercase tracking-widest text-emerald-500/60">Testes Passados</p>
+                                            </div>
+                                            <div className="p-4 rounded-2xl bg-amber-500/5 border border-amber-500/10 text-center space-y-1">
+                                                <p className="text-xl font-black font-mono text-amber-500">0</p>
+                                                <p className="text-[8px] font-black uppercase tracking-widest text-amber-500/60">Bugs Críticos</p>
+                                            </div>
+                                        </div>
+                                    )}
 
                                     <div className="flex items-center gap-1 pt-1 border-t border-border/50 mt-2">
                                         <Button variant="ghost" size="icon-xs" className="h-7 w-auto px-2 gap-1.5 text-[10px] font-bold uppercase tracking-wider text-muted-foreground hover:text-primary">

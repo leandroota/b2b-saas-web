@@ -23,6 +23,7 @@ interface AppState {
 
     // RBAC
     currentUser: {
+        id: string;
         name: string;
         email: string;
         role: UserRole;
@@ -52,13 +53,15 @@ interface AppState {
 
     activities: Array<{
         id: string;
-        userId: string;
-        userName: string;
         type: string;
-        projectName: string;
-        projectId: string;
         content: string;
         createdAt: string;
+        projectId: string;
+        user: {
+            id: string;
+            name: string;
+            role: string;
+        };
     }>;
 
     toggleCopilot: () => void;
@@ -86,6 +89,7 @@ export const useAppStore = create<AppState>((set) => ({
     currentProjectContext: null,
     currentWikiContext: null,
     currentUser: {
+        id: "u1",
         name: "John Smith",
         email: "john@acme.com",
         role: "MEMBER",
@@ -150,43 +154,27 @@ export const useAppStore = create<AppState>((set) => ({
     activities: [
         {
             id: "act_1",
-            userId: "user_1",
-            userName: "Felipe Designer",
             type: "TASK_COMPLETED",
-            projectName: "Flyprod Dashboard",
-            projectId: "p1", // Assigned to Alpha for filtering
+            projectId: "p1",
             content: "concluiu a tarefa: 'Definir paleta de cores primária'",
             createdAt: new Date(Date.now() - 600000).toISOString(),
+            user: { id: "user_1", name: "Felipe Designer", role: "UI Designer" }
         },
         {
             id: "act_2",
-            userId: "user_2",
-            userName: "Carla Product",
-            type: "PROJECT_MEMBER_ADDED",
-            projectName: "Flyprod Dashboard",
+            type: "DEPLOY",
             projectId: "p1",
-            content: "adicionou Robo Dev ao projeto",
+            content: "Acabei de subir o deploy para produção com as novas melhorias do Design System. O tempo de carregamento das páginas foi reduzido em 35%!",
             createdAt: new Date(Date.now() - 3600000).toISOString(),
+            user: { id: "user_2", name: "Alex Rivera", role: "Engenheiro Frontend" }
         },
         {
             id: "act_3",
-            userId: "user_3",
-            userName: "Robo Dev",
-            type: "TASK_CREATED",
-            projectName: "Infra Alpha",
-            projectId: "p2", // Assigned to SSO
-            content: "criou uma nova tarefa: 'Configurar CI/CD pipeline'",
-            createdAt: new Date(Date.now() - 7200000).toISOString(),
-        },
-        {
-            id: "act_4",
-            userId: "user_1",
-            userName: "Felipe Designer",
-            type: "PROJECT_MILESTONE",
-            projectName: "Flyprod Dashboard",
+            type: "BUG_FIX",
             projectId: "p1",
-            content: "alcançou o marco: 'MVP UI Definido'",
-            createdAt: new Date(Date.now() - 86400000).toISOString(),
+            content: "Resolvido o problema crítico de timeout no Gateway de APIs. Todos os testes de integração passaram em 100%. Ótimo trabalho, equipe!",
+            createdAt: new Date(Date.now() - 7200000).toISOString(),
+            user: { id: "user_3", name: "Sarah Chen", role: "Líder de QA" }
         }
     ],
 }));
