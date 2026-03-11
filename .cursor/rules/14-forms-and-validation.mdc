@@ -1,0 +1,518 @@
+---
+description: Regras para formulários, entradas de dados, validações, feedbacks e confirmação de ações em toda a plataforma.
+globs: *
+---
+# 14-forms-and-validation.mdc
+
+## Objetivo
+Definir regras para formulários, entradas de dados, validações, feedbacks e confirmação de ações em toda a plataforma.
+
+## Regra-mãe
+Todo formulário deve ser fácil de preencher, difícil de interpretar errado e claro ao confirmar, bloquear ou falhar.
+
+---
+
+# 1. PRINCÍPIOS GERAIS
+
+## 1. Formular o mínimo necessário
+Pedir apenas o que é necessário para concluir a ação com segurança.
+
+## 2. Clareza antes de completude
+Campos, labels, ajuda e validações devem reduzir dúvida, não aumentar burocracia.
+
+## 3. Erro deve orientar correção
+Validação não serve para punir o usuário.  
+Serve para mostrar o que falta ou o que precisa ser ajustado.
+
+## 4. Formulário deve respeitar contexto
+O conteúdo e a complexidade do formulário devem variar conforme:
+- tipo de entidade;
+- papel do usuário;
+- metodologia;
+- etapa do fluxo.
+
+## 5. Ações críticas exigem confirmação adequada
+Confirmar quando houver:
+- impacto estrutural;
+- perda de dados;
+- ação irreversível;
+- mudança ampla de contexto.
+
+---
+
+# 2. PRINCÍPIOS DE ESTRUTURA
+
+## Regras
+- usar labels sempre visíveis;
+- agrupar campos por assunto;
+- destacar claramente o objetivo do formulário;
+- manter CTA principal fácil de identificar;
+- separar ações destrutivas das ações primárias.
+
+## Estrutura preferencial
+1. título
+2. descrição curta ou contexto
+3. campos agrupados
+4. ajuda quando necessário
+5. validações inline
+6. CTA principal
+7. CTA secundário
+
+## Evitar
+- formulário longo sem agrupamento;
+- modal pequeno para fluxo complexo;
+- campos com função ambígua;
+- CTA sem contexto claro.
+
+---
+
+# 3. LABELS, HELP TEXT E PLACEHOLDERS
+
+## Labels
+### Regras
+- todo campo deve ter label claro;
+- label deve explicar o que o campo representa;
+- label deve usar linguagem de domínio do produto.
+
+### Exemplos bons
+- Nome do projeto
+- Metodologia
+- Objetivo da sprint
+- Título da página
+- Responsável
+
+### Evitar
+- Nome
+- Tipo
+- Valor
+- Detalhes
+sem contexto
+
+## Help text
+### Usar quando
+- o campo pode gerar dúvida;
+- há impacto operacional;
+- a escolha muda estrutura do sistema.
+
+### Exemplos
+- A metodologia define as visualizações iniciais deste projeto.
+- Este título será exibido na navegação da wiki.
+
+## Placeholder
+### Regra
+Placeholder complementa, nunca substitui label.
+
+### Exemplos bons
+- Ex.: Portal do Cliente
+- Ex.: Centralizar demandas do comercial
+
+---
+
+# 4. TIPOS DE VALIDAÇÃO
+
+## Validação obrigatória
+Campo precisa existir para a ação acontecer.
+
+## Validação de formato
+Campo deve seguir padrão esperado.
+
+## Validação contextual
+A regra depende do contexto, papel ou entidade.
+
+## Validação relacional
+Um campo depende de outro.
+
+## Validação de confirmação
+Ação exige segunda confirmação ou reconhecimento do impacto.
+
+---
+
+# 5. REGRAS DE VALIDAÇÃO
+
+## Regras gerais
+- validar cedo quando isso ajudar;
+- validar tarde quando validar cedo atrapalhar;
+- exibir erro próximo ao campo;
+- usar linguagem simples;
+- não depender só de cor;
+- não mostrar erro antes de o usuário interagir, salvo casos críticos.
+
+## Regras práticas
+- required deve ser visível;
+- erro deve dizer o que corrigir;
+- validação de formulário inteiro deve resumir o problema sem perder detalhe por campo;
+- CTA principal deve refletir estado do formulário.
+
+## Exemplo bom
+- Informe o nome do projeto.
+- Escolha uma metodologia.
+- O título precisa ter no máximo 120 caracteres.
+
+## Evitar
+- Campo inválido
+- Valor incorreto
+- Erro de validação
+
+---
+
+# 6. MOMENTO DE VALIDAÇÃO
+
+## Durante digitação
+Usar quando:
+- formato é simples;
+- feedback ajuda imediatamente;
+- campo curto e objetivo.
+
+## Ao sair do campo
+Usar quando:
+- o usuário precisa terminar de escrever antes;
+- validação depende do valor completo.
+
+## Ao submeter
+Usar quando:
+- regra depende do conjunto do formulário;
+- validação relacional;
+- checagem de conflito ou permissão.
+
+## Regra
+Não interromper digitação com erro prematuro em campos complexos.
+
+---
+
+# 7. ESTADOS DE FORMULÁRIO
+
+Todo formulário relevante deve prever:
+
+- default
+- focused
+- filled
+- invalid
+- valid
+- submitting
+- success
+- error
+- disabled
+
+## Regras
+- cada estado deve ser legível em dark mode premium;
+- foco deve ser visível;
+- invalid precisa ter mensagem clara;
+- submitting deve impedir ambiguidade;
+- success e error devem dar continuidade ao fluxo.
+
+---
+
+# 8. FORMULÁRIOS PRINCIPAIS DO PRODUTO
+
+## Criar projeto
+### Campos mínimos
+- nome do projeto
+- descrição
+- equipe
+- metodologia
+
+### Regras
+- metodologia é obrigatória;
+- descrição pode ser opcional no MVP;
+- estrutura inicial do projeto depende da metodologia;
+- confirmar criação apenas após validação completa.
+
+### Microcopy sugerida
+- Nome do projeto
+- Descrição
+- Equipe
+- Metodologia
+
+### Validações mínimas
+- nome obrigatório;
+- metodologia obrigatória;
+- evitar nome vazio;
+- opcionalmente validar duplicidade dentro do workspace.
+
+---
+
+## Criar ou editar tarefa
+### Campos mínimos
+- título
+- status
+- responsável
+- contexto/projeto
+
+### Opcionais
+- descrição
+- prazo
+- prioridade
+- vínculo com sprint ou fase
+
+### Regras
+- título obrigatório;
+- projeto/contexto deve estar claro;
+- campos avançados podem ser progressive disclosure.
+
+---
+
+## Criar publicação
+### Campos mínimos
+- tipo da publicação
+- conteúdo
+- contexto
+
+### Tipos sugeridos
+- Atualização
+- Aprendizado
+- Decisão
+- Bloqueio
+- Marco
+- Reconhecimento
+
+### Regras
+- contexto deve ser explícito;
+- tipo deve ser fácil de escolher;
+- publicação não deve parecer post genérico sem função.
+
+---
+
+## Criar página da wiki
+### Campos mínimos
+- título
+- seção
+- conteúdo
+
+### Regras
+- título obrigatório;
+- seção obrigatória;
+- ao promover conteúdo, origem deve ser preservada;
+- sem permissão de edição, o formulário não deve abrir.
+
+---
+
+## Ações do Copilot
+### Formulários/inputs possíveis
+- selecionar intenção
+- editar saída gerada
+- confirmar aplicação
+
+### Regras
+- intenção deve ser clara;
+- contexto deve estar visível;
+- saída deve ser editável;
+- aplicação exige confirmação humana.
+
+---
+
+# 9. REGRAS DE CTA
+
+## CTA primário
+Deve usar verbo claro e refletir a ação final.
+
+### Exemplos
+- Criar projeto
+- Salvar página
+- Publicar atualização
+- Criar tarefa
+- Aplicar resumo
+
+## CTA secundário
+Deve indicar saída segura.
+
+### Exemplos
+- Cancelar
+- Voltar
+- Fechar
+
+## Regras
+- CTA primário não pode ser genérico;
+- CTA destrutivo deve ser explícito;
+- loading do CTA deve comunicar progresso.
+
+---
+
+# 10. AÇÕES DESTRUTIVAS E CONFIRMAÇÃO
+
+## Exigem confirmação
+- excluir página
+- arquivar projeto
+- remover membro do projeto
+- alterar metodologia, se suportado
+- descartar mudanças não salvas quando houver perda real
+
+## Regras
+- confirmação deve explicar impacto;
+- evitar confirmação excessiva para ações simples;
+- ações destrutivas devem ter hierarquia visual distinta;
+- usar linguagem direta.
+
+## Exemplos
+- Excluir página
+- Arquivar projeto
+- Remover membro
+
+## Exemplos de alerta
+- Esta ação não pode ser desfeita.
+- O projeto ficará somente leitura se for arquivado.
+
+---
+
+# 11. AUTOSAVE, DRAFT E PERSISTÊNCIA
+
+## Regras
+- usar autosave apenas quando houver clareza sobre estado salvo;
+- sempre indicar se a alteração foi salva, está salvando ou falhou;
+- draft é útil para conteúdo mais longo, como wiki ou publicação;
+- autosave nunca deve mascarar erro de persistência.
+
+## Indicadores preferidos
+- Salvando…
+- Alterações salvas
+- Não foi possível salvar. Tente novamente.
+
+## Evitar
+- salvar silenciosamente sem feedback;
+- perder conteúdo em falha de conexão;
+- usar autosave em formulários curtos sem necessidade.
+
+---
+
+# 12. VALIDAÇÕES POR RELAÇÃO ENTRE CAMPOS
+
+## Exemplos
+- metodologia define views iniciais do projeto;
+- sprint só faz sentido em projeto ágil;
+- fase ou marco depende de planejamento macro;
+- promover para wiki exige contexto e permissão;
+- dependência no Gantt exige item de origem e destino válidos.
+
+## Regra
+Quando a relação entre campos impactar a estrutura do produto, isso deve ficar explícito no formulário.
+
+---
+
+# 13. MENSAGENS DE ERRO EM FORMULÁRIO
+
+## Regras
+- erro deve estar próximo do campo;
+- resumo global pode existir em formulários longos;
+- mensagens devem dizer o que corrigir.
+
+## Exemplos
+- Informe o nome do projeto.
+- Escolha uma metodologia.
+- O título precisa ter no máximo 120 caracteres.
+- Você não tem permissão para editar esta página.
+- Não foi possível salvar. Revise os campos e tente novamente.
+
+## Evitar
+- Dados inválidos
+- Erro de submissão
+- Formulário incorreto
+
+---
+
+# 14. ACESSIBILIDADE EM FORMULÁRIOS
+
+## Regras obrigatórias
+- todo campo com label;
+- mensagens de erro associadas ao campo;
+- foco visível;
+- navegação por teclado completa;
+- ordem lógica de tabulação;
+- required perceptível sem depender só de cor;
+- descrição adicional conectada semanticamente quando necessário.
+
+## Modais e drawers
+- foco inicial controlado;
+- `Esc` fecha quando apropriado;
+- retorno de foco ao elemento de origem;
+- CTA principal acessível por teclado.
+
+---
+
+# 15. RESPONSIVIDADE DE FORMULÁRIOS
+
+## Regras
+- em mobile, priorizar coluna única;
+- não comprimir demais labels e help text;
+- evitar muitos campos lado a lado em telas menores;
+- CTA principal deve continuar visível;
+- se o formulário for longo, a progressão deve ser clara.
+
+## Regra
+A versão responsiva não pode esconder regras essenciais do formulário.
+
+---
+
+# 16. FORMULÁRIOS LONGOS E PROGRESSIVE DISCLOSURE
+
+## Usar quando
+- o fluxo é complexo;
+- parte dos campos é opcional;
+- existe camada básica e avançada.
+
+## Aplicar em
+- criação de projeto;
+- configuração de metodologia;
+- configurações mais avançadas do workspace;
+- edição complexa de Gantt no futuro.
+
+## Regra
+Mostrar primeiro o mínimo necessário para o usuário concluir a ação principal.
+
+---
+
+# 17. GANTT E VALIDAÇÕES ESPECÍFICAS
+
+## Campos possíveis
+- nome do item
+- início
+- fim
+- marco
+- dependência
+- fase/grupo
+
+## Regras mínimas
+- início e fim devem ser coerentes;
+- marco pode ter tratamento próprio;
+- dependência só pode apontar para item válido;
+- projeto precisa permitir visão temporal;
+- erro de dependência deve ser claro e localizado.
+
+## Exemplos de mensagens
+- A data de término precisa ser posterior à data de início.
+- Escolha um item válido para criar a dependência.
+- Este projeto não possui itens compatíveis com o Gantt ainda.
+
+---
+
+# 18. ANTI-PADRÕES
+
+Evitar:
+- placeholder no lugar de label;
+- erro sem instrução;
+- CTA genérico;
+- formulário excessivamente longo para ação simples;
+- validação só no final quando poderia ajudar antes;
+- bloquear envio sem explicar motivo;
+- confirmação para toda microação;
+- modais complexos demais;
+- autosave sem indicação clara.
+
+---
+
+# 19. CHECKLIST DE QUALQUER FORMULÁRIO
+
+Antes de lançar qualquer formulário, validar:
+
+- O objetivo do formulário está claro?
+- Os campos são realmente necessários?
+- As labels são específicas?
+- O CTA principal está claro?
+- As validações estão próximas do campo?
+- O erro explica como corrigir?
+- Há estados de loading, success e error?
+- Há acessibilidade por teclado?
+- Em mobile, continua utilizável?
+- Há confirmação apenas para ações realmente críticas?
+- O formulário respeita o contexto do módulo e da metodologia?
+
+## Regra final
+Se o usuário não conseguir entender rapidamente o que preencher, por que preencher e como corrigir um erro, o formulário não está pronto.
