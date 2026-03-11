@@ -1,0 +1,519 @@
+---
+description: Regras para a arquitetura de informação, navegação principal e transições entre os módulos da plataforma.
+globs: *
+---
+# 13-information-architecture-and-navigation.mdc
+
+## Objetivo
+Definir a arquitetura de informação, a navegação principal e as regras de transição entre os módulos da plataforma.
+
+## Regra-mãe
+A navegação deve tornar o produto fácil de entender, previsível de usar e coerente com a promessa de centralizar execução, comunicação, contexto e conhecimento.
+
+---
+
+# 1. PRINCÍPIOS GERAIS
+
+## 1. Navegação deve reduzir carga cognitiva
+O usuário deve entender rapidamente:
+- onde está;
+- o que pode fazer;
+- para onde pode ir;
+- como voltar.
+
+## 2. Arquitetura deve refletir o modelo mental do trabalho
+A estrutura do produto deve acompanhar como as pessoas pensam o trabalho:
+- eu
+- meu dia
+- meus contextos
+- meus projetos
+- minhas conversas
+- meu conhecimento
+- minha gestão
+
+## 3. O contexto deve ser preservado
+Trocas entre módulos não devem fazer o usuário “recomeçar mentalmente”.
+
+## 4. Navegação principal e navegação contextual têm papéis diferentes
+- navegação principal = mudar de módulo estrutural;
+- navegação contextual = operar dentro do contexto atual.
+
+## 5. Não criar labirinto de navegação
+Toda tela deve ter caminho claro de entrada, permanência e saída.
+
+---
+
+# 2. MODELO DE ARQUITETURA DE INFORMAÇÃO
+
+A plataforma se organiza em dois níveis:
+
+## Nível 1 — Navegação estrutural
+Módulos principais do produto.
+
+## Nível 2 — Contexto operacional
+Projeto, Space, grupo, conversa, wiki ou view ativa.
+
+## Regra
+O usuário precisa conseguir distinguir:
+- “onde estou no produto”
+de
+- “em qual contexto estou trabalhando”.
+
+---
+
+# 3. NAVEGAÇÃO PRINCIPAL
+
+## Módulos principais
+- Home
+- Spaces
+- Projetos
+- Grupos
+- Chat
+- Dashboard
+- Minhas tarefas
+
+## Regra
+Esses módulos devem aparecer na navegação principal global.
+
+## Objetivo de cada item
+
+### Home
+Hub diário e ponto de retomada.
+
+### Spaces
+Entrada por contexto de trabalho.
+
+### Projetos
+Lista e descoberta de projetos.
+
+### Grupos
+Comunidades, áreas e grupos institucionais ou contextuais.
+
+### Chat
+Mensageria e coordenação rápida.
+
+### Dashboard
+Leitura gerencial e visão resumida.
+
+### Minhas tarefas
+Visão pessoal de execução.
+
+---
+
+# 4. NAVEGAÇÃO CONTEXTUAL
+
+## O que é
+Navegação que existe dentro de um contexto específico.
+
+## Exemplos
+- tabs de um projeto;
+- navegação da wiki;
+- filtros da Home;
+- filtros do feed;
+- troca de conversa dentro do chat;
+- troca de Space.
+
+## Regra
+A navegação contextual nunca deve competir visualmente com a navegação estrutural.
+
+---
+
+# 5. HIERARQUIA RECOMENDADA
+
+## Nível 0 — Workspace
+Escopo organizacional.
+
+## Nível 1 — Módulo principal
+Exemplo:
+- Home
+- Projetos
+- Chat
+
+## Nível 2 — Contexto
+Exemplo:
+- projeto X
+- grupo Y
+- Space Z
+- conversa A
+
+## Nível 3 — View ou superfície interna
+Exemplo:
+- backlog
+- sprint
+- board
+- wiki
+- atividade
+- gantt
+
+## Regra
+A interface deve tornar essa hierarquia perceptível sem exigir leitura técnica.
+
+---
+
+# 6. ESPAÇOS (SPACES) NA ARQUITETURA
+
+## Papel do Space
+Space é um agrupador de contexto de trabalho.
+
+## Tipos iniciais
+- projeto
+- área
+- pessoal
+- operação transversal
+
+## Regras
+- todo usuário pode participar de múltiplos Spaces;
+- Space deve ser acessível como ponto de entrada;
+- Space não substitui Projeto, mas organiza o acesso ao contexto;
+- Space precisa deixar explícito seu tipo.
+
+## Função na navegação
+Spaces devem funcionar como:
+- organizadores da rotina;
+- atalhos contextuais;
+- recortes naturais do trabalho diário.
+
+---
+
+# 7. PROJETOS NA ARQUITETURA
+
+## Papel do Projeto
+Projeto é a unidade principal de execução, contexto, colaboração e memória.
+
+## Regras
+- projeto deve poder ser acessado via:
+  - Home
+  - Spaces
+  - lista de Projetos
+  - links contextuais
+  - feed
+  - dashboard
+- ao entrar em um projeto, o usuário deve perceber imediatamente:
+  - nome;
+  - metodologia;
+  - status;
+  - membros;
+  - view ativa.
+
+## Estrutura interna do projeto
+- header contextual
+- tabs/views conforme metodologia
+- painel opcional de Copilot
+- conteúdo principal da view
+- acessos laterais/relacionados quando fizer sentido
+
+---
+
+# 8. HOME COMO HUB
+
+## Papel
+Ser o ponto central de retomada e orientação.
+
+## Regras
+- Home não deve duplicar o papel completo de Projetos, Chat ou Dashboard;
+- deve priorizar:
+  - o que mudou;
+  - o que requer atenção;
+  - onde retomar;
+  - o que está mais próximo do trabalho atual.
+
+## Entradas comuns para Home
+- login
+- retorno ao produto
+- clique no logo
+- saída de contexto profundo
+
+## Saídas comuns da Home
+- abrir projeto
+- abrir Space
+- abrir chat
+- abrir publicação
+- abrir tarefa
+- abrir dashboard
+
+---
+
+# 9. CHAT NA ARQUITETURA
+
+## Papel
+Coordenar conversas rápidas dentro do contexto correto.
+
+## Estrutura de navegação
+- lista de conversas/canais
+- conversa ativa
+- contexto da conversa
+- ações relacionadas
+
+## Regras
+- chat pode ser acessado por módulo principal ou de dentro do projeto;
+- quando acessado de dentro do projeto, o contexto deve permanecer explícito;
+- conversa direta e conversa contextual precisam ser distinguíveis visualmente.
+
+## Relações importantes
+- chat → tarefa
+- chat → aprendizado
+- chat → decisão
+- chat → projeto relacionado
+
+---
+
+# 10. FEED / TIMELINE NA ARQUITETURA
+
+## Papel
+Ser a superfície de visibilidade assíncrona do trabalho.
+
+## Regras
+- feed pode aparecer:
+  - na Home
+  - em grupos
+  - em projetos
+  - em contextos específicos
+- feed sempre precisa indicar o contexto de origem do post;
+- feed não substitui o chat e não deve parecer rede social casual.
+
+## Navegação relacionada
+- abrir projeto do post
+- abrir grupo do post
+- abrir aprendizado
+- promover para wiki
+
+---
+
+# 11. WIKI NA ARQUITETURA
+
+## Papel
+Ser a memória viva do projeto.
+
+## Regras
+- wiki deve existir como parte do projeto;
+- não deve ser um módulo solto no primeiro momento;
+- navegação da wiki precisa ser simples, previsível e orientada à consulta;
+- páginas promovidas de conteúdo operacional devem manter rastreabilidade.
+
+## Estrutura interna mínima
+- navegação lateral
+- página ativa
+- metadados
+- ações de criar/editar/promover
+
+---
+
+# 12. DASHBOARD NA ARQUITETURA
+
+## Papel
+Ser a camada de leitura gerencial e acompanhamento resumido.
+
+## Regras
+- dashboard não substitui projeto;
+- dashboard não substitui Home;
+- dashboard deve ser orientado a leitura e priorização, não execução detalhada.
+
+## Escopos possíveis
+- projeto
+- múltiplos projetos
+- workspace gerencial
+
+## Navegação relacionada
+- dashboard → projeto
+- dashboard → gargalo
+- dashboard → item sem progresso
+- dashboard → atividade recente
+
+---
+
+# 13. COPILOT NA ARQUITETURA
+
+## Papel
+Ser camada de apoio contextual dentro do módulo onde o usuário está.
+
+## Regra
+Copilot não deve ser o eixo principal da navegação.
+
+## Onde pode aparecer
+- dentro do projeto
+- no chat
+- no feed
+- na wiki
+- em leitura gerencial
+- opcionalmente como entrada global futura
+
+## Regras de navegação
+- o usuário deve saber de qual contexto o Copilot está lendo;
+- abrir Copilot não deve desmontar a navegação principal;
+- Copilot deve parecer ferramenta auxiliar, não destino primário.
+
+---
+
+# 14. NAVEGAÇÃO ENTRE MÓDULOS
+
+## Regras gerais
+- toda transição importante deve preservar contexto sempre que possível;
+- quando o usuário abre um projeto a partir do feed, o projeto deve abrir com contexto claro;
+- quando o usuário abre wiki a partir de um aprendizado, a origem deve estar perceptível;
+- quando o usuário cria tarefa a partir do chat, o retorno ao contexto deve ser simples.
+
+## Exemplos de fluxos desejáveis
+- Home → Projeto → Sprint
+- Home → Feed → Projeto relacionado
+- Projeto → Chat → Extrair tarefa
+- Projeto → Feed → Promover para wiki
+- Dashboard → Projeto com gargalo
+- Wiki → origem do aprendizado
+
+---
+
+# 15. BREADCRUMBS, HEADERS E SINALIZAÇÃO DE CONTEXTO
+
+## Regra
+A plataforma deve sinalizar contexto de forma consistente sem depender sempre de breadcrumb textual clássico.
+
+## Elementos que podem comunicar contexto
+- título da tela
+- nome do projeto
+- badge de metodologia
+- nome do Space
+- nome do grupo
+- tipo de conversa
+- aba ativa
+- subtítulo contextual
+
+## Quando usar breadcrumb
+- fluxos profundos de documentação;
+- navegação entre níveis hierárquicos claros;
+- páginas internas da wiki;
+- contextos com profundidade maior que 2 níveis perceptivos.
+
+## Regra
+Se o usuário puder se perder ao abrir uma tela via link direto, reforçar contexto no header.
+
+---
+
+# 16. PADRÕES DE ENTRADA E SAÍDA
+
+## Toda tela deve responder
+- de onde o usuário normalmente vem?
+- para onde ele normalmente vai?
+- qual a ação principal de saída?
+
+## Exemplo — Projeto
+### Entradas
+- Home
+- Spaces
+- Feed
+- Dashboard
+- link direto
+
+### Saídas
+- trocar view
+- abrir chat
+- abrir wiki
+- voltar para lista de projetos
+- abrir item específico
+
+## Exemplo — Wiki
+### Entradas
+- projeto
+- aprendizado promovido
+- link direto
+
+### Saídas
+- voltar ao projeto
+- abrir origem
+- editar página
+
+---
+
+# 17. BUSCA E DESCOBERTA
+
+## Papel
+Ajudar o usuário a encontrar contexto, não só conteúdo solto.
+
+## Regra
+Busca deve respeitar hierarquia e permissões.
+
+## Deve encontrar
+- projetos
+- Spaces
+- grupos
+- conversas
+- páginas da wiki
+- posts relevantes
+- tarefas
+
+## Regras de UX
+- resultados devem mostrar tipo e contexto;
+- não misturar tudo sem rotulagem;
+- busca deve indicar por que aquele resultado apareceu;
+- permissão deve ser respeitada em todos os resultados.
+
+---
+
+# 18. REGRAS DE PROFUNDIDADE
+
+## Regra
+Evitar profundidade excessiva de navegação.
+
+## Objetivo
+Usuário não deve precisar atravessar muitos níveis para chegar ao trabalho.
+
+## Preferir
+- acesso rápido via Home;
+- acesso contextual via projeto;
+- atalhos por Space;
+- links relacionados.
+
+## Evitar
+- muitos níveis de submenu;
+- páginas intermediárias sem valor;
+- redundância estrutural entre módulo e submódulo.
+
+---
+
+# 19. MOBILE E RESPONSIVIDADE DE NAVEGAÇÃO
+
+## Regras
+- navegação principal pode colapsar;
+- contexto atual deve continuar explícito;
+- tabs do projeto podem virar seletor;
+- drawers devem manter clareza de hierarquia;
+- ações principais não podem desaparecer.
+
+## Regra
+Mesmo em telas menores, o usuário deve continuar entendendo:
+- módulo atual;
+- contexto atual;
+- ação principal disponível.
+
+---
+
+# 20. ANTI-PADRÕES
+
+Evitar:
+- Home virar cópia do Dashboard;
+- Projeto virar super hub confuso;
+- Wiki solta fora do projeto sem motivo;
+- Copilot como item principal da navegação;
+- múltiplos caminhos iguais com nomes diferentes;
+- menus profundos demais;
+- contexto invisível;
+- chat, feed e atividade parecendo a mesma coisa.
+
+---
+
+# 21. CHECKLIST DE NOVA TELA OU NOVO FLUXO
+
+Antes de aprovar uma nova tela, validar:
+
+- Em qual módulo principal ela pertence?
+- Em qual contexto ela vive?
+- Como o usuário chega nela?
+- Como o usuário sai dela?
+- O contexto está explícito?
+- Ela compete com outra tela já existente?
+- Ela reduz ou aumenta profundidade de navegação?
+- Faz sentido como módulo principal ou como view contextual?
+- Há ligação clara com Home, Projeto, Chat, Feed, Wiki ou Dashboard?
+- O Copilot aparece como apoio, e não como eixo estrutural?
+
+## Regra final
+Se a navegação de uma tela não deixar claro onde o usuário está, por que está ali e qual o próximo passo, essa tela não está pronta.
