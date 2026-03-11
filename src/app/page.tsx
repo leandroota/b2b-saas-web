@@ -4,172 +4,121 @@ import {
   CheckCircle2,
   MessageSquare,
   AlertCircle,
-  FileText,
-  LayoutGrid
+  TrendingUp,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CreateProjectModal } from "@/features/projects/components/create-project-modal";
+import { ActivityFeed } from "@/features/social/components/activity-feed";
 
 export default function Home() {
   return (
-    <div className="flex-1 p-8 pt-6 space-y-8 max-w-7xl mx-auto">
-      {/* Header Section */}
-      <div className="flex items-end justify-between">
-        <div>
-          <h2 className="text-3xl font-mono font-bold tracking-tight text-foreground">
-            Bom dia, John.
-          </h2>
-          <p className="text-muted-foreground mt-2">
-            Aqui está o que exige sua atenção hoje e o que mudou recentemente no seu workspace.
-          </p>
+    <div className="flex h-full bg-background/50 overflow-hidden">
+      {/* Main Column: Feed */}
+      <div className="flex-1 flex flex-col min-w-0 border-r border-border">
+        {/* Workspace Header */}
+        <div className="px-8 py-6 border-b border-border bg-background">
+          <div className="flex items-end justify-between">
+            <div>
+              <h2 className="text-3xl font-mono font-bold tracking-tight text-foreground">
+                Bom dia, John.
+              </h2>
+              <p className="text-muted-foreground mt-2 font-medium">
+                O pulso do seu workspace em tempo real.
+              </p>
+            </div>
+            <div className="flex items-center space-x-2">
+              <CreateProjectModal />
+            </div>
+          </div>
         </div>
-        <div className="flex items-center space-x-2">
-          <CreateProjectModal />
+
+        {/* Dynamic Activity Feed */}
+        <div className="flex-1 overflow-hidden">
+          <ActivityFeed />
         </div>
       </div>
 
-      {/* Quick Metrics / Pendencies */}
-      <div className="grid gap-4 md:grid-cols-3">
-        <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-destructive/10 text-destructive rounded-lg">
-              <AlertCircle className="size-5" />
+      {/* Sidebar: Metrics & Projects */}
+      <aside className="hidden xl:flex w-[380px] shrink-0 flex-col bg-background p-8 space-y-8 overflow-y-auto">
+        <h3 className="text-xs font-bold font-mono uppercase tracking-[0.2em] text-muted-foreground">Insights Rápidos</h3>
+
+        {/* Quick Metrics */}
+        <div className="space-y-4">
+          <div className="rounded-xl border border-border bg-card/50 p-4 shadow-sm hover:bg-card transition-all group">
+            <div className="flex items-center gap-4">
+              <div className="p-2.5 bg-destructive/10 text-destructive rounded-lg group-hover:scale-110 transition-transform">
+                <AlertCircle className="size-5" />
+              </div>
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Bloqueios</p>
+                <h3 className="text-xl font-bold font-mono mt-0.5">3</h3>
+              </div>
             </div>
-            <div>
-              <p className="text-sm font-medium text-muted-foreground">Bloqueios Ativos</p>
-              <h3 className="text-2xl font-bold font-mono">3</h3>
+          </div>
+
+          <div className="rounded-xl border border-border bg-card/50 p-4 shadow-sm hover:bg-card transition-all group">
+            <div className="flex items-center gap-4">
+              <div className="p-2.5 bg-primary/10 text-primary rounded-lg group-hover:scale-110 transition-transform">
+                <CheckCircle2 className="size-5" />
+              </div>
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Tarefas Hoje</p>
+                <h3 className="text-xl font-bold font-mono mt-0.5">5</h3>
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-xl border border-border bg-card/50 p-4 shadow-sm hover:bg-card transition-all group border-l-4 border-l-primary">
+            <div className="flex items-center gap-4">
+              <div className="p-2.5 bg-secondary text-secondary-foreground rounded-lg group-hover:scale-110 transition-transform">
+                <TrendingUp className="size-5" />
+              </div>
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Velocidade</p>
+                <h3 className="text-xl font-bold font-mono mt-0.5">+24%</h3>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-primary/10 text-primary rounded-lg">
-              <CheckCircle2 className="size-5" />
-            </div>
-            <div>
-              <p className="text-sm font-medium text-muted-foreground">Tarefas para Hoje</p>
-              <h3 className="text-2xl font-bold font-mono">5</h3>
-            </div>
-          </div>
-        </div>
-
-        <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
-          <div className="flex items-center gap-4">
-            <div className="p-3 bg-secondary text-secondary-foreground rounded-lg">
-              <MessageSquare className="size-5" />
-            </div>
-            <div>
-              <p className="text-sm font-medium text-muted-foreground">Menções não lidas</p>
-              <h3 className="text-2xl font-bold font-mono">12</h3>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="grid gap-8 md:grid-cols-7">
-        {/* Main Timeline Column */}
-        <div className="md:col-span-4 space-y-6">
+        {/* Projects Section */}
+        <div className="space-y-4 pt-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-mono font-semibold">Timeline Recente</h3>
-            <Button variant="outline" size="sm" className="h-8">
-              Filtrar
-            </Button>
+            <h3 className="text-[11px] font-bold font-mono uppercase tracking-[0.2em] text-muted-foreground">Projetos Ativos</h3>
+            <Button variant="ghost" size="sm" className="h-7 text-[10px] font-bold uppercase tracking-wider hover:text-primary">Ver todos</Button>
           </div>
-
-          <div className="space-y-4">
-            {/* Mock Timeline Item 1 */}
-            <div className="p-5 rounded-xl border border-border bg-card shadow-sm space-y-3">
-              <div className="flex items-center justify-between text-sm">
-                <span className="flex items-center gap-2 font-medium text-primary">
-                  <span className="size-2 rounded-full bg-primary" />
-                  Projeto Alpha
-                </span>
-                <span className="text-muted-foreground text-xs flex items-center gap-1">
-                  <Clock className="size-3" /> há 15 min
-                </span>
+          <div className="space-y-2">
+            {[
+              { name: "Projeto Alpha", status: "No Prazo", color: "bg-primary" },
+              { name: "Integração SSO", status: "Risco", color: "bg-destructive" },
+              { name: "Marketing Q3", status: "No Prazo", color: "bg-primary" },
+            ].map((project) => (
+              <div key={project.name} className="flex items-center justify-between p-3 rounded-xl border border-transparent hover:border-border hover:bg-muted/30 cursor-pointer transition-all group">
+                <div className="flex items-center gap-3">
+                  <div className={`size-2.5 rounded-full ${project.color} shadow-[0_0_8px] shadow-current/30`} />
+                  <div>
+                    <h4 className="text-xs font-bold font-mono uppercase tracking-tight text-foreground">{project.name}</h4>
+                    <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">{project.status}</p>
+                  </div>
+                </div>
+                <ArrowRight className="size-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
               </div>
-              <p className="text-foreground text-sm leading-relaxed">
-                <span className="font-semibold text-foreground">Sarah Jenkins</span> atualizou o status da tarefa <span className="font-mono bg-muted px-1 py-0.5 rounded text-xs">AL-102</span> para <span className="text-primary font-medium">Em Revisão</span>.
-              </p>
-            </div>
-
-            {/* Mock Timeline Item 2 */}
-            <div className="p-5 rounded-xl border border-border bg-card shadow-sm space-y-3">
-              <div className="flex items-center justify-between text-sm">
-                <span className="flex items-center gap-2 font-medium text-secondary-foreground">
-                  <span className="size-2 rounded-full bg-secondary-foreground" />
-                  Marketing Q3
-                </span>
-                <span className="text-muted-foreground text-xs flex items-center gap-1">
-                  <Clock className="size-3" /> há 45 min
-                </span>
-              </div>
-              <p className="text-foreground text-sm leading-relaxed">
-                <span className="font-semibold text-foreground">Mike T.</span> salvou um novo aprendizado sobre conversão de landing pages que pode ser útil.
-              </p>
-              <div className="pt-2">
-                <Button variant="secondary" size="sm" className="h-8 gap-2">
-                  <FileText className="size-3" />
-                  Ler Aprendizado
-                </Button>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
 
-        {/* Sidebar/Context Column */}
-        <div className="md:col-span-3 space-y-8">
-          {/* Spaces Section */}
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h3 className="text-lg font-mono font-semibold">Meus Spaces</h3>
-              <Button variant="ghost" size="sm" className="h-8 text-xs underline underline-offset-4">
-                Ver todos
-              </Button>
+        {/* Spaces Shortcut */}
+        <div className="pt-6 border-t border-border mt-auto">
+          <div className="p-4 rounded-2xl bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/20 relative overflow-hidden">
+            <div className="relative z-10">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-primary mb-1">Membro Pro</p>
+              <h4 className="text-sm font-bold font-mono uppercase leading-tight mb-2">Seus atalhos preferidos</h4>
+              <Button size="sm" className="h-8 w-full text-[10px] font-bold uppercase tracking-wider rounded-lg">Gerenciar Workspace</Button>
             </div>
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                { name: "Inovação", type: "Core", initial: "In" },
-                { name: "Operações", type: "Hub", initial: "Op" },
-              ].map((space) => (
-                <div key={space.name} className="p-4 rounded-xl border border-border bg-card hover:bg-accent transition-colors cursor-pointer group">
-                  <div className="size-8 rounded bg-primary/10 flex items-center justify-center text-primary mb-3 font-mono font-bold">
-                    {space.initial}
-                  </div>
-                  <h4 className="text-sm font-medium">{space.name}</h4>
-                  <p className="text-xs text-muted-foreground">{space.type}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Projects Section */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-mono font-semibold">Projetos Ativos</h3>
-            <div className="space-y-3">
-              {[
-                { name: "Projeto Alpha", status: "No Prazo", color: "bg-primary" },
-                { name: "Integração SSO", status: "Risco", color: "bg-destructive" },
-                { name: "Marketing Q3", status: "No Prazo", color: "bg-primary" },
-              ].map((project) => (
-                <div key={project.name} className="flex items-center justify-between p-3 rounded-lg border border-border hover:bg-accent cursor-pointer transition-colors group">
-                  <div className="flex items-center gap-3">
-                    <div className={`size-8 rounded-md ${project.color}/10 flex items-center justify-center`}>
-                      <div className={`size-2.5 rounded-full ${project.color}`} />
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-medium text-foreground">{project.name}</h4>
-                      <p className="text-xs text-muted-foreground">{project.status}</p>
-                    </div>
-                  </div>
-                  <ArrowRight className="size-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-              ))}
-            </div>
+            <div className="absolute -right-4 -bottom-4 size-20 bg-primary/20 rounded-full blur-2xl" />
           </div>
         </div>
-      </div>
+      </aside>
     </div>
   );
 }
