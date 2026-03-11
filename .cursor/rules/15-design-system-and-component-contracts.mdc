@@ -1,0 +1,748 @@
+---
+description: Regras para design system, composição de interface, uso de componentes e contratos mínimos entre produto, design e engenharia.
+globs: *
+---
+# 15-design-system-and-component-contracts.mdc
+
+## Objetivo
+Definir regras para design system, composição de interface, uso de componentes e contratos mínimos entre produto, design e engenharia.
+
+## Regra-mãe
+Todo componente deve existir para reforçar clareza, consistência, acessibilidade e velocidade de implementação.  
+Nenhum componente deve entrar no sistema sem papel claro, comportamento previsível e contrato mínimo definido.
+
+---
+
+# 1. PRINCÍPIOS GERAIS
+
+## 1. Design system serve o produto
+O sistema de componentes deve reforçar:
+- clareza operacional;
+- consistência visual;
+- previsibilidade;
+- escalabilidade;
+- velocidade de desenvolvimento.
+
+## 2. Componentes não são só aparência
+Todo componente precisa ter:
+- papel funcional;
+- estados;
+- variantes;
+- regras de uso;
+- comportamento acessível.
+
+## 3. Reutilização com contexto
+Reusar não significa usar o mesmo componente para problemas diferentes sem critério.
+
+## 4. Menos variantes, mais consistência
+Evitar explosão de variantes sem necessidade real.
+
+## 5. O dark mode premium é padrão
+Todo componente deve nascer pronto para o modo Dark Premium.
+
+---
+
+# 2. PILARES DO DESIGN SYSTEM
+
+## Clareza
+A interface deve deixar evidente:
+- hierarquia;
+- contexto;
+- próxima ação;
+- estado do sistema.
+
+## Consistência
+Padrões de layout, texto, estados e interação devem se repetir de forma previsível.
+
+## Composição
+Telas devem ser montadas por blocos coerentes e não por exceções ad hoc.
+
+## Escalabilidade
+Novos módulos devem poder reutilizar padrões já existentes.
+
+## Acessibilidade
+Todo componente deve ser utilizável e perceptível por padrões acessíveis.
+
+---
+
+# 3. BASES OBRIGATÓRIAS DO SISTEMA
+
+## Tokens fundamentais
+- cores
+- tipografia
+- spacing
+- radius
+- shadow
+- border
+- z-index
+- motion
+- opacity
+- sizing
+
+## Regra
+Nenhum componente deve usar valor arbitrário fora do sistema sem justificativa clara.
+
+---
+
+# 4. CORES E DARK PREMIUM
+
+## Regra geral
+O sistema deve ser construído com dark mode premium como experiência principal.
+
+## Regras
+- contraste forte para texto principal;
+- contraste suficiente para texto secundário;
+- superfícies com hierarquia clara;
+- estados interativos visíveis;
+- cores sem excesso de saturação;
+- feedback visual elegante e funcional.
+
+## O dark mode premium deve transmitir
+- sofisticação;
+- foco;
+- clareza;
+- profundidade controlada.
+
+## Evitar
+- excesso de brilho;
+- fundos muito chapados sem hierarquia;
+- contraste baixo em elementos críticos;
+- cor como único sinal de estado.
+
+---
+
+# 5. TIPOGRAFIA
+
+## Regras
+- usar escala tipográfica consistente;
+- títulos devem comunicar hierarquia sem exagero;
+- texto de apoio deve continuar legível;
+- labels e microcopy devem ter leitura rápida;
+- métricas e números devem ser altamente legíveis.
+
+## Hierarquia mínima esperada
+- título de página
+- subtítulo/contexto
+- heading de seção
+- label de componente
+- body
+- meta/helper text
+
+## Evitar
+- muitas variações de tamanho sem papel claro;
+- texto pequeno demais em dark mode;
+- mistura arbitrária de pesos.
+
+---
+
+# 6. SPACING E DENSIDADE
+
+## Regra
+Densidade deve equilibrar produtividade e legibilidade.
+
+## Regras práticas
+- espaços consistentes entre blocos;
+- agrupamento visual por proximidade;
+- densidade maior em áreas operacionais, sem sacrificar leitura;
+- telas densas precisam manter respiro nos pontos críticos.
+
+## Aplicações
+- Home: equilíbrio entre informação e respiro;
+- Projeto: densidade controlada por view;
+- Chat: foco na leitura contínua;
+- Feed: cards bem separados;
+- Wiki: leitura confortável;
+- Gantt: alta densidade com estrutura clara.
+
+---
+
+# 7. COMPONENTES BASE OBRIGATÓRIOS
+
+O design system deve ter, no mínimo:
+
+- Button
+- IconButton
+- Input
+- Textarea
+- Select
+- Combobox
+- Checkbox
+- RadioGroup
+- Switch
+- Tabs
+- Badge
+- Tag/Chip
+- Tooltip
+- Toast
+- Alert
+- Dialog/Modal
+- Drawer/Sheet
+- DropdownMenu
+- Card
+- Table
+- List
+- Avatar
+- EmptyState
+- ErrorState
+- Skeleton
+- Pagination / LoadMore
+- Command/Search
+- Breadcrumb
+- SideNav
+- TopBar/Header
+- Panel
+- Divider
+- Progress
+- StatusIndicator
+
+## Regra
+Esses componentes devem ser padronizados antes da criação de componentes mais específicos.
+
+---
+
+# 8. COMPONENTES DE DOMÍNIO
+
+Além dos componentes base, o produto deve definir componentes de domínio, como:
+
+- ProjectHeader
+- ProjectTabs
+- TaskCard
+- BacklogItemRow
+- SprintSummary
+- ActivityItem
+- PostCard
+- LearningCard
+- WikiPageHeader
+- ChatMessage
+- ChatThreadSummary
+- DashboardMetricCard
+- CopilotPanel
+- CopilotActionCard
+- GanttRow
+- GanttTimelineHeader
+- GanttDependencyLink
+- SpaceCard
+- GroupCard
+
+## Regra
+Componentes de domínio devem usar os componentes base como fundação, não reinventá-los.
+
+---
+
+# 9. CONTRATO MÍNIMO DE TODO COMPONENTE
+
+Todo componente relevante deve ter:
+
+- nome
+- objetivo
+- quando usar
+- quando não usar
+- props principais
+- variantes
+- estados
+- comportamento
+- acessibilidade
+- eventos
+- composição permitida
+- exemplos de uso
+
+## Regra
+Sem contrato mínimo, o componente não está pronto para entrar no sistema.
+
+---
+
+# 10. ESTRUTURA RECOMENDADA DE CONTRATO
+
+## Nome do componente
+Exemplo:
+`project_tabs`
+
+## Objetivo
+Explicar o papel do componente.
+
+## Quando usar
+Contextos em que ele é apropriado.
+
+## Quando não usar
+Casos em que outro componente deve ser preferido.
+
+## Props principais
+Lista das props mínimas com responsabilidade clara.
+
+## Variantes
+Somente as necessárias.
+
+## Estados
+- default
+- hover
+- focus
+- active/selected
+- loading
+- empty (se aplicável)
+- error (se aplicável)
+- disabled
+
+## Eventos
+Exemplos:
+- `on_click`
+- `on_change`
+- `on_select`
+- `on_open_change`
+
+## Acessibilidade
+Regras específicas do componente.
+
+## Observações
+Limites, anti-padrões e dependências.
+
+---
+
+# 11. BOTÕES
+
+## Papel
+Acionar ações.
+
+## Variantes mínimas
+- primary
+- secondary
+- ghost
+- destructive
+- icon-only
+
+## Regras
+- CTA principal deve ser visualmente inequívoco;
+- ações destrutivas devem ter variante própria;
+- botões desabilitados devem continuar legíveis;
+- botão não substitui link de navegação sem critério.
+
+## Anti-padrões
+- várias ações primárias competindo;
+- botão com label vaga;
+- ícone sem significado claro.
+
+---
+
+# 12. INPUTS E CONTROLES DE FORMULÁRIO
+
+## Papel
+Capturar dados com clareza.
+
+## Regras
+- labels sempre visíveis;
+- help text quando necessário;
+- erro associado ao campo;
+- estados claros;
+- comportamento consistente em dark mode.
+
+## Variantes comuns
+- default
+- invalid
+- disabled
+- with_help
+- with_icon
+- multiline quando aplicável
+
+---
+
+# 13. TABS
+
+## Papel
+Alternar entre superfícies do mesmo contexto.
+
+## Regras
+- usar tabs apenas quando os conteúdos forem pares do mesmo nível;
+- a aba ativa deve ser clara;
+- tabs de projeto devem refletir metodologia;
+- tabs precisam ser navegáveis por teclado.
+
+## Anti-padrões
+- usar tabs para navegação estrutural global;
+- excesso de tabs sem hierarquia;
+- tabs ocultando diferença semântica entre conteúdos.
+
+---
+
+# 14. CARDS
+
+## Papel
+Agrupar conteúdo e ações relacionadas.
+
+## Regras
+- cards devem ter hierarquia interna clara;
+- título, contexto, meta e ação precisam ser legíveis;
+- usar card quando houver entidade com leitura resumida;
+- evitar card por padrão para qualquer bloco simples.
+
+## Aplicações
+- post
+- Space
+- grupo
+- métrica
+- item de atividade
+- resumo do Copilot
+
+---
+
+# 15. MODAIS E DRAWERS
+
+## Papel
+Capturar atenção para:
+- confirmação crítica;
+- criação rápida;
+- edição pontual;
+- painel contextual.
+
+## Regras
+- usar modal para decisão focada e curta;
+- usar drawer/sheet para contexto lateral ou painel auxiliar;
+- modais longos demais indicam fluxo errado;
+- Copilot funciona melhor em painel lateral;
+- foco deve ser controlado corretamente.
+
+## Anti-padrões
+- modal para fluxo grande demais;
+- múltiplos overlays empilhados;
+- ações críticas escondidas em drawer sem contexto.
+
+---
+
+# 16. EMPTY, ERROR E SKELETON COMPONENTS
+
+## Regra
+Esses componentes são parte do design system, não soluções improvisadas por tela.
+
+## EmptyState
+Deve ter:
+- título
+- descrição curta
+- CTA opcional
+- ilustração/ícone opcional
+
+## ErrorState
+Deve ter:
+- mensagem clara
+- ação de retry quando aplicável
+- contexto local
+
+## Skeleton
+Deve espelhar a estrutura real do conteúdo.
+
+---
+
+# 17. STATUS E FEEDBACK
+
+## Componentes necessários
+- badge de status
+- indicator de bloqueio
+- progress
+- toast
+- alert inline
+- helper text
+
+## Regras
+- status não depende só de cor;
+- bloqueio e risco precisam ser visíveis;
+- progresso deve ser fácil de ler;
+- feedback global deve ser usado com moderação.
+
+---
+
+# 18. COMPONENTES ESPECÍFICOS DE PROJETO
+
+## ProjectHeader
+### Papel
+Exibir nome, status, metodologia, membros e contexto do projeto.
+
+### Props mínimas
+- `project_name`
+- `project_status`
+- `methodology`
+- `members`
+- `actions`
+
+### Estados
+- default
+- loading
+- archived
+- restricted
+
+---
+
+## ProjectTabs
+### Papel
+Alternar entre views do projeto.
+
+### Props mínimas
+- `items`
+- `active_tab`
+- `project_methodology`
+- `disabled_tabs`
+
+### Regras
+- itens devem refletir metodologia;
+- não exibir tabs sem sentido para o projeto.
+
+---
+
+## TaskCard / TaskRow
+### Papel
+Representar item de execução.
+
+### Props mínimas
+- `title`
+- `status`
+- `assignee`
+- `priority`
+- `blocked`
+- `due_date`
+
+### Regras
+- precisa funcionar em lista e board;
+- estado bloqueado deve ser evidente.
+
+---
+
+# 19. COMPONENTES ESPECÍFICOS DE FEED E WIKI
+
+## PostCard
+### Deve conter
+- autor
+- contexto
+- tipo de post
+- conteúdo/resumo
+- ações
+
+## LearningCard
+### Deve conter
+- título
+- contexto
+- origem
+- ação de abrir/promover
+
+## WikiPageHeader
+### Deve conter
+- título
+- seção
+- autor
+- última atualização
+- ações permitidas
+
+---
+
+# 20. COMPONENTES ESPECÍFICOS DE CHAT
+
+## ChatMessage
+### Deve conter
+- autor
+- horário
+- conteúdo
+- estado de envio quando aplicável
+- ações contextuais
+
+## ThreadSummary
+### Deve conter
+- resumo
+- ações sugeridas
+- origem/contexto
+- CTA de revisar/aplicar
+
+---
+
+# 21. COMPONENTES ESPECÍFICOS DE COPILOT
+
+## CopilotPanel
+### Papel
+Container principal de interação com IA.
+
+### Props mínimas
+- `context_type`
+- `context_id`
+- `available_actions`
+- `status`
+
+### Estados
+- idle
+- loading
+- success
+- error
+- disabled
+
+## CopilotActionCard
+### Papel
+Representar uma intenção de IA.
+
+### Deve conter
+- nome da ação
+- descrição curta
+- contexto
+- CTA
+
+## Regras
+- saída da IA deve ser editável;
+- contexto lido deve ser visível;
+- ação não pode parecer automática.
+
+---
+
+# 22. COMPONENTES ESPECÍFICOS DE GANTT
+
+## GanttTimelineHeader
+### Papel
+Exibir a escala temporal.
+
+### Regras
+- legibilidade acima de detalhe;
+- adaptação a zoom/escala quando aplicável;
+- contraste adequado em dark mode.
+
+## GanttRow
+### Papel
+Representar item temporal.
+
+### Deve conter
+- nome do item
+- datas
+- barra temporal
+- estado visual
+- dependências básicas quando aplicável
+
+## GanttDependencyLink
+### Papel
+Representar relações entre itens.
+
+### Regras
+- legível sem poluir;
+- pode carregar depois das barras principais;
+- não depender só de cor.
+
+## Anti-padrões
+- excesso de densidade sem hierarquia;
+- linhas ilegíveis;
+- microdetalhe visual em prejuízo da operação.
+
+---
+
+# 23. COMPOSIÇÃO DE TELA
+
+## Regra
+Telas devem ser compostas por:
+- estrutura
+- blocos
+- componentes de domínio
+- componentes base
+
+## Exemplo — Projeto
+- PageShell
+- ProjectHeader
+- ProjectTabs
+- ViewContainer
+- Task components / Wiki / Chat / Gantt
+- CopilotPanel opcional
+
+## Regra
+Não montar telas com árvores inconsistentes ou exceções visuais sem sistema.
+
+---
+
+# 24. RESPONSIVIDADE
+
+## Regras
+- componentes devem nascer responsivos;
+- tabs podem virar seletor;
+- side panels podem virar drawer;
+- tabelas e Gantt exigem estratégia específica;
+- ações principais devem continuar acessíveis.
+
+## Regra
+Responsividade não deve criar um segundo sistema visual improvisado.
+
+---
+
+# 25. ACESSIBILIDADE DOS COMPONENTES
+
+Todo componente deve prever:
+- foco visível;
+- navegação por teclado;
+- roles semânticos corretos;
+- labels claros;
+- estado disabled perceptível;
+- erro associado quando aplicável.
+
+## Regra
+Sem acessibilidade mínima, o componente não está aprovado.
+
+---
+
+# 26. REGRAS DE VARIANTES
+
+## Regra
+Cada variante deve responder a uma necessidade real.
+
+## Permitir
+- variantes por prioridade
+- variantes por densidade
+- variantes por contexto funcional
+
+## Evitar
+- variantes cosméticas demais;
+- nomes ambíguos;
+- diferenças visuais sem diferença comportamental.
+
+---
+
+# 27. REGRAS DE NOMENCLATURA
+
+## Regras
+- usar nomes previsíveis;
+- componente base com nome genérico de sistema;
+- componente de domínio com nome do contexto;
+- evitar nomes vagos ou criativos demais.
+
+## Exemplos bons
+- `button`
+- `input`
+- `project_header`
+- `post_card`
+- `copilot_panel`
+- `gantt_row`
+
+## Evitar
+- `cool_card`
+- `super_tabs`
+- `mega_panel`
+- `widget_box`
+
+---
+
+# 28. ANTI-PADRÕES
+
+Evitar:
+- componente sem contrato;
+- duplicação de componentes com pequenas diferenças;
+- componentes fortemente acoplados a uma tela sem necessidade;
+- estilos arbitrários fora do sistema;
+- variações excessivas de card, button ou badge;
+- componente visual sem estado de erro/loading/disabled quando necessário;
+- criar componente novo para resolver problema de copy ou layout simples.
+
+---
+
+# 29. CHECKLIST DE NOVO COMPONENTE
+
+Antes de aprovar qualquer componente, validar:
+
+- Qual problema ele resolve?
+- É base ou domínio?
+- Já existe algo equivalente no sistema?
+- Qual é o objetivo do componente?
+- Quais props mínimas ele precisa?
+- Quais estados ele possui?
+- Quais variantes são realmente necessárias?
+- Ele é acessível?
+- Funciona em dark mode premium?
+- Há contrato mínimo documentado?
+- Há risco de duplicidade?
+- Ele ajuda ou atrapalha a consistência do sistema?
+
+## Regra final
+Se um componente não melhora clareza, consistência ou escalabilidade, ele não deve entrar no design system.
