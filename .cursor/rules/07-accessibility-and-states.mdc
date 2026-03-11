@@ -1,0 +1,476 @@
+---
+description: Regras obrigatórias de acessibilidade, feedback de sistema e tratamento de estados para toda a plataforma
+globs: *
+---
+# 07-accessibility-and-states.mdc
+
+## Objetivo
+Definir regras obrigatórias de acessibilidade, feedback de sistema e tratamento de estados para toda a plataforma.
+
+## Regra-mãe
+Nenhuma tela, fluxo ou componente crítico pode ser implementado sem cobertura explícita de acessibilidade e dos estados principais do sistema.
+
+---
+
+# 1. PRINCÍPIO GERAL
+
+A plataforma deve ser:
+- compreensível;
+- navegável;
+- perceptível;
+- operável;
+- robusta.
+
+## Regra prática
+Toda experiência deve continuar utilizável:
+- sem mouse;
+- com leitor de tela;
+- com zoom;
+- com navegação por teclado;
+- em cenários de erro, vazio e carregamento.
+
+---
+
+# 2. ESTADOS OBRIGATÓRIOS
+
+Toda tela, módulo ou componente crítico deve prever:
+
+- loading
+- empty
+- error
+- success
+- disabled
+
+## Regra
+Se um componente pode carregar, falhar, ficar vazio, ser concluído ou ficar indisponível, esses estados precisam ser definidos antes da implementação.
+
+---
+
+# 3. LOADING
+
+## Objetivo
+Indicar que o sistema está processando ou carregando conteúdo sem parecer travado.
+
+## Regras
+- usar skeleton sempre que possível para conteúdo estrutural;
+- usar spinner apenas para ações curtas ou locais;
+- manter layout previsível durante loading;
+- evitar telas vazias piscando antes de carregar;
+- sempre comunicar loading em áreas críticas.
+
+## Deve existir em
+- Home
+- Projeto
+- Feed
+- Chat
+- Wiki
+- Dashboard
+- Copilot
+- tabelas
+- listas
+- cards de conteúdo
+- ações assíncronas importantes
+
+## Acessibilidade
+- estados de loading devem ser anunciáveis quando necessário;
+- não prender foco em loading;
+- evitar animações excessivas ou agressivas.
+
+## Exemplos preferidos
+- skeleton de cards na Home
+- skeleton de mensagens no Chat
+- skeleton de página na Wiki
+- botão com estado “Gerando…” no Copilot
+
+## Evitar
+- spinner global sem contexto;
+- loading infinito sem feedback;
+- sumir com toda a interface quando só uma parte está carregando.
+
+---
+
+# 4. EMPTY
+
+## Objetivo
+Explicar ausência de conteúdo e orientar o próximo passo.
+
+## Regras
+- toda área vazia deve dizer o que está faltando;
+- sempre que fizer sentido, mostrar CTA;
+- texto curto, claro e útil;
+- diferenciar vazio inicial de vazio por filtro.
+
+## Tipos de empty state
+- vazio inicial
+- vazio por busca
+- vazio por filtro
+- vazio por permissão indireta
+- vazio por contexto novo
+
+## Exemplos
+- “Nenhuma mensagem ainda. Comece a conversa.”
+- “Esta wiki ainda está vazia. Crie a primeira página.”
+- “Nenhuma atualização encontrada para este filtro.”
+
+## Acessibilidade
+- empty state deve ser legível e semanticamente claro;
+- CTA do estado vazio deve ser focável e descritivo.
+
+---
+
+# 5. ERROR
+
+## Objetivo
+Informar falhas com clareza e orientar recuperação.
+
+## Regras
+- dizer o que falhou;
+- evitar jargão técnico para usuário final;
+- oferecer retry quando possível;
+- permitir fallback manual quando existir;
+- tratar erro local sem derrubar a experiência inteira.
+
+## Tipos de erro a tratar
+- erro de carregamento
+- erro de salvamento
+- erro de rede
+- erro de permissão
+- erro de contexto insuficiente
+- erro do Copilot
+
+## Exemplos
+- “Não foi possível carregar este projeto. Tente novamente.”
+- “Não foi possível salvar a página. Revise o conteúdo e tente novamente.”
+- “Você não tem permissão para editar esta página.”
+
+## Acessibilidade
+- erro deve ser anunciado quando necessário;
+- erro associado a campo deve ser conectado ao campo;
+- foco deve poder ir para o erro em formulários.
+
+## Evitar
+- “Algo deu errado”
+- códigos crus de backend
+- erro sem ação possível
+
+---
+
+# 6. SUCCESS
+
+## Objetivo
+Confirmar que a ação foi concluída corretamente.
+
+## Regras
+- usar mensagens curtas;
+- priorizar feedback contextual;
+- evitar excesso de toasts globais;
+- não interromper o fluxo sem necessidade.
+
+## Exemplos
+- “Aprendizado salvo.”
+- “Página salva com sucesso.”
+- “Resumo pronto para revisão.”
+- “Projeto criado com sucesso.”
+
+## Acessibilidade
+- sucesso relevante deve poder ser anunciado;
+- não depender só de cor para indicar sucesso.
+
+---
+
+# 7. DISABLED
+
+## Objetivo
+Mostrar que uma ação existe, mas está indisponível no momento.
+
+## Regras
+- não usar disabled quando a ação deve simplesmente ficar oculta;
+- quando visível, idealmente explicar motivo;
+- disabled não pode parecer erro;
+- evitar estados bloqueados sem contexto.
+
+## Quando usar
+- permissão insuficiente;
+- pré-requisito ausente;
+- item arquivado;
+- formulário inválido;
+- contexto incompleto.
+
+## Exemplos
+- botão “Promover para wiki” desabilitado até haver conteúdo suficiente;
+- edição de projeto bloqueada se arquivado;
+- ação indisponível para usuário sem permissão.
+
+## Acessibilidade
+- contraste suficiente;
+- tooltip ou texto auxiliar quando aplicável;
+- não depender apenas de cor ou opacidade para comunicar indisponibilidade.
+
+---
+
+# 8. PARTIAL STATES
+
+## Objetivo
+Permitir que parte da interface funcione mesmo quando outra parte falhar.
+
+## Regra
+Quando tecnicamente viável, preferir degradação parcial a falha total.
+
+## Exemplos
+- Home carrega timeline, mas falha bloco lateral;
+- Projeto abre tabs, mas dashboard interno não carrega;
+- Chat carrega histórico antigo, mas falha atualização em tempo real.
+
+## Regras de UX
+- identificar claramente o módulo com falha;
+- não ocultar áreas funcionais por erro local;
+- mostrar retry apenas na área afetada.
+
+---
+
+# 9. ACESSIBILIDADE — PRINCÍPIOS BASE
+
+Toda interface deve seguir estes princípios:
+
+## Perceptível
+Informação precisa ser visível, audível ou textual de forma acessível.
+
+## Operável
+Tudo essencial precisa poder ser usado por teclado.
+
+## Compreensível
+Rótulos, instruções e feedback precisam ser claros.
+
+## Robusto
+A interface deve funcionar com tecnologias assistivas e padrões modernos.
+
+---
+
+# 10. NAVEGAÇÃO POR TECLADO
+
+## Regras obrigatórias
+- todo elemento interativo deve ser focável;
+- a ordem de foco deve seguir a lógica visual e operacional;
+- modais, drawers e painéis laterais devem ter foco gerenciado;
+- `Tab`, `Shift+Tab`, `Enter`, `Space`, `Esc` devem funcionar quando aplicável;
+- não criar armadilhas de foco.
+
+## Deve funcionar bem em
+- sidebar principal
+- tabs de projeto
+- filtros da Home
+- lista de mensagens
+- composer do chat
+- wiki nav
+- painel do Copilot
+- modais e diálogos
+
+## Evitar
+- div clicável sem comportamento de botão;
+- foco invisível;
+- ordem de foco incoerente;
+- drawer que abre sem foco inicial controlado.
+
+---
+
+# 11. FOCO VISÍVEL
+
+## Regra
+Todo elemento interativo focável deve ter foco visível, consistente e com contraste adequado.
+
+## Regras de styling
+- foco não pode depender só de mudança sutil de cor;
+- usar outline/ring claro e consistente com o design system;
+- foco deve ser visível também em dark mode premium.
+
+## Evitar
+- remover outline sem substituição;
+- foco invisível em componentes customizados.
+
+---
+
+# 12. SEMÂNTICA E ESTRUTURA
+
+## Regras
+- usar elementos semânticos nativos sempre que possível;
+- títulos devem respeitar hierarquia;
+- listas devem ser listas;
+- tabelas devem ser tabelas;
+- botões devem ser botões;
+- links devem ser links.
+
+## Exemplos
+- usar `button` para CTA
+- usar `nav` para navegação
+- usar headings em ordem lógica
+- usar `main`, `aside`, `header`, `section` quando fizer sentido
+
+## Evitar
+- construir tudo com `div`
+- usar link para ação que não navega
+- usar botão para navegação sem motivo
+
+---
+
+# 13. LABELS E INPUTS
+
+## Regras
+- todo input precisa ter label claro;
+- placeholder nunca substitui label;
+- campos obrigatórios devem ser indicados com clareza;
+- erros de campo devem estar associados ao campo;
+- ajuda adicional deve ser curta e próxima do controle.
+
+## Aplicar em
+- criação de projeto
+- filtros
+- busca
+- criação de página wiki
+- composer com ações assistidas
+- prompts/ações do Copilot
+
+## Evitar
+- placeholder como única instrução
+- erro solto sem relação com campo
+- labels ambíguos como “Nome” em contextos múltiplos
+
+---
+
+# 14. CONTRASTE E DARK MODE
+
+## Regra
+Todo conteúdo deve manter contraste suficiente no modo Dark Premium.
+
+## Regras práticas
+- texto principal deve ser altamente legível;
+- texto secundário não pode perder legibilidade;
+- estados de hover, focus, disabled e error precisam manter distinção;
+- bordas e divisores não podem desaparecer no dark mode.
+
+## Atenção especial
+- badges de status
+- textos sobre cards escuros
+- placeholder
+- toasts
+- tooltips
+- foco
+- tabelas/listas densas
+
+---
+
+# 15. ÍCONES E SINAIS VISUAIS
+
+## Regras
+- ícones não podem ser a única forma de comunicar algo crítico;
+- ícone importante deve ter label, tooltip ou contexto textual;
+- status não pode depender só de cor;
+- usar redundância visual + textual em erro, sucesso e bloqueio.
+
+## Exemplos
+- bloqueado = ícone + label “Bloqueado”
+- sucesso = feedback textual + estilo visual
+- sem permissão = texto explícito
+
+---
+
+# 16. MOTION E ANIMAÇÃO
+
+## Regras
+- animações devem apoiar compreensão, não distrair;
+- motion não pode prejudicar legibilidade;
+- respeitar preferências de redução de movimento;
+- evitar transições longas em áreas de trabalho intenso.
+
+## Aplicação
+- entrada de drawer/modal
+- mudança de tabs
+- skeleton shimmer sutil
+- atualização de cards
+
+## Evitar
+- animações decorativas excessivas
+- loops chamativos
+- motion em excesso no feed ou dashboard
+
+---
+
+# 17. TOASTS, ALERTS E FEEDBACKS
+
+## Regras
+- usar toast para confirmações breves e não críticas;
+- usar alert inline para erro contextual ou aviso persistente;
+- usar modal apenas para confirmação importante ou decisão destrutiva;
+- não empilhar toasts demais.
+
+## Acessibilidade
+- feedback importante deve poder ser anunciado;
+- toast não pode ser a única evidência de uma ação concluída se a UI também puder refletir isso;
+- modais devem capturar foco corretamente.
+
+---
+
+# 18. REGRAS POR MÓDULO
+
+## Home
+- loading com skeleton de cards;
+- filtro sempre navegável por teclado;
+- empty com CTA claro;
+- erro local por bloco quando possível.
+
+## Projeto
+- tabs acessíveis;
+- states por visualização;
+- partial state permitido por módulo;
+- projeto arquivado em leitura clara.
+
+## Chat
+- composer com label;
+- foco inicial controlado;
+- mensagens com autor e tempo perceptíveis;
+- ações por thread acessíveis por teclado.
+
+## Feed
+- contexto do post sempre legível;
+- ações de salvar/favoritar acessíveis;
+- estados vazios por filtro claramente diferenciados.
+
+## Wiki
+- navegação semântica;
+- headings corretos;
+- editor com labels;
+- erros ligados ao campo ou ação correspondente.
+
+## Copilot
+- painel com foco controlado;
+- loading e success claros;
+- origem do contexto visível;
+- saída revisável;
+- falha sem bloquear fluxo principal.
+
+---
+
+# 19. CHECKLIST DE ACESSIBILIDADE E ESTADOS
+
+Antes de aprovar qualquer tela, validar:
+
+## Estados
+- Existe loading?
+- Existe empty?
+- Existe error?
+- Existe success?
+- Existe disabled?
+- Existe partial state quando relevante?
+
+## Acessibilidade
+- Funciona por teclado?
+- O foco está visível?
+- A hierarquia semântica está correta?
+- Há labels adequados?
+- O contraste está suficiente no dark mode?
+- Estados não dependem só de cor?
+- Os erros estão conectados ao contexto correto?
+- Modais/drawers controlam foco?
+- Há suporte razoável a leitor de tela?
+
+## Regra final
+Se a tela não puder ser compreendida, operada e recuperada em cenários reais de uso, ela não está pronta.
