@@ -14,6 +14,8 @@ import { useAppStore } from "@/store/use-app-store";
 export function Publisher() {
     const { currentUser } = useAppStore();
 
+    if (currentUser.role !== 'ADMIN') return null;
+
     return (
         <div className="p-8 border-b border-border bg-background/50 backdrop-blur-sm">
             <div className="flex gap-4">

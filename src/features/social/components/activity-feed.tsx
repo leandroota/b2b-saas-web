@@ -207,10 +207,6 @@ export function ActivityFeed() {
                                             <MessageSquare className="size-3" />
                                             Comentar
                                         </Button>
-                                        <Button variant="ghost" size="icon-xs" className="h-7 w-auto px-2 gap-1.5 text-[10px] font-bold uppercase tracking-wider text-muted-foreground hover:text-primary">
-                                            <Repeat2 className="size-3" />
-                                            Republicar
-                                        </Button>
                                     </div>
                                 </CardContent>
                             </Card>
