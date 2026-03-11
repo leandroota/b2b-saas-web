@@ -1,0 +1,530 @@
+---
+description: Regras de instrumentação de eventos para garantir consistência analítica entre produto, UX, engenharia e dados
+globs: *
+---
+# 08-tracking-and-events.mdc
+
+## Objetivo
+Definir regras de instrumentação de eventos para garantir consistência analítica entre produto, UX, engenharia e dados.
+
+## Regra-mãe
+Todo evento deve existir para responder uma pergunta real de produto, UX, negócio ou qualidade.  
+Não instrumentar eventos sem hipótese, decisão ou métrica associada.
+
+---
+
+# 1. PRINCÍPIOS DE TRACKING
+
+## 1. Tracking deve servir decisão
+Cada evento precisa ajudar a:
+- medir adoção;
+- entender comportamento;
+- diagnosticar fricção;
+- avaliar valor percebido;
+- monitorar qualidade.
+
+## 2. Menos eventos, mais clareza
+Preferir eventos poucos, bem nomeados e úteis a instrumentação excessiva e ruidosa.
+
+## 3. Naming consistente é obrigatório
+Eventos e propriedades devem seguir convenção única e previsível.
+
+## 4. Contexto mínimo sempre presente
+Sempre que possível, eventos devem carregar contexto suficiente para análise sem depender de inferência posterior.
+
+## 5. Erros críticos devem ser rastreados
+Falha sem tracking é invisibilidade operacional.
+
+---
+
+# 2. CONVENÇÃO DE NOMES
+
+## Eventos
+- usar `snake_case`
+- nomear com verbo no particípio ou ação concluída quando fizer sentido
+- manter nomes curtos e claros
+
+## Exemplos bons
+- `home_viewed`
+- `project_created`
+- `project_viewed`
+- `project_tab_selected`
+- `message_sent`
+- `post_created`
+- `post_saved_as_learning`
+- `wiki_page_created`
+- `copilot_opened`
+- `copilot_output_applied`
+- `error_shown`
+
+## Evitar
+- `click_button`
+- `didStuff`
+- `projectThing`
+- `homeLoadedMaybe`
+- nomes genéricos demais
+
+---
+
+# 3. CONVENÇÃO DE PROPRIEDADES
+
+## Regras
+- usar `snake_case`
+- propriedades devem ser estáveis ao longo do tempo
+- nomes devem refletir domínio do produto
+- IDs devem ter nomenclatura consistente
+- não criar aliases para a mesma coisa
+
+## Campos padrão recomendados
+- `user_id`
+- `workspace_id`
+- `project_id`
+- `space_id`
+- `group_id`
+- `message_id`
+- `post_id`
+- `wiki_page_id`
+- `task_id`
+- `screen_name`
+- `context_type`
+- `context_id`
+- `role`
+- `source`
+- `entry_point`
+- `platform`
+- `device_type`
+- `methodology`
+
+## Evitar
+- `id`
+- `name`
+- `type`
+- `value`
+sem escopo claro
+
+---
+
+# 4. EVENTOS DEVEM SER DISPARADOS EM MOMENTOS CONSISTENTES
+
+## Regras
+- `*_viewed` dispara quando a tela ou módulo realmente ficou visível;
+- `*_created` dispara apenas em sucesso confirmado;
+- `*_selected` dispara quando houve mudança real de seleção;
+- `*_applied` dispara quando a ação foi realmente aplicada;
+- `error_shown` dispara quando o erro foi exibido ao usuário, não só logado internamente.
+
+## Regra importante
+Nunca misturar intenção com conclusão.
+
+### Exemplo
+- abrir Copilot = `copilot_opened`
+- escolher ação no Copilot = `copilot_action_selected`
+- gerar saída = `copilot_response_generated`
+- aplicar saída = `copilot_output_applied`
+
+---
+
+# 5. CATEGORIAS DE EVENTOS
+
+## Navegação
+Eventos ligados à abertura e uso de telas e módulos.
+
+## Execução
+Eventos ligados a tarefas, boards, backlog, sprint e projeto.
+
+## Colaboração
+Eventos ligados a chat, feed, comentários, favoritos e aprendizados.
+
+## Conhecimento
+Eventos ligados a wiki, decisões, aprendizados salvos e promoção de conteúdo.
+
+## IA / Copilot
+Eventos ligados à abertura, intenção, geração e aplicação de saídas.
+
+## Qualidade
+Eventos ligados a erro, falha, retry, estados parciais e degradações.
+
+---
+
+# 6. EVENTOS BASE OBRIGATÓRIOS
+
+## Navegação
+- `home_viewed`
+- `project_viewed`
+- `dashboard_viewed`
+- `wiki_viewed`
+- `chat_opened`
+- `feed_viewed`
+
+## Execução
+- `project_created`
+- `project_tab_selected`
+- `task_created`
+- `task_status_changed`
+- `backlog_item_created`
+- `sprint_started`
+- `sprint_completed`
+
+## Colaboração
+- `message_sent`
+- `post_created`
+- `post_commented`
+- `post_favorited`
+- `post_saved_as_learning`
+
+## Conhecimento
+- `wiki_page_created`
+- `wiki_page_edited`
+- `learning_promoted_to_wiki`
+- `decision_registered`
+
+## IA / Copilot
+- `copilot_opened`
+- `copilot_action_selected`
+- `copilot_response_generated`
+- `copilot_output_applied`
+- `copilot_output_discarded`
+
+## Qualidade
+- `error_shown`
+- `retry_clicked`
+
+---
+
+# 7. EVENTOS POR MÓDULO
+
+## Home
+### Eventos mínimos
+- `home_viewed`
+- `timeline_filter_selected`
+- `home_quick_access_clicked`
+
+### Propriedades úteis
+- `filter_name`
+- `source`
+- `role`
+
+---
+
+## Projeto
+### Eventos mínimos
+- `project_viewed`
+- `project_tab_selected`
+- `project_created`
+
+### Propriedades úteis
+- `project_id`
+- `methodology`
+- `tab_name`
+- `role`
+
+---
+
+## Chat
+### Eventos mínimos
+- `chat_opened`
+- `message_sent`
+- `thread_opened`
+
+### Propriedades úteis
+- `context_type`
+- `context_id`
+- `project_id`
+- `message_origin`
+
+---
+
+## Feed
+### Eventos mínimos
+- `feed_viewed`
+- `post_created`
+- `post_commented`
+- `post_favorited`
+- `post_saved_as_learning`
+
+### Propriedades úteis
+- `post_type`
+- `project_id`
+- `source_type`
+
+---
+
+## Wiki
+### Eventos mínimos
+- `wiki_viewed`
+- `wiki_page_created`
+- `wiki_page_edited`
+- `learning_promoted_to_wiki`
+
+### Propriedades úteis
+- `section_name`
+- `project_id`
+- `source_type`
+- `source_id`
+
+---
+
+## Copilot
+### Eventos mínimos
+- `copilot_opened`
+- `copilot_action_selected`
+- `copilot_response_generated`
+- `copilot_output_applied`
+- `copilot_output_discarded`
+
+### Propriedades úteis
+- `action_name`
+- `context_type`
+- `context_id`
+- `project_id`
+- `output_type`
+- `entry_point`
+
+---
+
+# 8. EVENTOS DE ERRO E QUALIDADE
+
+## Regra
+Erro visível ao usuário precisa ter tracking mínimo.
+
+## Evento padrão
+- `error_shown`
+
+## Propriedades mínimas
+- `screen_name`
+- `module_name`
+- `error_type`
+- `error_code`
+- `context_type`
+- `context_id`
+
+## Tipos de erro sugeridos
+- `load_failed`
+- `save_failed`
+- `permission_denied`
+- `network_failed`
+- `context_missing`
+- `copilot_failed`
+
+## Evento complementar
+- `retry_clicked`
+
+## Regra
+Não depender apenas de logs de backend para análise de qualidade da UX.
+
+---
+
+# 9. TRACKING DE FUNIL
+
+## Regra
+Sempre que houver fluxo crítico, instrumentar começo, etapa intermediária e conversão final.
+
+## Exemplo — Funil de adoção principal
+1. `home_viewed`
+2. `project_viewed`
+3. `message_sent` ou `task_status_changed` ou `post_created`
+4. `post_saved_as_learning` ou `wiki_page_created` ou `copilot_output_applied`
+
+## Exemplo — Funil de criação de projeto
+1. `project_creation_started`
+2. `project_methodology_selected`
+3. `project_created`
+
+## Exemplo — Funil do Copilot
+1. `copilot_opened`
+2. `copilot_action_selected`
+3. `copilot_response_generated`
+4. `copilot_output_applied` ou `copilot_output_discarded`
+
+---
+
+# 10. PROPRIEDADES PADRÃO OBRIGATÓRIAS
+
+Sempre que aplicável, incluir:
+- `user_id`
+- `workspace_id`
+- `screen_name`
+- `role`
+- `platform`
+- `device_type`
+
+## Regras
+- `project_id` obrigatório em eventos dentro de projeto
+- `context_type` obrigatório em chat/feed/copilot contextual
+- `methodology` obrigatória em eventos que dependem da estrutura do projeto
+- `source` obrigatória quando a ação vier de outro módulo
+
+---
+
+# 11. SOURCE E ENTRY POINT
+
+## Objetivo
+Entender de onde o usuário veio e qual caminho tomou.
+
+## Campos recomendados
+- `source`
+- `entry_point`
+
+## Exemplos de `source`
+- `home`
+- `project`
+- `chat`
+- `feed`
+- `wiki`
+- `dashboard`
+- `copilot`
+
+## Exemplos de `entry_point`
+- `sidebar`
+- `header`
+- `quick_access`
+- `thread_action_menu`
+- `post_card_action`
+- `wiki_toolbar`
+- `project_header`
+
+## Regra
+Sempre usar valores controlados e documentados.
+
+---
+
+# 12. DEFINIÇÕES DE SUCESSO E CONCLUSÃO
+
+## Regra
+Eventos de criação, aplicação ou edição só disparam quando a ação foi confirmada com sucesso.
+
+## Exemplos
+- `project_created` apenas após confirmação do backend
+- `wiki_page_created` apenas após persistência
+- `copilot_output_applied` apenas após o usuário aplicar e o sistema confirmar
+
+## Evitar
+- disparar evento no clique antes do sucesso real
+- misturar tentativa com conclusão
+
+---
+
+# 13. EVITAR DUPLICIDADE E RUIDO
+
+## Regras
+- não disparar o mesmo `*_viewed` repetidamente sem mudança relevante;
+- evitar eventos por microinterações sem valor analítico;
+- não criar dois eventos para a mesma ação com nomes diferentes;
+- não instrumentar cada clique visual quando o que importa é a intenção de produto.
+
+## Exemplos a evitar
+- `button_clicked`
+- `modal_opened` para qualquer modal irrelevante
+- `tooltip_opened` sem hipótese clara
+
+---
+
+# 14. PRIVACIDADE E DADOS SENSÍVEIS
+
+## Regras
+- não enviar conteúdo sensível bruto em propriedades analíticas;
+- não rastrear texto integral de mensagens, wiki ou posts como propriedade de evento;
+- usar IDs, tipos, categorias e metadados controlados;
+- em IA, evitar registrar prompts/respostas integrais em analytics de produto quando não necessário.
+
+## Preferir
+- `post_type`
+- `section_name`
+- `action_name`
+- `context_type`
+
+## Evitar
+- `message_body`
+- `wiki_content`
+- `post_text`
+- `copilot_full_prompt`
+
+---
+
+# 15. TRACKING DO COPILOT
+
+## Objetivo
+Medir utilidade, confiança e valor percebido.
+
+## Eventos obrigatórios
+- `copilot_opened`
+- `copilot_action_selected`
+- `copilot_response_generated`
+- `copilot_output_applied`
+- `copilot_output_discarded`
+- `error_shown` com `error_type=copilot_failed`
+
+## Propriedades obrigatórias
+- `action_name`
+- `context_type`
+- `context_id`
+- `project_id` quando existir
+- `entry_point`
+- `output_type`
+
+## Métricas derivadas
+- taxa de abertura
+- taxa de geração
+- taxa de aplicação
+- taxa de descarte
+- taxa de erro
+- tempo até aplicar
+
+---
+
+# 16. TRACKING DE ESTADOS CRÍTICOS
+
+## Regra
+Estados importantes de degradação devem ser observáveis.
+
+## Casos recomendados
+- erro visível
+- retry
+- empty state action
+- partial state relevante
+
+## Eventos sugeridos
+- `error_shown`
+- `retry_clicked`
+- `empty_state_cta_clicked`
+
+---
+
+# 17. DONO E DOCUMENTAÇÃO
+
+## Regra
+Cada evento deve ter:
+- definição clara;
+- proprietário;
+- consumidor principal;
+- momento de disparo documentado.
+
+## Donos possíveis
+- produto
+- dados
+- engenharia
+- growth
+- operações
+
+## Recomendação
+Manter tabela única de eventos viva e versionada.
+
+---
+
+# 18. CHECKLIST DE QUALQUER NOVO EVENTO
+
+Antes de adicionar um evento, validar:
+
+- Qual pergunta ele responde?
+- Qual decisão ele ajuda a tomar?
+- Ele já não existe com outro nome?
+- O nome está consistente?
+- O momento de disparo está claro?
+- É conclusão ou tentativa?
+- As propriedades mínimas estão definidas?
+- Há risco de duplicidade?
+- Há risco de expor dado sensível?
+- O evento realmente precisa existir?
+
+## Regra final
+Se um evento não responder uma pergunta real de produto, UX, qualidade ou negócio, ele não deve entrar.
