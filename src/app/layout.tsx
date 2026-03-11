@@ -5,6 +5,7 @@ import "./globals.css";
 import { Sidebar } from "@/components/layout/sidebar";
 import { Header } from "@/components/layout/header";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -27,21 +28,28 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${dmSans.variable} ${spaceGrotesk.variable} antialiased bg-background text-foreground h-screen overflow-hidden`}
       >
-        <TooltipProvider>
-          <div className="flex h-full w-full">
-            <Sidebar />
-            <div className="flex flex-col flex-1 min-w-0">
-              <Header />
-              <main className="flex-1 overflow-y-auto bg-background/50">
-                {children}
-              </main>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <TooltipProvider>
+            <div className="flex h-full w-full">
+              <Sidebar />
+              <div className="flex flex-col flex-1 min-w-0">
+                <Header />
+                <main className="flex-1 overflow-y-auto bg-background/50">
+                  {children}
+                </main>
+              </div>
             </div>
-          </div>
-        </TooltipProvider>
+          </TooltipProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

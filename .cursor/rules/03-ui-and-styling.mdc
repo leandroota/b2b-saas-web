@@ -5,10 +5,10 @@ globs: *
 # 03-ui-and-styling.mdc
 
 ## Objetivo
-Definir regras de UI e styling consistentes usando Shadcn/ui, Tailwind v4 e foco total numa estética B2B "Dark Mode Premium", prezando tipografia, superfícies claras e consistência de espaçamento.
+Definir regras de UI e styling consistentes usando Shadcn/ui, Tailwind v4 e suporte a "Dark Mode Premium" e "Light Mode Premium" (ambos são primeira classe), prezando tipografia, superfícies claras e consistência de espaçamento.
 
 ## Regra-mãe
-Todo estilo deve derivar dos tokens globais, respeitando o Dark Mode Premium, garantindo acessibilidade, consistência e alta sofisticação visual — nunca com classes CSS arbitrárias ou mágicas.
+Todo estilo deve derivar dos tokens globais, respeitando as exigências estéticas para as duas variáveis de cor (Light/Dark), garantindo acessibilidade, consistência e alta sofisticação visual usando `next-themes` — nunca utilize classes CSS hardcoded genéricas.
 
 ---
 
@@ -20,8 +20,11 @@ Evite bordas desnecessárias, cores gritantes e sombras saturadas. Refine. O con
 ## 2. Abstraia Classes Longas no Tailwind
 Não espalhe `className="flex items-center justify-center p-4 bg-red-500 rounded-md shadow-md text-white font-bold ..."` repetidamente. Use abstrações `CVA (class-variance-authority)` para componentes e limite-se a micro-ajustes nas views.
 
-## 3. Dark Mode Nativo, Não Adicional
-O sistema é nativamente **Dark Mode Premium**. Cores desaturadas, pretos azulados profundos e acentos vibrantes neon. Todo Design System é desenhado tendo sombras internas de card levemente acentuadas e borders muito finas (`border-border/40`).
+## 3. Light + Dark Mode Premium
+O sistema é desenhado para ambos, mas as superfícies devem preservar a sofisticação ("Premium B2B"). 
+No Light Mode: evite brancos duros (use off-whites), mantenha as bordas e texturas polidas.
+No Dark Mode: Cores desaturadas, pretos azulados profundos e acentos vibrantes neon. 
+Sempre defina e utilize os contrastes das tipografias e border finas baseadas nas variáveis radiculares.
 
 ---
 
@@ -35,9 +38,9 @@ O sistema é nativamente **Dark Mode Premium**. Cores desaturadas, pretos azulad
 - `muted` e `muted-foreground`: Para elementos não focos de atenção (subtextos, datas distantes, rótulos de colunas do Gantt).
 
 ## Proibições de Tailwind
-Não use cores hardcoded: `text-[#123123]` ou `bg-gray-800`.
-Utilize SEMPRE os tokens semânticos: `bg-accent`, `text-destructive-foreground`.
-Isso garante a mudança perfeita de temas (se aplicável), mas principalmente preserva a coesão do Dark Mode.
+Não use cores hardcoded: `text-[#123123]`, `bg-gray-800` ou force o dark mode com `dark:bg-slate-900`.
+Utilize SEMPRE os tokens semânticos nativos: `bg-accent`, `bg-card`, `text-destructive-foreground` ou `text-primary`.
+Isso garante a mudança perfeita de temas via `next-themes` e resolve os problemas nativos de ambos.
 
 ---
 
@@ -60,15 +63,15 @@ Os componentes do Shadcn adicionados à pasta `src/components/ui` PODEM (e devem
 ## Pesos de Fonte
 - `font-medium` para maioria dos links, dados de tabela e títulos subjacentes.
 - `font-bold` para dar extrema urgência visual ou numerais grandes.
-- Evite `font-light` ou `font-thin` no Dark Mode Premium; textos fracos em fundos pretos "sangram" e desaparecem, invista pelo menos em `normal / 400` balanceando com forte contraste do `text-muted-foreground`.
+- Evite `font-light` ou `font-thin`. Textos muito fracos sofrem em contraste, invista pelo menos em `normal / 400` balanceando com o `text-muted-foreground`. No Light Mode, o peso precisa suportar telas de baixa fidelidade sem desaparecer.
 
 ---
 
 # 5. SUPERFÍCIES E BORDAS
 
 ## Profundidade
-O Dark Mode moderno não usa grandes montanhas de sombras com Gaussian blurs brancos que estouram.
-Garantir profundidade por `border` super controlada (`border border-border/50`) ou pequenas variações no espectro da luminosidade. O container principal reside em `bg-background` ou um `bg-zinc-950` liso, e elementos elevados utilizam `bg-card` ou `bg-sidebar`.
+No Dark Mode Premium, sombras com muito blur branco não são indicadas; garantimos profundidade com borders controladas (`border border-border/50`). O container reside em `bg-background` e elementos elevados usam `bg-card`.
+No Light Mode Premium, permita o uso elegante de sombras nativas do Tailwind leves (`shadow-sm`, `shadow-md`), sem exageros (estilo Apple HIG).
 
 ## Glassmorphism com Sabedoria
 Pode-se usar o padrão `backdrop-blur-md bg-background/60` para:

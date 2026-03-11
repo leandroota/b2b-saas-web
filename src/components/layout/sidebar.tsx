@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAppStore } from '@/store/use-app-store'; // Added useAppStore import
+import { ModeToggle } from "@/components/mode-toggle";
 
 const navItems = [
     { icon: Home, label: "Home", href: "/" },
@@ -89,7 +90,8 @@ export function Sidebar() {
                             john@acme.com
                         </span>
                     </div>
-                    <Settings className="size-4 text-sidebar-foreground/50" />
+                    <ModeToggle />
+                    <Settings className="size-4 text-sidebar-foreground/50 shrink-0" />
                 </div>
             </div>
         </aside>
