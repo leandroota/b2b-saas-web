@@ -1,0 +1,427 @@
+---
+description: Regras de segurança, tratamento de dados sensíveis, exposição de informação e limites de acesso em toda a plataforma.
+globs: *
+---
+# 16-security-and-sensitive-data.mdc
+
+## Objetivo
+Definir regras de segurança, tratamento de dados sensíveis, exposição de informação e limites de acesso em toda a plataforma.
+
+## Regra-mãe
+A plataforma deve proteger contexto, conteúdo e comportamento do usuário sem comprometer clareza, usabilidade e colaboração legítima.
+
+---
+
+# 1. PRINCÍPIOS GERAIS
+
+## 1. Segurança por padrão
+Toda feature deve nascer assumindo:
+- controle de acesso;
+- exposição mínima;
+- proteção de dados;
+- rastreabilidade de ações críticas.
+
+## 2. Menor exposição possível
+O sistema deve exibir apenas o que o usuário precisa ver para cumprir sua função.
+
+## 3. Segurança sem UX punitiva
+Proteção não deve criar experiência confusa, mas deve deixar limites claros.
+
+## 4. Permissões e segurança andam juntas
+Controle de acesso não é detalhe de backend.  
+É parte estrutural da experiência do produto.
+
+## 5. IA segue as mesmas restrições
+O Copilot nunca pode expandir acesso a conteúdo sensível ou restrito.
+
+---
+
+# 2. O QUE CONSIDERAR DADO SENSÍVEL
+
+## Dados sensíveis no contexto da plataforma
+- conteúdo de projetos restritos;
+- mensagens privadas;
+- páginas de wiki restritas;
+- decisões estratégicas;
+- dados internos de roadmap;
+- informações operacionais críticas;
+- dados pessoais dos usuários;
+- metadados de acesso ou estrutura organizacional sensível;
+- prompts e saídas do Copilot quando contiverem conteúdo restrito.
+
+## Regra
+Mesmo quando não forem “dados sensíveis legais” no sentido regulatório estrito, conteúdos de projeto podem ser sensíveis para o negócio e devem ser tratados com o mesmo cuidado operacional.
+
+---
+
+# 3. PRINCÍPIO DE NECESSIDADE DE ACESSO
+
+## Regra
+Usuários devem acessar apenas:
+- os projetos em que atuam;
+- os grupos dos quais participam;
+- os chats de que fazem parte;
+- as páginas da wiki para as quais têm leitura;
+- os dashboards compatíveis com sua função.
+
+## Implicação
+A plataforma não deve assumir visibilidade ampla por conveniência.
+
+---
+
+# 4. SEGURANÇA POR CONTEXTO
+
+## Workspace
+- configurações globais exigem acesso administrativo;
+- conteúdos não devem ser visíveis só por pertencer ao mesmo workspace.
+
+## Space
+- visibilidade depende do tipo do Space e da participação do usuário;
+- Space pessoal deve ser privado por padrão.
+
+## Projeto
+- projeto restrito deve proteger:
+  - tarefas
+  - posts
+  - atividade
+  - wiki
+  - chat
+  - dashboard relacionado
+
+## Grupo
+- grupo restrito não deve expor membros, posts ou histórico a não participantes.
+
+## Chat
+- conversa direta é privada aos participantes;
+- chat contextual herda regras do contexto pai.
+
+## Wiki
+- leitura e edição devem obedecer à permissão do projeto ou regra mais restritiva.
+
+## Dashboard
+- dashboards agregados exigem cuidado extra com exposição de informações cruzadas.
+
+---
+
+# 5. REGRAS DE VISIBILIDADE DE CONTEÚDO
+
+## Regra
+Todo conteúdo deve ter vínculo claro com um contexto de visibilidade.
+
+## Exemplos
+- um post pertence a um projeto ou grupo;
+- um aprendizado deriva de uma origem contextual;
+- uma página de wiki pertence a um projeto;
+- uma decisão registrada herda acesso do contexto em que surgiu.
+
+## Proibição
+Nenhum conteúdo deve ficar “solto” sem política de visibilidade definida.
+
+---
+
+# 6. LINKS DIRETOS E ACESSO INDEVIDO
+
+## Regra
+Se o usuário acessar um link direto sem permissão:
+- o sistema não deve exibir conteúdo;
+- não deve vazar metadados sensíveis;
+- deve mostrar mensagem clara e segura.
+
+## Mensagem recomendada
+- Você não tem acesso a este conteúdo.
+
+## Regras adicionais
+- não exibir nomes sensíveis se a política exigir ocultação;
+- não inferir a existência completa do conteúdo quando isso for inadequado.
+
+---
+
+# 7. PROMOÇÃO DE CONTEÚDO ENTRE CONTEXTOS
+
+## Regra
+Quando conteúdo for promovido de um módulo para outro, a política de acesso deve ser preservada.
+
+## Exemplos
+- thread privada → aprendizado: continua restrito ao projeto original;
+- aprendizado → wiki: só pode ser promovido se o destino respeitar ou restringir adequadamente o acesso;
+- post de grupo restrito → documentação: não pode ampliar visibilidade sem permissão explícita.
+
+## Proibição
+Nunca promover automaticamente conteúdo para um contexto mais amplo do que sua origem permite.
+
+---
+
+# 8. SEGURANÇA DO COPILOT
+
+## Regra geral
+O Copilot só pode ler, resumir, estruturar ou sugerir com base em conteúdo que o usuário já pode acessar.
+
+## O Copilot não pode
+- atravessar limites de projeto;
+- responder com base em chats privados fora do escopo;
+- expor decisões de outro contexto;
+- inferir informações sensíveis a partir de padrões de uso;
+- sugerir aplicação em contexto mais amplo sem confirmação e permissão.
+
+## Regras extras
+- ações do Copilot devem indicar o contexto analisado;
+- respostas devem respeitar o escopo atual;
+- escopo ampliado exige intenção explícita do usuário e permissão válida.
+
+---
+
+# 9. DADOS SENSÍVEIS EM TRACKING
+
+## Regra
+Analytics de produto não deve registrar conteúdo sensível bruto.
+
+## Não enviar como propriedade de evento
+- corpo completo de mensagem;
+- texto integral de post;
+- texto integral da wiki;
+- prompt completo do Copilot;
+- resposta completa do Copilot;
+- dados pessoais desnecessários;
+- informações internas sem propósito analítico claro.
+
+## Preferir
+- IDs
+- tipos
+- categorias
+- contexto
+- resultado da ação
+- estado de erro
+- escopo
+
+## Exemplos
+### Bom
+- `context_type=project`
+- `action_name=summarize_thread`
+- `output_type=task_suggestion`
+
+### Evitar
+- `message_body="..."`
+
+---
+
+# 10. LOGS E OBSERVABILIDADE
+
+## Regra
+Logs internos devem equilibrar capacidade de diagnóstico com minimização de conteúdo sensível.
+
+## Regras práticas
+- logar IDs e metadados primeiro;
+- evitar logar payload textual completo sem necessidade;
+- mascarar informações quando possível;
+- separar logs de produto de logs de segurança;
+- controlar retenção de logs sensíveis.
+
+## Regra
+Erro técnico pode ser visível para engenharia, mas não deve ser exposto ao usuário final.
+
+---
+
+# 11. EXPORTAÇÃO, COMPARTILHAMENTO E CÓPIA
+
+## Regra do MVP
+Exportações e compartilhamentos amplos devem ser limitados ou controlados.
+
+## Cuidados
+- copiar conteúdo sensível da wiki;
+- exportar backlog, Gantt ou dashboard;
+- compartilhar links diretos;
+- replicar dados entre módulos.
+
+## Recomendação
+No MVP, evitar recursos amplos de exportação sem política clara de permissão e rastreabilidade.
+
+---
+
+# 12. REMOÇÃO, ARQUIVAMENTO E RETENÇÃO
+
+## Regra
+Ações de exclusão, arquivamento e retenção precisam de política clara.
+
+## Arquivar
+- usado para preservar histórico sem permitir edição;
+- deve manter contexto e rastreabilidade quando aplicável.
+
+## Excluir
+- só para casos definidos;
+- deve exigir confirmação apropriada;
+- deve respeitar política de retenção e auditoria.
+
+## Retenção
+- conteúdos importantes podem exigir preservação mínima;
+- histórico crítico não deve desaparecer silenciosamente.
+
+---
+
+# 13. DADOS PESSOAIS E PERFIL
+
+## Regras
+- mostrar apenas os dados pessoais necessários à colaboração;
+- perfis não devem expor informações além do necessário;
+- presença, disponibilidade e vínculo com contexto devem ser tratados com cuidado;
+- dados de conta devem ser separados de dados de operação.
+
+## Exemplo
+Mostrar:
+- nome
+- avatar
+- papel/contexto quando necessário
+
+Evitar expor sem necessidade:
+- e-mail em todos os contextos
+- informação sensível de estrutura organizacional
+- dados privados do usuário
+
+---
+
+# 14. DASHBOARDS E AGREGAÇÃO DE DADOS
+
+## Regra
+Dados agregados podem revelar informação sensível mesmo sem mostrar conteúdo bruto.
+
+## Cuidados
+- dashboards de poucos usuários podem expor desempenho individual;
+- agregações por projeto restrito podem revelar prioridades estratégicas;
+- métricas globais precisam respeitar escopo de acesso.
+
+## Regra prática
+Mostrar dashboards apenas para perfis autorizados e dentro do escopo correto.
+
+---
+
+# 15. SEGURANÇA NA UI
+
+## Regras
+- ação bloqueada deve ser claramente comunicada;
+- ocultar quando a existência da ação criar risco ou ruído desnecessário;
+- não usar UI para “simular” segurança — o backend deve aplicar as regras;
+- feedback de erro não deve revelar detalhes internos sensíveis.
+
+## Exemplos
+- “Você não tem permissão para editar esta página.”
+- “Você não tem acesso a este conteúdo.”
+
+## Evitar
+- mensagens que revelem lógica interna de permissão;
+- exibir IDs internos, roles técnicas ou estruturas ocultas.
+
+---
+
+# 16. FORMULÁRIOS E SEGURANÇA
+
+## Regras
+- validar permissão no backend e no frontend;
+- não confiar apenas em ocultação de campo;
+- impedir submissão de ações não autorizadas;
+- revisar campos que possam alterar visibilidade, contexto ou acesso.
+
+## Ações sensíveis
+- criar projeto restrito;
+- alterar membros;
+- mudar visibilidade de grupo;
+- promover conteúdo;
+- arquivar ou excluir.
+
+---
+
+# 17. UPLOADS E ANEXOS
+
+## Regra do MVP
+Se uploads existirem, precisam de política mínima de segurança.
+
+## Regras mínimas
+- tipo de arquivo permitido;
+- limite de tamanho;
+- associação obrigatória a um contexto;
+- permissão de leitura herdada do contexto;
+- exibição segura e controlada.
+
+## Evitar
+- upload solto sem dono;
+- arquivos públicos por padrão;
+- anexos acessíveis fora do contexto pai.
+
+---
+
+# 18. GANTT, WIKI E CONTEÚDO ESTRATÉGICO
+
+## Regra
+Views de planejamento e documentação podem concentrar informação de alto valor estratégico.
+
+## Cuidados específicos
+### Gantt
+Pode revelar:
+- cronogramas sensíveis;
+- marcos estratégicos;
+- dependências críticas.
+
+### Wiki
+Pode revelar:
+- decisões;
+- arquitetura;
+- contexto técnico;
+- informações internas relevantes.
+
+## Regra
+Essas superfícies exigem a mesma disciplina de acesso que tarefas e chat.
+
+---
+
+# 19. AUDITORIA E RASTREABILIDADE
+
+## Regras
+Ações estruturais ou sensíveis devem ser rastreáveis, como:
+- criação de projeto;
+- mudança de metodologia;
+- promoção para wiki;
+- registro de decisão;
+- alteração de permissão;
+- arquivamento;
+- exclusão.
+
+## Objetivo
+Permitir diagnóstico, governança e confiança operacional.
+
+## Regra
+Rastreabilidade não significa exposição pública da ação, mas capacidade controlada de auditoria.
+
+---
+
+# 20. ANTI-PADRÕES
+
+Evitar:
+- tratar visibilidade como detalhe de UI;
+- permitir que Copilot leia mais do que o usuário;
+- vazar texto sensível em analytics;
+- expor conteúdo via link direto;
+- promover conteúdo para contexto mais amplo sem controle;
+- usar dashboards para mostrar informação não autorizada;
+- confiar só em frontend para bloquear acesso;
+- respostas de erro revelando estrutura interna;
+- exportação ampla sem política de acesso.
+
+---
+
+# 21. CHECKLIST DE SEGURANÇA DE NOVA FEATURE
+
+Antes de aprovar qualquer nova feature, validar:
+
+- Qual dado ela expõe?
+- Em qual contexto ela vive?
+- Quem pode ver?
+- Quem pode editar?
+- O conteúdo pode ser sensível para o negócio?
+- Há risco de atravessar contexto?
+- O Copilot pode atuar nela?
+- O tracking evita capturar conteúdo bruto?
+- Existe risco de acesso por link direto?
+- Há rastreabilidade para ações críticas?
+- O backend reforça a regra de acesso?
+- A UI comunica bloqueios sem revelar demais?
+
+## Regra final
+Se a feature não tiver política clara de acesso, exposição, rastreabilidade e tratamento de conteúdo sensível, ela não está pronta.
