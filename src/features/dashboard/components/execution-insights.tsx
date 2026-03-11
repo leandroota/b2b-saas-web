@@ -7,7 +7,8 @@ import {
     ArrowUpRight,
     TrendingUp,
     Zap,
-    Rocket
+    Rocket,
+    Target
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -17,7 +18,35 @@ import { Separator } from "@/components/ui/separator";
 export function ExecutionInsights() {
     return (
         <aside className="w-96 shrink-0 border-l border-border bg-card/10 flex flex-col h-full overflow-hidden">
-            <div className="p-8 space-y-8">
+            <div className="p-8 space-y-8 overflow-y-auto">
+                {/* 0. Weekly Goals (Relocated) */}
+                <div className="space-y-4">
+                    <div className="flex items-center gap-2 px-1">
+                        <Target className="size-3.5 text-primary" />
+                        <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Metas da Semana</h3>
+                    </div>
+
+                    <div className="p-6 rounded-[2rem] bg-primary/5 border border-primary/10 space-y-4 relative overflow-hidden group hover:bg-primary/[0.08] transition-colors cursor-pointer">
+                        <div className="flex items-center justify-between">
+                            <div className="space-y-1">
+                                <p className="text-[10px] font-bold text-primary uppercase tracking-widest">Performance</p>
+                                <h4 className="text-2xl font-black font-mono tracking-tighter">82<span className="text-primary text-sm">%</span></h4>
+                            </div>
+                            <div className="size-10 rounded-2xl bg-primary/20 flex items-center justify-center">
+                                <Zap className="size-5 text-primary animate-pulse" />
+                            </div>
+                        </div>
+
+                        <div className="space-y-2">
+                            <div className="flex items-center justify-between text-[8px] font-black uppercase tracking-widest opacity-60">
+                                <span>Sprint Completion</span>
+                                <span>24/30 Tasks</span>
+                            </div>
+                            <Progress value={82} className="h-1 bg-primary/10" />
+                        </div>
+                    </div>
+                </div>
+
                 {/* 1. Project Health */}
                 <div className="space-y-5">
                     <div className="flex items-center justify-between px-1">

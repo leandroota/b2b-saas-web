@@ -2,20 +2,16 @@
 
 import { useAppStore } from "@/store/use-app-store";
 import { useEffect, useState } from "react";
-import { ProjectSidebar } from "@/features/projects/components/project-sidebar"; // We'll keep the import for logic or if we want to refactor parts
 import { Publisher } from "@/features/social/components/publisher";
 import { ActivityFeed } from "@/features/social/components/activity-feed";
 import { ExecutionInsights } from "@/features/dashboard/components/execution-insights";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import {
   FolderKanban,
-  Target,
   Users,
   FileText,
-  Calendar,
-  ChevronRight
+  Calendar
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -50,24 +46,6 @@ export default function Home() {
                 <span className="flex items-center gap-1.5 border-l border-border pl-3 text-primary"><Calendar className="size-3" /> Cronograma Ativo</span>
               </div>
             </div>
-          </div>
-
-          {/* Weekly Goals Widget (Horizontal) */}
-          <div className="hidden md:flex flex-1 max-w-xl items-center gap-6 px-6 py-3 rounded-2xl bg-muted/30 border border-border/50 relative overflow-hidden group">
-            <div className="flex items-center gap-3 shrink-0">
-              <div className="size-8 rounded-full bg-background flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                <Target className="size-4 text-primary" />
-              </div>
-              <p className="text-[10px] font-black uppercase tracking-tighter text-muted-foreground w-20 leading-tight">Metas da Semana</p>
-            </div>
-            <div className="flex-1 space-y-2">
-              <div className="flex items-center justify-between text-[10px] font-black font-mono">
-                <span className="text-muted-foreground">TASKS FINALIZADAS</span>
-                <span className="text-primary">82%</span>
-              </div>
-              <Progress value={82} className="h-1.5" />
-            </div>
-            <ChevronRight className="size-4 text-muted-foreground/30 group-hover:text-primary transition-colors cursor-pointer" />
           </div>
         </div>
       </header>
