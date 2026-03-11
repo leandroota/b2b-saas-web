@@ -21,7 +21,7 @@ import { PermissionGuard } from "@/components/auth/permission-guard";
 
 const navItems = [
     { icon: Home, label: "Home", href: "/" },
-    { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard", role: 'ADMIN' },
+    { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
     { icon: FolderKanban, label: "Projetos", href: "/projects" },
     { icon: MessageSquare, label: "Chat", href: "/chat" },
     { icon: Activity, label: "Feed", href: "/feed" },
@@ -46,7 +46,7 @@ export function Sidebar() {
 
             {/* Primary Navigation */}
             <nav className="flex-1 overflow-y-auto p-3 space-y-1">
-                {navItems.map((item) => {
+                {navItems.map((item: any) => {
                     const content = (
                         <Link key={item.href} href={item.href}>
                             <span
@@ -63,7 +63,7 @@ export function Sidebar() {
 
                     if (item.role) {
                         return (
-                            <PermissionGuard key={item.href} role={item.role as any}>
+                            <PermissionGuard key={item.href} role={item.role}>
                                 {content}
                             </PermissionGuard>
                         );
