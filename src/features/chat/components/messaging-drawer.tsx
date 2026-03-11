@@ -209,7 +209,7 @@ export function MessagingDrawer() {
                                         <Avatar className="size-9 border border-border/50">
                                             <AvatarImage src={activeConversation.avatar} />
                                             <AvatarFallback className="text-xs font-bold bg-primary/10 text-primary">
-                                                {activeConversation.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)}
+                                                {activeConversation?.name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || "CM"}
                                             </AvatarFallback>
                                         </Avatar>
                                         <Circle className={cn(
@@ -225,13 +225,13 @@ export function MessagingDrawer() {
                             </div>
                             <div>
                                 <h3 className="text-sm font-black font-mono tracking-tight uppercase flex items-center gap-2">
-                                    {activeConversation?.name}
+                                    {activeConversation?.name || "Conversa"}
                                     <Badge variant="outline" className="text-[8px] font-mono h-3.5 px-1 border-primary/20 text-primary">
                                         {activeConversation?.type === 'person' ? 'TEAM' : 'GROUP'}
                                     </Badge>
                                 </h3>
                                 <p className="text-[9px] text-muted-foreground font-bold uppercase tracking-widest leading-none">
-                                    {activeConversation?.context}
+                                    {activeConversation?.context || "Carregando..."}
                                     {activeConversation?.participants && ` • ${activeConversation.participants} p.`}
                                 </p>
                             </div>
@@ -288,7 +288,7 @@ export function MessagingDrawer() {
                                 value={inputValue}
                                 onChange={(e) => setInputValue(e.target.value)}
                                 onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
-                                placeholder={`Conversar em ${activeConversation?.name.split(' ')[0]}...`}
+                                placeholder={`Conversar em ${activeConversation?.name?.split(' ')[0] || "chat"}...`}
                                 className="border-none bg-transparent shadow-none focus-visible:ring-0 text-sm h-9"
                             />
                             <div className="flex items-center justify-between mt-1 px-1">
