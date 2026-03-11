@@ -1,0 +1,501 @@
+---
+description: Regras de conteúdo e tom para toda a plataforma, garantindo consistência entre produto, UX, UI, estados do sistema e Copilot
+globs: *
+---
+# 06-copy-and-tone.mdc
+
+## Objetivo
+Definir regras de conteúdo e tom para toda a plataforma, garantindo consistência entre produto, UX, UI, estados do sistema e Copilot.
+
+## Regra-mãe
+Todo texto da plataforma deve ajudar o usuário a entender contexto, agir com segurança e seguir em frente sem esforço desnecessário.
+
+---
+
+# 1. PRINCÍPIOS DE TOM
+
+## O tom da plataforma deve ser
+- claro;
+- profissional;
+- direto;
+- útil;
+- confiável;
+- calmo;
+- orientado à ação.
+
+## O tom da plataforma não deve ser
+- infantilizado;
+- teatral;
+- excessivamente entusiasmado;
+- vago;
+- robótico;
+- prolixo;
+- agressivo;
+- casual demais.
+
+## Regra prática
+Escrever como um produto B2B premium que respeita o tempo do usuário.
+
+---
+
+# 2. PRINCÍPIOS DE MICROCOPY
+
+## 1. Clareza antes de estilo
+Se houver escolha entre soar “criativo” e soar claro, escolher clareza.
+
+## 2. Cada texto deve cumprir um papel
+Todo texto deve fazer pelo menos uma destas coisas:
+- explicar;
+- orientar;
+- confirmar;
+- alertar;
+- destravar;
+- reduzir incerteza.
+
+## 3. Sempre que possível, indicar próximo passo
+Especialmente em:
+- empty states;
+- erros;
+- confirmações;
+- estados bloqueados.
+
+## 4. Não descrever demais o óbvio
+Evitar textos redundantes que repetem o que a UI já mostra.
+
+## 5. Usar linguagem humana e objetiva
+Evitar jargão técnico quando o contexto for de usuário final.
+
+---
+
+# 3. REGRAS DE ESCRITA
+
+## Usar
+- frases curtas;
+- verbos de ação;
+- substantivos consistentes;
+- linguagem concreta;
+- instruções diretas.
+
+## Evitar
+- frases longas;
+- abstrações vagas;
+- excesso de gerúndio;
+- marketing dentro do produto;
+- humor gratuito;
+- exclamações desnecessárias.
+
+## Exemplo preferido
+- "Não foi possível carregar o projeto. Tente novamente."
+
+## Exemplo a evitar
+- "Oops! Tivemos um probleminha ao buscar suas informações 😅"
+
+---
+
+# 4. VOCABULÁRIO BASE DO PRODUTO
+
+## Termos preferenciais
+- Home
+- Space
+- Projeto
+- Grupo
+- Chat
+- Feed
+- Wiki
+- Dashboard
+- Backlog
+- Sprint
+- Board
+- Lista
+- Atividade
+- Aprendizado
+- Decisão
+- Bloqueio
+- Copilot
+
+## Regra
+Os nomes dos módulos devem ser consistentes em toda a plataforma.
+
+## Não variar sem motivo
+Exemplo:
+- se o produto usa "Aprendizado", não alternar para "Insight", "Conhecimento salvo" e "Lição" na interface.
+- se usa "Projeto", não alternar para "Iniciativa" na UI sem regra explícita.
+
+---
+
+# 5. PADRÕES DE CTA
+
+## Regras
+- CTA principal deve usar verbo direto.
+- CTA secundário deve ser curto e previsível.
+- CTA destrutivo deve deixar consequência clara.
+
+## Exemplos bons
+- Criar projeto
+- Salvar aprendizado
+- Abrir wiki
+- Resumir conversa
+- Tentar novamente
+- Cancelar
+- Excluir página
+
+## Exemplos a evitar
+- Vamos nessa
+- Continuar jornada
+- Fazer acontecer
+- Explorar magia
+- Confirmar ação
+
+---
+
+# 6. EMPTY STATES
+
+## Objetivo
+Explicar ausência de conteúdo e orientar o próximo passo.
+
+## Estrutura preferencial
+1. o que está vazio;
+2. por que isso pode estar assim;
+3. qual ação o usuário pode tomar.
+
+## Regras
+- não culpar o usuário;
+- não usar tom brincalhão;
+- sempre ter CTA quando fizer sentido;
+- manter texto curto.
+
+## Exemplos
+
+### Home vazia
+Título:
+- Nada novo por aqui
+
+Descrição:
+- Acompanhe seus projetos ou volte mais tarde para ver atualizações.
+
+CTA:
+- Explorar projetos
+
+### Feed vazio
+Título:
+- Nenhuma atualização ainda
+
+Descrição:
+- Quando houver avanços, aprendizados ou decisões, eles aparecerão aqui.
+
+CTA:
+- Criar atualização
+
+### Wiki vazia
+Título:
+- Esta wiki ainda está vazia
+
+Descrição:
+- Crie a primeira página ou promova um aprendizado do projeto.
+
+CTA:
+- Criar página
+
+### Chat vazio
+Título:
+- Nenhuma mensagem ainda
+
+Descrição:
+- Comece a conversa neste contexto.
+
+CTA:
+- Enviar mensagem
+
+---
+
+# 7. MENSAGENS DE ERRO
+
+## Objetivo
+Informar o problema sem gerar pânico e indicar caminho de recuperação.
+
+## Estrutura preferencial
+1. o que falhou;
+2. impacto;
+3. ação possível.
+
+## Regras
+- não usar linguagem técnica exposta ao usuário;
+- não culpar o usuário;
+- evitar "algo deu errado" genérico quando houver contexto;
+- sempre oferecer retry ou saída alternativa quando possível.
+
+## Exemplos
+
+### Erro genérico
+- Não foi possível concluir esta ação. Tente novamente.
+
+### Erro ao carregar projeto
+- Não foi possível carregar este projeto. Tente novamente.
+
+### Erro ao carregar mensagens
+- Não foi possível carregar as mensagens. Tente novamente.
+
+### Erro ao salvar wiki
+- Não foi possível salvar a página. Revise o conteúdo e tente novamente.
+
+### Erro do Copilot
+- Não foi possível gerar essa sugestão agora. Tente novamente.
+
+## Exemplos a evitar
+- Ocorreu um erro inesperado
+- Algo deu errado
+- Error 500
+- Ops, quebramos tudo
+
+---
+
+# 8. MENSAGENS DE SUCESSO
+
+## Objetivo
+Confirmar que a ação foi concluída, sem interromper mais do que o necessário.
+
+## Regras
+- ser curtas;
+- ser específicas;
+- evitar celebração excessiva;
+- não repetir a ação inteira se o contexto já estiver claro.
+
+## Exemplos
+- Projeto criado com sucesso.
+- Página salva com sucesso.
+- Aprendizado salvo.
+- Resumo pronto para revisão.
+- Tarefa criada.
+- Alterações salvas.
+
+## Evitar
+- Uhu! Você conseguiu!
+- Tudo certo por aqui 🚀
+- Parabéns pela conquista
+
+---
+
+# 9. ESTADOS DISABLED / BLOQUEADOS
+
+## Objetivo
+Explicar por que algo não está disponível.
+
+## Regras
+- nunca deixar ação bloqueada sem motivo claro quando houver contexto;
+- usar linguagem neutra;
+- preferir explicar permissão ou requisito faltante.
+
+## Exemplos
+- Você não tem permissão para editar esta página.
+- Este projeto está arquivado e não pode mais ser alterado.
+- Selecione um projeto para continuar.
+- Adicione conteúdo suficiente para gerar um resumo.
+
+---
+
+# 10. COPY DE ONBOARDING E ORIENTAÇÃO
+
+## Objetivo
+Ensinar sem sobrecarregar.
+
+## Regras
+- orientar por contexto;
+- ensinar o mínimo necessário;
+- priorizar diferença entre módulos;
+- evitar tours longos e genéricos.
+
+## Prioridades de onboarding
+1. o que é Home;
+2. o que é Space;
+3. diferença entre Chat, Feed, Tarefa e Wiki;
+4. como a metodologia muda a visão do projeto;
+5. como usar o Copilot com revisão.
+
+## Exemplos curtos
+
+### Projeto
+- Este é o espaço principal para acompanhar e executar o trabalho do projeto.
+
+### Chat
+- Use o chat para alinhamentos rápidos e conversas do dia a dia.
+
+### Feed
+- Use o feed para atualizações, aprendizados, decisões e marcos relevantes.
+
+### Wiki
+- Use a wiki para manter o conhecimento do projeto acessível e reaproveitável.
+
+---
+
+# 11. COPY PARA FEED E SOCIAL LAYER
+
+## Regras
+- incentivar contribuição útil;
+- evitar linguagem de rede social casual;
+- reforçar contexto do trabalho;
+- valorizar clareza, não autopromoção.
+
+## Tipos de publicação recomendados
+- Atualização
+- Aprendizado
+- Decisão
+- Bloqueio
+- Marco
+- Reconhecimento
+
+## Labels recomendadas
+- Publicar atualização
+- Salvar aprendizado
+- Promover para wiki
+- Ver projeto
+- Ver contexto
+
+## Evitar labels como
+- Compartilhar vibe
+- Postar algo
+- Inspirar o time
+- Dizer o que pensa
+
+---
+
+# 12. COPY PARA WIKI
+
+## Regras
+- linguagem mais informativa e estável;
+- títulos objetivos;
+- metadados visíveis;
+- foco em consulta futura.
+
+## Títulos preferidos de seções
+- Visão geral
+- Decisões
+- Funcional
+- Técnico
+- FAQ
+- Aprendizados
+
+## Metadados recomendados
+- Última atualização
+- Autor
+- Projeto relacionado
+- Origem do conteúdo
+
+---
+
+# 13. COPY PARA DASHBOARD
+
+## Regras
+- comunicar status sem exagero;
+- evitar conclusões alarmistas sem contexto;
+- preferir termos operacionais.
+
+## Labels preferidos
+- Em andamento
+- Sem progresso
+- Bloqueado
+- Concluído
+- Atenção
+- Risco
+- Atividade recente
+
+## Evitar
+- Crítico! sem critério claro
+- Projeto em colapso
+- Alerta máximo
+- Performance ruim
+
+---
+
+# 14. COPY DO COPILOT
+
+## Objetivo
+O Copilot deve soar útil, confiável e controlado.
+
+## Regras de tom
+- profissional;
+- direto;
+- pragmático;
+- sem excesso de entusiasmo;
+- sem parecer humano demais.
+
+## O Copilot deve dizer
+- o que analisou;
+- o que resumiu;
+- o que sugere;
+- o que precisa de revisão.
+
+## Exemplos bons
+- Resumo pronto para revisão.
+- Encontrei 3 ações sugeridas com base nesta conversa.
+- Não encontrei contexto suficiente para gerar esta resposta.
+- Revise antes de aplicar.
+
+## Exemplos a evitar
+- Aqui está a resposta perfeita
+- Eu resolvi isso para você
+- Pode confiar, já organizei tudo
+- Descobri exatamente o que vocês precisam
+
+---
+
+# 15. PADRÕES DE FORMULAÇÃO
+
+## Para ações
+Usar:
+- Criar
+- Salvar
+- Editar
+- Excluir
+- Abrir
+- Resumir
+- Promover
+- Confirmar
+- Cancelar
+
+## Para feedback
+Usar:
+- salvo com sucesso
+- criado com sucesso
+- pronto para revisão
+- não foi possível
+- tente novamente
+- revise antes de aplicar
+
+## Para alertas
+Usar:
+- esta ação não pode ser desfeita
+- você não tem permissão
+- este item está arquivado
+- faltam informações para continuar
+
+---
+
+# 16. CONSISTÊNCIA ENTRE MÓDULOS
+
+## Regra
+Se uma mesma ação existe em mais de um contexto, o texto base deve ser o mesmo.
+
+## Exemplos
+- "Salvar aprendizado" deve ser igual em Feed, Chat e Projeto.
+- "Promover para wiki" deve manter o mesmo nome em toda a plataforma.
+- "Resumir conversa" não deve virar "Gerar síntese" em outra tela.
+
+---
+
+# 17. CHECKLIST DE COPY
+
+Antes de aprovar qualquer texto, validar:
+
+- Está claro na primeira leitura?
+- O usuário entende o que aconteceu?
+- O próximo passo está evidente?
+- O tom está profissional e direto?
+- A mensagem evita jargão desnecessário?
+- Está consistente com o resto da plataforma?
+- Está curta o suficiente?
+- Em caso de erro, existe recuperação?
+- Em caso de empty, existe orientação?
+- Em caso de sucesso, existe confirmação sem exagero?
+
+## Regra final
+Se o texto não ajuda o usuário a entender, decidir ou agir, ele deve ser reescrito.
