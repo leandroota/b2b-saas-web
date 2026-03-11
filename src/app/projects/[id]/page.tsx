@@ -7,13 +7,16 @@ import {
     Settings2,
     Share2,
     Star,
-    MoreHorizontal
+    MoreHorizontal,
+    Plus
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ProjectTabs } from "@/features/projects/components/project-tabs";
 import { ProjectMethodology } from "@/features/projects/lib/project-schema";
 import { Badge } from "@/components/ui/badge";
+import { KanbanBoard } from "@/features/projects/components/kanban-board";
+import { Task } from "@/features/projects/lib/task-schema";
 
 // Mock data for project recovery
 const mockProjects: Record<string, { name: string, methodology: ProjectMethodology, description: string, status: string }> = {
@@ -37,21 +40,78 @@ const mockProjects: Record<string, { name: string, methodology: ProjectMethodolo
     }
 };
 
+// Mock tasks for initial state
+const MOCK_TASKS: Task[] = [
+    {
+        id: "T-01",
+        title: "Definir paleta de cores primária para Light Mode",
+        description: "",
+        status: "TODO",
+        priority: "HIGH",
+        assigneeId: "user_01",
+        projectId: "proj_01",
+        workspaceId: "wksp_01",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        labels: ["UI/UX"]
+    },
+    {
+        id: "T-02",
+        title: "Refatorar componentes de formulário para Zod 3.0",
+        description: "",
+        status: "IN_PROGRESS",
+        priority: "MEDIUM",
+        assigneeId: "user_02",
+        projectId: "proj_01",
+        workspaceId: "wksp_01",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        labels: ["Refactor"]
+    },
+    {
+        id: "T-03",
+        title: "Implementar testes de acessibilidade no Header",
+        description: "",
+        status: "REVIEW",
+        priority: "URGENT",
+        assigneeId: "user_03",
+        projectId: "proj_01",
+        workspaceId: "wksp_01",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        labels: ["QA"]
+    },
+    {
+        id: "T-04",
+        title: "Documentação inicial da arquitetura FSD",
+        description: "",
+        status: "DONE",
+        priority: "LOW",
+        assigneeId: "user_01",
+        projectId: "proj_01",
+        workspaceId: "wksp_01",
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        labels: ["Docs"]
+    }
+];
+
 export default function ProjectPage() {
     const params = useParams();
     const id = params.id as string;
 
-    const [project, setProject] = useState(mockProjects[id] || mockProjects["proj_01"]);
+    // Fallback to avoid error if id not in mock
+    const projectData = mockProjects[id] || mockProjects["proj_01"];
     const [activeTab, setActiveTab] = useState("");
 
     // Set initial tab based on methodology
     useEffect(() => {
-        if (project.methodology === "AGILE") setActiveTab("backlog");
-        else if (project.methodology === "KANBAN") setActiveTab("kanban");
-        else if (project.methodology === "LIST") setActiveTab("list");
-        else if (project.methodology === "PLANNING") setActiveTab("wiki");
+        if (projectData.methodology === "AGILE") setActiveTab("kanban");
+        else if (projectData.methodology === "KANBAN") setActiveTab("kanban");
+        else if (projectData.methodology === "LIST") setActiveTab("list");
+        else if (projectData.methodology === "PLANNING") setActiveTab("wiki");
         else setActiveTab("overview");
-    }, [project.methodology]);
+    }, [projectData.methodology]);
 
     return (
         <div className="flex flex-col h-full bg-background/50">
@@ -60,16 +120,16 @@ export default function ProjectPage() {
                 <div className="flex items-start justify-between mb-6">
                     <div className="space-y-1">
                         <div className="flex items-center gap-3">
-                            <h1 className="text-2xl font-mono font-bold tracking-tight">{project.name}</h1>
+                            <h1 className="text-2xl font-mono font-bold tracking-tight">{projectData.name}</h1>
                             <Button variant="ghost" size="icon-sm" className="text-muted-foreground hover:text-yellow-500">
                                 <Star className="size-4" />
                             </Button>
-                            <Badge variant={project.status === "Crítico" ? "destructive" : "secondary"}>
-                                {project.status}
+                            <Badge variant={projectData.status === "Crítico" ? "destructive" : "secondary"}>
+                                {projectData.status}
                             </Badge>
                         </div>
                         <p className="text-muted-foreground text-sm max-w-2xl leading-relaxed">
-                            {project.description}
+                            {projectData.description}
                         </p>
                     </div>
 
@@ -99,29 +159,33 @@ export default function ProjectPage() {
                 </div>
 
                 <ProjectTabs
-                    methodology={project.methodology}
+                    methodology={projectData.methodology}
                     activeTab={activeTab}
                     onTabChange={setActiveTab}
                 />
             </div>
 
-            {/* Tab Content Placeholder */}
-            <div className="flex-1 overflow-auto p-8">
-                <div className="rounded-xl border-2 border-dashed border-border h-full flex flex-col items-center justify-center text-center p-12 space-y-4">
-                    <div className="size-12 rounded-full bg-muted flex items-center justify-center">
-                        <Settings2 className="size-6 text-muted-foreground" />
+            {/* Tab Content */}
+            <div className="flex-1 overflow-hidden">
+                {activeTab === "kanban" ? (
+                    <KanbanBoard tasks={MOCK_TASKS} />
+                ) : (
+                    <div className="p-8 h-full overflow-auto">
+                        <div className="rounded-xl border-2 border-dashed border-border h-full flex flex-col items-center justify-center text-center p-12 space-y-4">
+                            <div className="size-12 rounded-full bg-muted flex items-center justify-center">
+                                <Settings2 className="size-6 text-muted-foreground" />
+                            </div>
+                            <div>
+                                <h2 className="text-lg font-mono font-semibold">Módulo {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} em construção</h2>
+                                <p className="text-muted-foreground text-sm max-w-xs mx-auto">
+                                    Este módulo faz parte da {projectData.methodology} e será implementado nos próximos sprints.
+                                </p>
+                            </div>
+                            <Button variant="secondary">Saiba mais sobre {projectData.methodology}</Button>
+                        </div>
                     </div>
-                    <div>
-                        <h2 className="text-lg font-mono font-semibold">Módulo {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} em construção</h2>
-                        <p className="text-muted-foreground text-sm max-w-xs mx-auto">
-                            Este módulo faz parte da {project.methodology} e será implementado nos próximos sprints.
-                        </p>
-                    </div>
-                    <Button variant="secondary">Saiba mais sobre {project.methodology}</Button>
-                </div>
+                )}
             </div>
         </div>
     );
 }
-
-import { Plus } from "lucide-react";
