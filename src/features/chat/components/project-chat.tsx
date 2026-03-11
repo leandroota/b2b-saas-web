@@ -57,6 +57,10 @@ export function ProjectChat() {
         setMounted(true);
     }, []);
 
+    if (!mounted) {
+        return <div className="flex h-full flex-col bg-background relative border-r border-border max-w-[400px] xl:max-w-[450px]" />;
+    }
+
     const handleSendMessage = () => {
         if (!inputValue.trim()) return;
 

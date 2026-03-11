@@ -93,6 +93,10 @@ export function WikiView() {
         setMounted(true);
     }, []);
 
+    if (!mounted) {
+        return <div className="flex h-full bg-background overflow-hidden relative" />;
+    }
+
     // Broadcast wiki context for AI
     useEffect(() => {
         setWikiContext({

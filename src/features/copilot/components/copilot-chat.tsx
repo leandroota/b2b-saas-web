@@ -49,6 +49,10 @@ export function CopilotChat() {
         setMounted(true);
     }, []);
 
+    if (!mounted) {
+        return <div className="flex h-full flex-col bg-background/80 backdrop-blur-xl relative border-l border-border shadow-2xl overflow-hidden" />;
+    }
+
     const handleSendMessage = (text?: string) => {
         const finalContent = text || inputValue;
         if (!finalContent.trim()) return;
