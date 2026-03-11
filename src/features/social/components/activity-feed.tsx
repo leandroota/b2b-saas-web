@@ -21,6 +21,7 @@ import { Activity, ActivityType } from "../lib/activity-schema";
 import { cn } from "@/lib/utils";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { useAppStore } from "@/store/use-app-store";
 
 const MOCK_ACTIVITIES: Activity[] = [
     {
@@ -73,11 +74,22 @@ const getActivityIcon = (type: ActivityType) => {
 };
 
 export function ActivityFeed() {
+    const { currentUser, activities, projects } = useAppStore();
     const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
         setMounted(true);
     }, []);
+
+    // Filter projects based on involvement for logic context
+    const involvedProjectIds = projects
+        .filter(p => p.involvedMembers.includes(currentUser.email))
+        .map(p => p.id);
+
+    // Filter activities based on role
+    const displayedActivities = currentUser.role === 'ADMIN'
+        ? activities
+        : activities.filter(a => involvedProjectIds.includes(a.projectId));
 
     return (
         <div className="flex flex-col h-full bg-background/50">
@@ -113,14 +125,14 @@ export function ActivityFeed() {
             {/* Feed Content */}
             <ScrollArea className="flex-1">
                 <div className="p-6 space-y-6">
-                    {MOCK_ACTIVITIES.map((activity) => (
+                    {displayedActivities.map((activity) => (
                         <div key={activity.id} className="relative pl-8 group">
                             {/* Timeline Connector */}
                             <div className="absolute left-3 top-2 bottom-[-24px] w-px bg-border group-last:bg-transparent" />
 
                             {/* Activity Icon Node */}
                             <div className="absolute left-0 top-1.5 size-6 rounded-full bg-card border border-border flex items-center justify-center z-10 shadow-sm">
-                                {getActivityIcon(activity.type)}
+                                {getActivityIcon(activity.type as ActivityType)}
                             </div>
 
                             <Card className="border-border bg-card/50 hover:bg-card transition-all duration-300 group-hover:shadow-md">

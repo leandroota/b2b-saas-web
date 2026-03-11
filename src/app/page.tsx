@@ -16,8 +16,18 @@ import { CopilotCard } from "@/features/copilot/components/copilot-card";
 import { useAppStore } from "@/store/use-app-store";
 
 export default function Home() {
-  const { isCopilotOpen, isMessagingOpen } = useAppStore();
+  const { isCopilotOpen, isMessagingOpen, currentUser, projects, activities } = useAppStore();
   const isChatActive = isCopilotOpen || isMessagingOpen;
+
+  // Filter projects based on role
+  const displayedProjects = currentUser.role === 'ADMIN'
+    ? projects
+    : projects.filter(p => p.involvedMembers.includes(currentUser.email));
+
+  // Filter activities for metrics (simulated)
+  const displayedActivities = currentUser.role === 'ADMIN'
+    ? activities
+    : activities.filter(a => displayedProjects.some(p => p.id === a.projectId));
 
   return (
     <div className="flex h-full bg-background/50 overflow-hidden">
@@ -28,7 +38,7 @@ export default function Home() {
           <div className="flex items-end justify-between">
             <div>
               <h2 className="text-3xl font-mono font-bold tracking-tight text-foreground">
-                Bom dia, John.
+                Bom dia, {currentUser.name.split(' ')[0]}.
               </h2>
               <p className="text-muted-foreground mt-2 font-medium">
                 O pulso do seu workspace em tempo real.
@@ -60,7 +70,9 @@ export default function Home() {
                 </div>
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Bloqueios</p>
-                  <h3 className="text-xl font-bold font-mono mt-0.5">3</h3>
+                  <h3 className="text-xl font-bold font-mono mt-0.5">
+                    {displayedProjects.some(p => p.status === "Risco") ? "1" : "0"}
+                  </h3>
                 </div>
               </div>
             </div>
@@ -72,7 +84,9 @@ export default function Home() {
                 </div>
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Tarefas Hoje</p>
-                  <h3 className="text-xl font-bold font-mono mt-0.5">5</h3>
+                  <h3 className="text-xl font-bold font-mono mt-0.5">
+                    {currentUser.role === 'ADMIN' ? '5' : '2'}
+                  </h3>
                 </div>
               </div>
             </div>
@@ -84,7 +98,9 @@ export default function Home() {
                 </div>
                 <div>
                   <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Velocidade</p>
-                  <h3 className="text-xl font-bold font-mono mt-0.5">+24%</h3>
+                  <h3 className="text-xl font-bold font-mono mt-0.5">
+                    {currentUser.role === 'ADMIN' ? '+24%' : '+12%'}
+                  </h3>
                 </div>
               </div>
             </div>
@@ -97,11 +113,7 @@ export default function Home() {
               <Button variant="ghost" size="sm" className="h-7 text-[10px] font-bold uppercase tracking-wider hover:text-primary">Ver todos</Button>
             </div>
             <div className="space-y-2">
-              {[
-                { name: "Projeto Alpha", status: "No Prazo", color: "bg-primary" },
-                { name: "Integração SSO", status: "Risco", color: "bg-destructive" },
-                { name: "Marketing Q3", status: "No Prazo", color: "bg-primary" },
-              ].map((project) => (
+              {displayedProjects.map((project) => (
                 <div key={project.name} className="flex items-center justify-between p-3 rounded-xl border border-transparent hover:border-border hover:bg-muted/30 cursor-pointer transition-all group">
                   <div className="flex items-center gap-3">
                     <div className={`size-2.5 rounded-full ${project.color} shadow-[0_0_8px] shadow-current/30`} />
