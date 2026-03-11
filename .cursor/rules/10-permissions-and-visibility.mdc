@@ -1,0 +1,489 @@
+---
+description: Regras de permissões, visibilidade e acesso entre workspace, Spaces, projetos, grupos, chat, feed, wiki, dashboard e Copilot
+globs: *
+---
+# 10-permissions-and-visibility.mdc
+
+## Objetivo
+Definir regras de permissões, visibilidade e acesso entre workspace, Spaces, projetos, grupos, chat, feed, wiki, dashboard e Copilot.
+
+## Regra-mãe
+O usuário só pode ver, acessar e operar sobre conteúdos e ações compatíveis com seu papel e com o contexto ao qual pertence.
+
+---
+
+# 1. PRINCÍPIOS GERAIS
+
+## 1. Permissão mínima necessária
+Dar ao usuário apenas o acesso necessário para executar seu papel.
+
+## 2. Visibilidade segue contexto
+Se o usuário não participa de um contexto, ele não deve ver conteúdo daquele contexto sem regra explícita.
+
+## 3. Acesso deve ser previsível
+O usuário deve conseguir entender por que pode ou não pode ver/editar algo.
+
+## 4. Copilot respeita as mesmas permissões
+A IA nunca pode atravessar limites de acesso do usuário.
+
+## 5. Ocultar x desabilitar
+- ocultar quando a funcionalidade não faz sentido para aquele usuário;
+- desabilitar quando a funcionalidade existe, mas está indisponível naquele estado.
+
+---
+
+# 2. NÍVEIS DE CONTEXTO
+
+A plataforma possui os seguintes níveis principais:
+
+## Workspace
+Nível global da organização.
+
+## Space
+Agrupador de contexto por:
+- projeto;
+- área;
+- pessoal;
+- operação transversal.
+
+## Projeto
+Unidade principal de execução.
+
+## Grupo
+Contexto de comunidade, área ou projeto.
+
+## Chat
+Contexto conversacional vinculado a projeto, grupo, área ou conversa direta.
+
+## Wiki
+Memória do projeto.
+
+## Dashboard
+Camada gerencial de leitura.
+
+---
+
+# 3. PAPÉIS INICIAIS
+
+## Colaborador
+Pode operar dentro dos contextos onde participa.
+
+## Líder de projeto
+Pode configurar e operar projetos sob sua responsabilidade.
+
+## Gerente
+Pode acompanhar múltiplos projetos e seus indicadores.
+
+## Admin básico
+Pode configurar workspace, regras iniciais e acesso macro.
+
+## Regra
+O MVP deve evitar excesso de perfis.  
+Começar com poucos papéis e regras claras.
+
+---
+
+# 4. MATRIZ DE ACESSO POR PAPEL
+
+## Colaborador
+### Pode
+- acessar Home;
+- acessar Spaces dos quais participa;
+- ver projetos onde está incluído;
+- usar chat nos contextos com acesso;
+- criar e interagir em posts;
+- comentar;
+- favoritar;
+- salvar aprendizado;
+- editar tarefas permitidas;
+- consultar wiki permitida;
+- criar/editar páginas permitidas;
+- usar Copilot no contexto acessível.
+
+### Não deve poder por padrão
+- criar regras globais do workspace;
+- ver dashboards agregados de toda a organização sem permissão;
+- alterar configurações estruturais do workspace;
+- acessar projetos privados sem inclusão.
+
+---
+
+## Líder de projeto
+### Pode
+- tudo que o colaborador pode;
+- criar projeto;
+- escolher metodologia;
+- configurar estrutura inicial do projeto;
+- adicionar/remover membros do projeto conforme regra do workspace;
+- organizar backlog/sprint/board;
+- promover conteúdo para wiki;
+- ver dashboard do projeto;
+- registrar decisões;
+- gerenciar partes do contexto do projeto.
+
+### Não deve poder por padrão
+- alterar configurações globais do workspace sem permissão;
+- acessar projetos fora da sua alçada sem acesso explícito.
+
+---
+
+## Gerente
+### Pode
+- tudo que o líder pode em contextos permitidos;
+- visualizar dashboards agregados;
+- acompanhar múltiplos projetos;
+- consultar status, gargalos e atividade recente;
+- navegar entre projetos com acesso gerencial;
+- usar Copilot para leitura gerencial dos contextos permitidos.
+
+### Não deve poder por padrão
+- editar qualquer projeto automaticamente sem vínculo ou permissão;
+- acessar contextos privados fora da estrutura autorizada.
+
+---
+
+## Admin básico
+### Pode
+- configurar workspace;
+- criar grupos institucionais;
+- gerir visibilidade macro;
+- definir regras de acesso iniciais;
+- criar ou arquivar contextos globais;
+- acompanhar configuração geral.
+
+### Regra
+Mesmo admin não deve automaticamente modificar conteúdo operacional de qualquer projeto sem trilha e contexto.
+
+---
+
+# 5. VISIBILIDADE POR TIPO DE CONTEXTO
+
+## Home
+### Mostrar
+- conteúdo dos contextos aos quais o usuário tem acesso;
+- resumo de projetos/Spaces permitidos;
+- feed conforme filtro e acesso.
+
+### Não mostrar
+- publicações de projetos privados sem acesso;
+- dados agregados sensíveis fora da permissão.
+
+---
+
+## Space
+### Regra
+O usuário só vê Spaces dos quais participa ou que sejam públicos no workspace.
+
+### Tipos
+- projeto;
+- área;
+- pessoal;
+- operação transversal.
+
+### Observação
+Space pessoal é visível apenas ao próprio usuário, salvo regra futura de compartilhamento.
+
+---
+
+## Projeto
+### Regra
+Projeto pode ser:
+- público no workspace;
+- restrito a membros;
+- gerencialmente visível com leitura ampliada.
+
+### Usuário sem acesso
+- não deve ver conteúdo interno;
+- pode ver estado de bloqueio ou inexistência conforme política;
+- deve receber mensagem clara se tentar acessar via link.
+
+---
+
+## Grupo
+### Regra
+Grupo pode ter visibilidade:
+- pública no workspace;
+- restrita a membros;
+- institucional.
+
+### Conteúdo do grupo
+Segue a mesma política do grupo.
+
+---
+
+## Chat
+### Regra
+Chat herda o contexto ao qual pertence.
+
+### Exemplos
+- chat de projeto: visível a membros do projeto;
+- chat de grupo: visível a membros do grupo;
+- conversa direta: visível apenas aos participantes.
+
+### Regra extra
+Não mostrar mensagens fora do contexto permitido.
+
+---
+
+## Feed
+### Regra
+Post só aparece para usuários com acesso ao contexto associado.
+
+### Exemplos
+- post de projeto privado: só membros e papéis autorizados;
+- post de grupo público: visível dentro do workspace conforme política;
+- post pessoal: visível conforme regra do contexto.
+
+### Regra importante
+Sempre exibir contexto do post para justificar por que ele apareceu.
+
+---
+
+## Wiki
+### Regra
+Wiki herda acesso do projeto, salvo se houver regra mais restritiva.
+
+### Permissões mínimas possíveis
+- sem acesso
+- leitura
+- edição
+
+### Regra
+Leitura e edição devem ser separáveis.
+
+---
+
+## Dashboard
+### Regra
+Dashboard não é automaticamente público.
+
+### Escopos possíveis
+- dashboard do projeto;
+- dashboard gerencial agregado;
+- dashboard de workspace.
+
+### Regras
+- colaborador vê apenas dashboards dos seus contextos permitidos, se habilitado;
+- líder vê dashboard dos projetos que lidera ou participa com permissão;
+- gerente vê dashboards agregados autorizados;
+- admin vê configuração e visão macro conforme política.
+
+---
+
+## Copilot
+### Regra
+Copilot só pode ler o que o usuário já pode acessar.
+
+### Não permitido
+- resumir conteúdo de projeto sem acesso;
+- cruzar chats privados com wiki de outro contexto;
+- sugerir decisões baseadas em conteúdo invisível ao usuário.
+
+---
+
+# 6. AÇÕES POR NÍVEL DE PERMISSÃO
+
+## Leitura
+Pode:
+- visualizar conteúdo;
+- navegar;
+- consultar histórico permitido;
+- usar Copilot em modo leitura se autorizado.
+
+## Interação
+Pode:
+- comentar;
+- reagir;
+- favoritar;
+- salvar aprendizado;
+- participar do chat.
+
+## Edição
+Pode:
+- criar/editar tarefas;
+- editar páginas da wiki;
+- publicar updates;
+- registrar decisões;
+- promover conteúdo.
+
+## Gestão
+Pode:
+- configurar projeto;
+- definir metodologia;
+- gerenciar membros do projeto;
+- organizar backlog/sprint;
+- visualizar dashboards avançados.
+
+## Administração
+Pode:
+- configurar regras do workspace;
+- gerenciar visibilidade global;
+- criar grupos institucionais;
+- administrar estrutura base.
+
+---
+
+# 7. REGRAS DE HERANÇA DE PERMISSÃO
+
+## Regra geral
+Conteúdos filhos tendem a herdar o acesso do contexto pai.
+
+### Exemplos
+- wiki do projeto herda projeto;
+- chat do projeto herda projeto;
+- post de projeto herda projeto;
+- aprendizado salvo de conteúdo do projeto herda projeto.
+
+## Exceções
+Só podem existir se forem explicitamente modeladas.
+
+### Exemplo futuro
+- página da wiki com edição restrita mas leitura ampla.
+
+## Regra
+Evitar exceções demais no MVP.
+
+---
+
+# 8. REGRAS DE OCULTAÇÃO E BLOQUEIO
+
+## Ocultar
+Usar quando:
+- a feature não se aplica ao papel;
+- a existência da ação não ajuda o usuário;
+- reduzir ruído é melhor que explicar indisponibilidade.
+
+## Desabilitar
+Usar quando:
+- a ação existe e o usuário entende seu valor;
+- falta pré-requisito;
+- contexto está arquivado;
+- está sem permissão temporária/condicional.
+
+## Mensagens recomendadas
+- Você não tem permissão para editar esta página.
+- Este projeto está arquivado e não pode mais ser alterado.
+- Selecione um projeto para continuar.
+
+---
+
+# 9. LINKS DIRETOS E ACESSO VIA URL
+
+## Regra
+Se o usuário abrir um link direto para contexto sem acesso:
+- não mostrar conteúdo;
+- exibir mensagem clara;
+- oferecer saída segura.
+
+## Exemplo de mensagem
+- Você não tem acesso a este conteúdo.
+- Voltar para Home
+
+## Regra adicional
+Nunca vazar metadados sensíveis em páginas sem acesso.
+
+---
+
+# 10. CONTEÚDO PROMOVIDO E RASTREABILIDADE
+
+## Regra
+Quando conteúdo vira aprendizado, decisão ou wiki:
+- manter vínculo com origem;
+- manter regras de acesso compatíveis com o contexto de origem;
+- impedir promoção para contexto mais amplo sem permissão.
+
+## Exemplo
+Uma thread privada de projeto não pode ser promovida para uma wiki visível a usuários sem acesso ao projeto.
+
+---
+
+# 11. PERMISSÕES DO COPILOT
+
+## O Copilot pode
+- resumir conteúdo acessível;
+- estruturar saídas no contexto visível;
+- sugerir tarefas, decisões e aprendizados;
+- apoiar wiki e feed no contexto permitido.
+
+## O Copilot não pode
+- atravessar contextos privados;
+- inferir ou expor conteúdo restrito;
+- sugerir aplicação em contexto fora da permissão;
+- responder com base em conteúdo não acessível ao usuário.
+
+## Regra obrigatória
+Permissões do Copilot devem ser iguais ou mais restritivas que as permissões humanas.
+
+---
+
+# 12. ESTADOS DE PERMISSÃO NA UI
+
+Toda área bloqueada deve prever estados claros:
+
+## Sem acesso
+- mensagem objetiva
+- CTA de saída ou retorno
+
+## Sem permissão de edição
+- leitura liberada
+- ação de edição desabilitada ou oculta
+
+## Contexto arquivado
+- leitura permitida quando fizer sentido
+- edição bloqueada
+- indicação visível de arquivamento
+
+## Pré-requisito ausente
+- explicar o que falta para habilitar a ação
+
+---
+
+# 13. TRACKING DE PERMISSÃO E VISIBILIDADE
+
+## Eventos sugeridos
+- `access_denied_shown`
+- `permission_block_shown`
+- `restricted_content_open_attempted`
+
+## Propriedades úteis
+- `context_type`
+- `context_id`
+- `role`
+- `block_reason`
+- `screen_name`
+
+## Regra
+Bloqueios importantes devem ser observáveis para diagnosticar problemas de configuração ou UX.
+
+---
+
+# 14. ANTI-PADRÕES
+
+Evitar:
+- permissões excessivamente granulares no MVP;
+- diferença imprevisível entre ver e editar;
+- ações visíveis sem explicação de bloqueio;
+- Copilot com acesso maior que o usuário;
+- conteúdos herdando visibilidade errada;
+- dashboard mostrando dados sensíveis por acidente;
+- links diretos vazando informação.
+
+---
+
+# 15. CHECKLIST DE NOVA FEATURE
+
+Antes de lançar qualquer feature, validar:
+
+- Em qual contexto ela existe?
+- Quem pode ver?
+- Quem pode interagir?
+- Quem pode editar?
+- Quem pode gerenciar?
+- Ela herda permissão de qual entidade?
+- Há alguma exceção?
+- O que acontece via link direto?
+- O Copilot pode operar nela?
+- O estado bloqueado está claro na UI?
+
+## Regra final
+Se a visibilidade e a permissão de uma feature não estiverem explícitas, a feature não está pronta.
