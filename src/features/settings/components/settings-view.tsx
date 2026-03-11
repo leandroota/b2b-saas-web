@@ -12,8 +12,10 @@ import {
     Plus,
     MoreHorizontal,
     Upload,
+    ExternalLink,
     Zap,
-    ExternalLink
+    Workflow,
+    Palette
 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
@@ -27,6 +29,8 @@ import { useAppStore } from "@/store/use-app-store";
 import { PermissionGuard } from "@/components/auth/permission-guard";
 import { InviteMemberModal } from "./invite-member-modal";
 import { IntegrationsGallery } from "./integrations-gallery";
+import { AutomationRules } from "./automation-rules";
+import { BrandingSettings } from "./branding-settings";
 
 export function SettingsView() {
     const { currentUser } = useAppStore();
@@ -67,6 +71,16 @@ export function SettingsView() {
                                 <Zap className="size-4" />
                                 <span className="text-xs font-bold uppercase tracking-wider">Integrações</span>
                             </TabsTrigger>
+                            <PermissionGuard role="ADMIN">
+                                <TabsTrigger value="automation" className="gap-2 h-10 px-6 data-[state=active]:bg-background data-[state=active]:text-primary">
+                                    <Workflow className="size-4" />
+                                    <span className="text-xs font-bold uppercase tracking-wider">Automação</span>
+                                </TabsTrigger>
+                                <TabsTrigger value="branding" className="gap-2 h-10 px-6 data-[state=active]:bg-background data-[state=active]:text-primary">
+                                    <Palette className="size-4" />
+                                    <span className="text-xs font-bold uppercase tracking-wider">Personalização</span>
+                                </TabsTrigger>
+                            </PermissionGuard>
                         </TabsList>
 
                         {/* Profile Tab */}
@@ -274,6 +288,16 @@ export function SettingsView() {
                                 <p className="text-sm text-muted-foreground">Potencialize seu fluxo de trabalho conectando ferramentas externas.</p>
                             </div>
                             <IntegrationsGallery />
+                        </TabsContent>
+
+                        {/* Automation Tab */}
+                        <TabsContent value="automation" className="space-y-6 animate-in slide-in-from-bottom-2 duration-500">
+                            <AutomationRules />
+                        </TabsContent>
+
+                        {/* Branding Tab */}
+                        <TabsContent value="branding" className="space-y-6 animate-in slide-in-from-bottom-2 duration-500">
+                            <BrandingSettings />
                         </TabsContent>
                     </Tabs>
                 </div>
