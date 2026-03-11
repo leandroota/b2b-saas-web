@@ -86,7 +86,12 @@ export function WikiView() {
     const [isEditing, setIsEditing] = useState(false);
     const [editedContent, setEditedContent] = useState("");
     const [showHistory, setShowHistory] = useState(false);
+    const [mounted, setMounted] = useState(false);
     const { setWikiContext } = useAppStore();
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     // Broadcast wiki context for AI
     useEffect(() => {
@@ -219,7 +224,7 @@ export function WikiView() {
                         <div className="hidden md:flex items-center gap-2 text-muted-foreground">
                             <Clock className="size-3.5" />
                             <span className="text-[10px] font-medium uppercase tracking-wider">
-                                Atualizado por <strong>{selectedPage.authorName}</strong> em {new Date(selectedPage.lastUpdatedAt).toLocaleDateString()}
+                                Atualizado por <strong>{selectedPage.authorName}</strong> em {mounted ? new Date(selectedPage.lastUpdatedAt).toLocaleDateString() : "--/--/----"}
                             </span>
                         </div>
                     </div>

@@ -50,7 +50,12 @@ const MOCK_MESSAGES: ChatMessage[] = [
 export function ProjectChat() {
     const [messages, setMessages] = useState<ChatMessage[]>(MOCK_MESSAGES);
     const [inputValue, setInputValue] = useState("");
+    const [mounted, setMounted] = useState(false);
     const scrollRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const handleSendMessage = () => {
         if (!inputValue.trim()) return;
@@ -140,7 +145,7 @@ export function ProjectChat() {
                                                 {message.senderName}
                                             </span>
                                             <span className="text-[10px] text-muted-foreground font-mono">
-                                                {new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                                {mounted ? new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "--:--"}
                                             </span>
                                         </div>
                                     )}

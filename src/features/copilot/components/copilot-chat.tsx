@@ -41,8 +41,13 @@ export function CopilotChat() {
     const [messages, setMessages] = useState<CopilotMessage[]>(INITIAL_MESSAGES);
     const [inputValue, setInputValue] = useState("");
     const [isTyping, setIsTyping] = useState(false);
+    const [mounted, setMounted] = useState(false);
     const scrollRef = useRef<HTMLDivElement>(null);
     const { currentProjectContext, currentWikiContext } = useAppStore();
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const handleSendMessage = (text?: string) => {
         const finalContent = text || inputValue;
@@ -152,7 +157,7 @@ export function CopilotChat() {
                                         {message.content}
                                     </div>
                                     <span className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground/50 opacity-0 group-hover:opacity-100 transition-opacity">
-                                        Alpha Intelligence • {new Date(message.createdAt).toLocaleTimeString()}
+                                        Alpha Intelligence • {mounted ? new Date(message.createdAt).toLocaleTimeString() : "--:--"}
                                     </span>
                                 </div>
                             </div>
