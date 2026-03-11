@@ -43,15 +43,11 @@ export function CopilotChat() {
     const [isTyping, setIsTyping] = useState(false);
     const [mounted, setMounted] = useState(false);
     const scrollRef = useRef<HTMLDivElement>(null);
-    const { currentProjectContext, currentWikiContext } = useAppStore();
+    const { currentProjectContext, currentWikiContext, setCopilotOpen } = useAppStore();
 
     useEffect(() => {
         setMounted(true);
     }, []);
-
-    if (!mounted) {
-        return <div className="flex h-full flex-col bg-background/80 backdrop-blur-xl relative border-l border-border shadow-2xl overflow-hidden" />;
-    }
 
     const handleSendMessage = (text?: string) => {
         const finalContent = text || inputValue;
@@ -106,12 +102,16 @@ export function CopilotChat() {
 
     useEffect(() => {
         if (scrollRef.current) {
-            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+            scrollRef.current.scrollIntoView({ behavior: "smooth" });
         }
     }, [messages, isTyping]);
 
+    if (!mounted) {
+        return <div className="flex h-full flex-col bg-background/80 backdrop-blur-xl relative border-l border-border shadow-2xl overflow-hidden" />;
+    }
+
     return (
-        <div className="flex h-full flex-col bg-background/80 backdrop-blur-xl relative border-l border-border shadow-2xl overflow-hidden">
+        <div className="flex h-full flex-col bg-background/80 backdrop-blur-xl relative overflow-hidden">
             {/* Copilot Header */}
             <div className="h-16 flex items-center justify-between px-6 border-b border-border/50 bg-primary/5 sticky top-0 z-10">
                 <div className="flex items-center gap-3">
@@ -126,13 +126,23 @@ export function CopilotChat() {
                         <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">IA Conectada ao Projeto</p>
                     </div>
                 </div>
-                <Button variant="ghost" size="icon-xs" className="size-8 text-muted-foreground hover:text-foreground">
-                    <RefreshCcw className="size-3.5" />
-                </Button>
+                <div className="flex items-center gap-1">
+                    <Button variant="ghost" size="icon-xs" className="size-8 text-muted-foreground hover:text-foreground">
+                        <RefreshCcw className="size-3.5" />
+                    </Button>
+                    <Button
+                        variant="ghost"
+                        size="icon-xs"
+                        onClick={() => setCopilotOpen(false)}
+                        className="size-8 text-muted-foreground hover:text-destructive hover:bg-destructive/5"
+                    >
+                        <X className="size-4" />
+                    </Button>
+                </div>
             </div>
 
             {/* Messages Area */}
-            <ScrollArea className="flex-1 px-4" ref={scrollRef}>
+            <ScrollArea className="flex-1 px-4">
                 <div className="flex flex-col gap-6 py-6 pb-32">
                     {messages.map((message) => {
                         const isAI = message.role === "assistant";
@@ -180,6 +190,7 @@ export function CopilotChat() {
                             </div>
                         </div>
                     )}
+                    <div ref={scrollRef} />
                 </div>
             </ScrollArea>
 
@@ -218,7 +229,7 @@ export function CopilotChat() {
                 </div>
                 <div className="flex items-center justify-center gap-4 mt-3">
                     <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-muted-foreground/60 flex items-center gap-1.5">
-                        <Zap className="size-2.5" /> Contexto: Tarefas + Wiki
+                        <Zap className="size-2.5" /> Contexto: {currentProjectContext?.name ? "Projeto Ativo" : "Workspace"}
                     </span>
                 </div>
             </div>

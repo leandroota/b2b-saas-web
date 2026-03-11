@@ -28,6 +28,20 @@ interface AppState {
         role: UserRole;
     };
 
+    // Unified Messaging (Epic 14 Pivô)
+    isMessagingOpen: boolean;
+    unreadCount: number;
+    drawerLevel: 'inbox' | 'chat';
+    activeConversation: {
+        id: string;
+        type: 'person' | 'project';
+        name: string;
+        context: string;
+        status?: 'online' | 'away' | 'offline';
+        avatar?: string;
+        participants?: number;
+    } | null;
+
     toggleCopilot: () => void;
     setCopilotOpen: (isOpen: boolean) => void;
     setActiveWorkspace: (workspaceId: string) => void;
@@ -35,6 +49,12 @@ interface AppState {
     setProjectContext: (context: any) => void;
     setWikiContext: (context: any) => void;
     setUserRole: (role: UserRole) => void;
+
+    // Messaging Actions
+    openMessaging: () => void;
+    closeMessaging: () => void;
+    openConversation: (conv: any) => void;
+    backToInbox: () => void;
 }
 
 export const useAppStore = create<AppState>((set) => ({
@@ -46,11 +66,22 @@ export const useAppStore = create<AppState>((set) => ({
     currentUser: {
         name: "John Smith",
         email: "john@acme.com",
-        role: "MEMBER", // Default for testing
+        role: "MEMBER",
     },
 
-    toggleCopilot: () => set((state) => ({ isCopilotOpen: !state.isCopilotOpen })),
-    setCopilotOpen: (isOpen) => set({ isCopilotOpen: isOpen }),
+    isMessagingOpen: false,
+    unreadCount: 3,
+    drawerLevel: 'inbox',
+    activeConversation: null,
+
+    toggleCopilot: () => set((state) => ({
+        isCopilotOpen: !state.isCopilotOpen,
+        isMessagingOpen: false
+    })),
+    setCopilotOpen: (isOpen) => set((state) => ({
+        isCopilotOpen: isOpen,
+        isMessagingOpen: isOpen ? false : state.isMessagingOpen
+    })),
     setActiveWorkspace: (workspaceId) => set({ workspaceId }),
     setActiveTheme: (theme) => set({ activeTheme: theme }),
     setProjectContext: (context) => set({ currentProjectContext: context }),
@@ -58,4 +89,24 @@ export const useAppStore = create<AppState>((set) => ({
     setUserRole: (role) => set((state) => ({
         currentUser: { ...state.currentUser, role }
     })),
+
+    openMessaging: () => set({
+        isMessagingOpen: true,
+        isCopilotOpen: false,
+        drawerLevel: 'inbox'
+    }),
+    closeMessaging: () => set({
+        isMessagingOpen: false,
+        activeConversation: null
+    }),
+    openConversation: (conv) => set({
+        activeConversation: conv,
+        drawerLevel: 'chat',
+        isMessagingOpen: true,
+        isCopilotOpen: false
+    }),
+    backToInbox: () => set({
+        drawerLevel: 'inbox',
+        activeConversation: null
+    }),
 }));

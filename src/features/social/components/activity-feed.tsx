@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -72,6 +73,12 @@ const getActivityIcon = (type: ActivityType) => {
 };
 
 export function ActivityFeed() {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     return (
         <div className="flex flex-col h-full bg-background/50">
             {/* Feed Header */}
@@ -130,7 +137,7 @@ export function ActivityFeed() {
                                                 </span>
                                                 <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground font-medium uppercase tracking-wider">
                                                     <Clock className="size-3" />
-                                                    {formatDistanceToNow(new Date(activity.createdAt), { addSuffix: true, locale: ptBR })}
+                                                    {mounted ? formatDistanceToNow(new Date(activity.createdAt), { addSuffix: true, locale: ptBR }) : "--:--"}
                                                 </div>
                                             </div>
                                         </div>

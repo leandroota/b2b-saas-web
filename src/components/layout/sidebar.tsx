@@ -71,25 +71,6 @@ export function Sidebar() {
 
                     return content;
                 })}
-
-                <div className="pt-4 pb-2">
-                    <div className="px-3 text-xs font-mono font-semibold text-sidebar-foreground/50 mb-2 uppercase tracking-widest">
-                        Copilot
-                    </div>
-                    <Button
-                        variant={isCopilotOpen ? "secondary" : "outline"}
-                        size="sm"
-                        className={cn(
-                            "w-full justify-start gap-2 font-bold transition-all border-primary/20",
-                            !isCopilotOpen && "text-primary hover:bg-primary/10 hover:border-primary/40",
-                            isCopilotOpen && "bg-primary/10 text-primary border-primary/30"
-                        )}
-                        onClick={toggleCopilot}
-                    >
-                        <Zap className={cn("h-4 w-4", isCopilotOpen && "fill-current animate-pulse")} />
-                        {isCopilotOpen ? "Ocultar Copilot" : "Fly Copilot AI"}
-                    </Button>
-                </div>
             </nav>
 
             {/* User Footer */}

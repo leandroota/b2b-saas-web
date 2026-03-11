@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ArrowRight,
   Clock,
@@ -9,8 +11,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { CreateProjectModal } from "@/features/projects/components/create-project-modal";
 import { ActivityFeed } from "@/features/social/components/activity-feed";
+import { InboxCard } from "@/features/chat/components/inbox-card";
+import { CopilotCard } from "@/features/copilot/components/copilot-card";
+import { useAppStore } from "@/store/use-app-store";
 
 export default function Home() {
+  const { isCopilotOpen, isMessagingOpen } = useAppStore();
+  const isChatActive = isCopilotOpen || isMessagingOpen;
+
   return (
     <div className="flex h-full bg-background/50 overflow-hidden">
       {/* Main Column: Feed */}
@@ -38,87 +46,83 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Sidebar: Metrics & Projects */}
-      <aside className="hidden xl:flex w-[380px] shrink-0 flex-col bg-background p-8 space-y-8 overflow-y-auto">
-        <h3 className="text-xs font-bold font-mono uppercase tracking-[0.2em] text-muted-foreground">Insights Rápidos</h3>
+      {/* Persistent Sidebar Slot to prevent layout jumps */}
+      <div className="hidden xl:flex w-[380px] shrink-0 flex-col relative border-l border-border overflow-hidden">
+        <aside className="absolute inset-0 flex flex-col bg-background p-8 space-y-8 overflow-y-auto animate-in fade-in duration-500">
+          <h3 className="text-xs font-bold font-mono uppercase tracking-[0.2em] text-muted-foreground">Insights Rápidos</h3>
 
-        {/* Quick Metrics */}
-        <div className="space-y-4">
-          <div className="rounded-xl border border-border bg-card/50 p-4 shadow-sm hover:bg-card transition-all group">
-            <div className="flex items-center gap-4">
-              <div className="p-2.5 bg-destructive/10 text-destructive rounded-lg group-hover:scale-110 transition-transform">
-                <AlertCircle className="size-5" />
-              </div>
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Bloqueios</p>
-                <h3 className="text-xl font-bold font-mono mt-0.5">3</h3>
-              </div>
-            </div>
-          </div>
-
-          <div className="rounded-xl border border-border bg-card/50 p-4 shadow-sm hover:bg-card transition-all group">
-            <div className="flex items-center gap-4">
-              <div className="p-2.5 bg-primary/10 text-primary rounded-lg group-hover:scale-110 transition-transform">
-                <CheckCircle2 className="size-5" />
-              </div>
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Tarefas Hoje</p>
-                <h3 className="text-xl font-bold font-mono mt-0.5">5</h3>
-              </div>
-            </div>
-          </div>
-
-          <div className="rounded-xl border border-border bg-card/50 p-4 shadow-sm hover:bg-card transition-all group border-l-4 border-l-primary">
-            <div className="flex items-center gap-4">
-              <div className="p-2.5 bg-secondary text-secondary-foreground rounded-lg group-hover:scale-110 transition-transform">
-                <TrendingUp className="size-5" />
-              </div>
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Velocidade</p>
-                <h3 className="text-xl font-bold font-mono mt-0.5">+24%</h3>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Projects Section */}
-        <div className="space-y-4 pt-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-[11px] font-bold font-mono uppercase tracking-[0.2em] text-muted-foreground">Projetos Ativos</h3>
-            <Button variant="ghost" size="sm" className="h-7 text-[10px] font-bold uppercase tracking-wider hover:text-primary">Ver todos</Button>
-          </div>
-          <div className="space-y-2">
-            {[
-              { name: "Projeto Alpha", status: "No Prazo", color: "bg-primary" },
-              { name: "Integração SSO", status: "Risco", color: "bg-destructive" },
-              { name: "Marketing Q3", status: "No Prazo", color: "bg-primary" },
-            ].map((project) => (
-              <div key={project.name} className="flex items-center justify-between p-3 rounded-xl border border-transparent hover:border-border hover:bg-muted/30 cursor-pointer transition-all group">
-                <div className="flex items-center gap-3">
-                  <div className={`size-2.5 rounded-full ${project.color} shadow-[0_0_8px] shadow-current/30`} />
-                  <div>
-                    <h4 className="text-xs font-bold font-mono uppercase tracking-tight text-foreground">{project.name}</h4>
-                    <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">{project.status}</p>
-                  </div>
+          {/* Quick Metrics */}
+          <div className="space-y-4">
+            <div className="rounded-xl border border-border bg-card/50 p-4 shadow-sm hover:bg-card transition-all group">
+              <div className="flex items-center gap-4">
+                <div className="p-2.5 bg-destructive/10 text-destructive rounded-lg group-hover:scale-110 transition-transform">
+                  <AlertCircle className="size-5" />
                 </div>
-                <ArrowRight className="size-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Bloqueios</p>
+                  <h3 className="text-xl font-bold font-mono mt-0.5">3</h3>
+                </div>
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Spaces Shortcut */}
-        <div className="pt-6 border-t border-border mt-auto">
-          <div className="p-4 rounded-2xl bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/20 relative overflow-hidden">
-            <div className="relative z-10">
-              <p className="text-[10px] font-bold uppercase tracking-wider text-primary mb-1">Membro Pro</p>
-              <h4 className="text-sm font-bold font-mono uppercase leading-tight mb-2">Seus atalhos preferidos</h4>
-              <Button size="sm" className="h-8 w-full text-[10px] font-bold uppercase tracking-wider rounded-lg">Gerenciar Workspace</Button>
             </div>
-            <div className="absolute -right-4 -bottom-4 size-20 bg-primary/20 rounded-full blur-2xl" />
+
+            <div className="rounded-xl border border-border bg-card/50 p-4 shadow-sm hover:bg-card transition-all group">
+              <div className="flex items-center gap-4">
+                <div className="p-2.5 bg-primary/10 text-primary rounded-lg group-hover:scale-110 transition-transform">
+                  <CheckCircle2 className="size-5" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Tarefas Hoje</p>
+                  <h3 className="text-xl font-bold font-mono mt-0.5">5</h3>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-xl border border-border bg-card/50 p-4 shadow-sm hover:bg-card transition-all group border-l-4 border-l-primary">
+              <div className="flex items-center gap-4">
+                <div className="p-2.5 bg-secondary text-secondary-foreground rounded-lg group-hover:scale-110 transition-transform">
+                  <TrendingUp className="size-5" />
+                </div>
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Velocidade</p>
+                  <h3 className="text-xl font-bold font-mono mt-0.5">+24%</h3>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </aside>
+
+          {/* Projects Section */}
+          <div className="space-y-4 pt-4">
+            <div className="flex items-center justify-between">
+              <h3 className="text-[11px] font-bold font-mono uppercase tracking-[0.2em] text-muted-foreground">Projetos Ativos</h3>
+              <Button variant="ghost" size="sm" className="h-7 text-[10px] font-bold uppercase tracking-wider hover:text-primary">Ver todos</Button>
+            </div>
+            <div className="space-y-2">
+              {[
+                { name: "Projeto Alpha", status: "No Prazo", color: "bg-primary" },
+                { name: "Integração SSO", status: "Risco", color: "bg-destructive" },
+                { name: "Marketing Q3", status: "No Prazo", color: "bg-primary" },
+              ].map((project) => (
+                <div key={project.name} className="flex items-center justify-between p-3 rounded-xl border border-transparent hover:border-border hover:bg-muted/30 cursor-pointer transition-all group">
+                  <div className="flex items-center gap-3">
+                    <div className={`size-2.5 rounded-full ${project.color} shadow-[0_0_8px] shadow-current/30`} />
+                    <div>
+                      <h4 className="text-xs font-bold font-mono uppercase tracking-tight text-foreground">{project.name}</h4>
+                      <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">{project.status}</p>
+                    </div>
+                  </div>
+                  <ArrowRight className="size-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Interaction Hub */}
+          <div className="pt-6 border-t border-border mt-auto flex flex-col gap-3">
+            <InboxCard />
+            <CopilotCard />
+          </div>
+        </aside>
+      </div>
     </div>
   );
 }
