@@ -1,0 +1,590 @@
+---
+description: Regras para definir como as metodologias de projeto moldam a estrutura da interface, as views disponíveis e o modo de trabalho
+globs: *
+---
+# 11-project-methodologies.mdc
+
+## Objetivo
+Definir como as metodologias de projeto moldam a estrutura da interface, as views disponíveis, o comportamento esperado do time e a organização inicial do projeto.
+
+## Regra-mãe
+Metodologia não é apenas uma tag do projeto.  
+Ela deve alterar a estrutura inicial de operação, as visualizações disponíveis e o modo de trabalho esperado dentro do produto.
+
+---
+
+# 1. PRINCÍPIOS GERAIS
+
+## 1. Metodologia deve simplificar, não complicar
+Ao escolher uma metodologia, o usuário deve receber uma estrutura inicial útil, e não mais complexidade.
+
+## 2. Views devem existir por necessidade operacional
+Não habilitar todas as views para todos os projetos por padrão.
+
+## 3. Cada metodologia tem um modo principal de operar
+A interface deve refletir o fluxo real de trabalho daquela metodologia.
+
+## 4. Customização é permitida, mas não no primeiro momento
+O projeto começa com uma estrutura recomendada.  
+Customizações futuras podem existir, mas o MVP deve priorizar clareza.
+
+## 5. Metodologia deve ser visível
+O usuário precisa entender em que tipo de projeto está e por que vê determinadas views.
+
+## 6. Gantt é view de coordenação e planejamento
+Gantt deve ser usado para visualizar:
+- duração;
+- dependências;
+- marcos;
+- fases;
+- sequenciamento;
+- risco de atraso.
+
+## Regra
+Gantt não deve substituir backlog, sprint, board ou lista.  
+Ele complementa a execução com visão temporal e estrutural.
+
+---
+
+# 2. METODOLOGIAS INICIAIS SUPORTADAS
+
+## Metodologias do MVP
+- Ágil
+- Kanban
+- Lista simples
+- Planejamento macro
+
+## Regra
+O MVP deve suportar poucas metodologias, mas com diferença real entre elas.
+
+---
+
+# 3. ESTRUTURA BASE COMUM A TODO PROJETO
+
+Independentemente da metodologia, todo projeto deve ter pelo menos:
+
+- Visão geral
+- Atividade
+- Wiki
+- Chat
+
+## Regra
+Essas superfícies são o núcleo comum de contexto, memória e colaboração.
+
+---
+
+# 4. METODOLOGIA: ÁGIL
+
+## Objetivo operacional
+Permitir que o time organize e execute trabalho iterativo com backlog, sprint, objetivo e acompanhamento frequente.
+
+## Quando usar
+- squads de produto;
+- times de tecnologia;
+- times com cadência iterativa;
+- projetos com planejamento incremental.
+
+## Views obrigatórias
+- Visão geral
+- Backlog
+- Sprint
+- Board
+- Atividade
+- Wiki
+- Chat
+
+## Views opcionais futuras
+- Lista
+- Gantt executivo
+- Burndown
+- Release planning
+- Dependências
+- Retrospectiva estruturada
+
+## View principal
+- Sprint
+
+## Papel de cada view
+### Visão geral
+Resumo do projeto, status, objetivo e contexto.
+
+### Backlog
+Priorização e preparação do trabalho.
+
+### Sprint
+Recorte da iteração atual com objetivo, itens e progresso.
+
+### Board
+Execução visual do trabalho da sprint.
+
+### Atividade
+Mudanças relevantes, decisões, aprendizados e atualizações.
+
+### Wiki
+Memória do projeto.
+
+### Chat
+Coordenação rápida do time.
+
+### Gantt executivo (opcional)
+Visual temporal de épicos, marcos e dependências de alto nível para alinhamento com liderança e stakeholders.
+
+## Regras de UX
+- backlog e sprint devem ser claramente diferentes;
+- board de projeto ágil deve refletir a sprint atual ou o recorte ativo;
+- objetivo da sprint deve ser visível;
+- impedimentos devem ser destacados;
+- se houver Gantt, ele não pode virar a view central da operação do time.
+
+## Comportamentos esperados
+- priorizar backlog;
+- puxar itens para sprint;
+- acompanhar progresso de sprint;
+- usar board para execução;
+- registrar aprendizados e decisões;
+- usar chat para alinhamento rápido.
+
+## Anti-padrões
+- backlog virar lista caótica sem priorização;
+- sprint sem objetivo claro;
+- board genérico igual ao de kanban puro;
+- usar atividade como substituto de planejamento;
+- transformar Gantt em ferramenta principal de gestão do squad.
+
+---
+
+# 5. METODOLOGIA: KANBAN
+
+## Objetivo operacional
+Permitir fluxo contínuo de trabalho com foco em status, throughput e bloqueios.
+
+## Quando usar
+- operações;
+- sustentação;
+- times de atendimento;
+- frentes contínuas sem iteração formal;
+- equipes que preferem fluxo contínuo a sprint.
+
+## Views obrigatórias
+- Visão geral
+- Board
+- Lista
+- Atividade
+- Wiki
+- Chat
+
+## Views opcionais futuras
+- Gantt leve
+- Swimlanes avançadas
+- Métricas de fluxo
+- WIP tracking avançado
+- Dependências leves
+
+## View principal
+- Board
+
+## Papel de cada view
+### Visão geral
+Resumo do projeto, status e contexto.
+
+### Board
+Visual principal de fluxo por estágio.
+
+### Lista
+Visão tabular/linear de itens para organização complementar.
+
+### Atividade
+Mudanças, bloqueios, aprendizados e atualizações.
+
+### Wiki
+Memória estruturada.
+
+### Chat
+Coordenação rápida.
+
+### Gantt leve (opcional)
+Visual temporal de marcos, entregas e dependências externas quando o projeto precisar de coordenação adicional.
+
+## Regras de UX
+- board deve ser a vista central;
+- bloqueios precisam ser claramente sinalizados;
+- lista deve complementar o board, não duplicar sem valor;
+- priorização pode existir, mas sem semântica de sprint;
+- se houver Gantt, ele deve ser suporte de planejamento e não a estrutura principal do fluxo.
+
+## Comportamentos esperados
+- mover itens ao longo do fluxo;
+- visualizar gargalos;
+- acompanhar itens bloqueados;
+- atualizar trabalho continuamente;
+- registrar aprendizados.
+
+## Anti-padrões
+- chamar fluxo contínuo de sprint sem iteração real;
+- criar backlog complexo como se fosse ágil;
+- lista e board sem diferença de utilidade;
+- usar Gantt como substituto do board.
+
+---
+
+# 6. METODOLOGIA: LISTA SIMPLES
+
+## Objetivo operacional
+Oferecer uma forma leve e clara de organizar trabalho sem estrutura complexa.
+
+## Quando usar
+- projetos pequenos;
+- áreas não técnicas;
+- acompanhamento simples;
+- times que precisam começar rápido;
+- contextos onde board ou sprint seriam exagero.
+
+## Views obrigatórias
+- Visão geral
+- Lista
+- Atividade
+- Wiki
+- Chat
+
+## Views opcionais futuras
+- Board leve
+- Timeline simplificada
+
+## View principal
+- Lista
+
+## Papel de cada view
+### Visão geral
+Resumo e contexto do projeto.
+
+### Lista
+Visual principal para organizar e acompanhar itens.
+
+### Atividade
+Atualizações e mudanças relevantes.
+
+### Wiki
+Memória do projeto.
+
+### Chat
+Coordenação rápida.
+
+## Regras de UX
+- simplicidade máxima;
+- poucos campos obrigatórios;
+- filtros claros;
+- evitar jargão ágil;
+- CTA principal deve ser evidente.
+
+## Comportamentos esperados
+- criar itens rapidamente;
+- acompanhar status de forma simples;
+- atualizar andamento;
+- registrar informações importantes sem cerimônia.
+
+## Anti-padrões
+- adicionar complexidade de backlog, sprint ou board sem necessidade;
+- parecer uma versão “capada” de outros modos;
+- excesso de colunas/campos na lista.
+
+---
+
+# 7. METODOLOGIA: PLANEJAMENTO MACRO
+
+## Objetivo operacional
+Ajudar times a visualizar marcos, fases, dependências e planejamento em horizonte mais amplo.
+
+## Quando usar
+- projetos estratégicos;
+- iniciativas interáreas;
+- planejamento executivo;
+- cronogramas mais macro;
+- coordenação de múltiplas entregas.
+
+## Views obrigatórias
+- Visão geral
+- Timeline
+- Gantt
+- Lista
+- Atividade
+- Wiki
+- Chat
+
+## Views opcionais futuras
+- Dependências avançadas
+- Marcos por fase
+- Riscos
+- Cenários de planejamento
+
+## View principal
+- Gantt
+
+## View secundária principal
+- Timeline
+
+## Papel de cada view
+### Visão geral
+Resumo do projeto e seus objetivos.
+
+### Timeline
+Visualização macro de fases e marcos, com leitura simples para stakeholders.
+
+### Gantt
+Visual detalhado de:
+- duração;
+- dependências;
+- sequência de entregas;
+- marcos;
+- impacto temporal de atrasos.
+
+### Lista
+Detalhamento dos itens principais.
+
+### Atividade
+Mudanças, decisões e atualizações relevantes.
+
+### Wiki
+Memória estruturada.
+
+### Chat
+Coordenação do time.
+
+## Regras de UX
+- Gantt deve ser legível e orientado a planejamento;
+- Timeline deve ser a alternativa simplificada para leitura rápida;
+- foco em marcos, fases e dependências;
+- evitar complexidade excessiva no MVP;
+- atividade deve complementar o planejamento;
+- permitir leitura rápida do caminho crítico quando aplicável no futuro.
+
+## Comportamentos esperados
+- alinhar stakeholders;
+- acompanhar fases;
+- visualizar marcos;
+- entender dependências;
+- identificar atraso macro;
+- registrar decisões e contexto.
+
+## Anti-padrões
+- transformar Gantt em interface impossível de operar;
+- misturar sprint e planejamento macro sem clareza;
+- excesso de granularidade logo na visão principal;
+- usar Gantt para microgestão diária de tarefas simples.
+
+---
+
+# 8. MATRIZ DE VIEWS POR METODOLOGIA
+
+| View | Ágil | Kanban | Lista simples | Planejamento macro |
+|---|---|---|---|---|
+| Visão geral | Sim | Sim | Sim | Sim |
+| Backlog | Sim | Não | Não | Não |
+| Sprint | Sim | Não | Não | Não |
+| Board | Sim | Sim | Não | Não |
+| Lista | Opcional | Sim | Sim | Sim |
+| Timeline | Opcional futura | Não | Opcional futura | Sim |
+| Gantt | Opcional executiva | Opcional leve | Não | Sim |
+| Atividade | Sim | Sim | Sim | Sim |
+| Wiki | Sim | Sim | Sim | Sim |
+| Chat | Sim | Sim | Sim | Sim |
+
+## Regra
+Não exibir views ausentes como “desabilitadas” por padrão.  
+Mostrar apenas o que faz sentido para a metodologia ativa.
+
+---
+
+# 9. VIEW PRINCIPAL POR METODOLOGIA
+
+| Metodologia | View principal |
+|---|---|
+| Ágil | Sprint |
+| Kanban | Board |
+| Lista simples | Lista |
+| Planejamento macro | Gantt |
+
+## Regra
+Ao abrir o projeto pela primeira vez, a view principal deve refletir a metodologia escolhida.
+
+---
+
+# 10. COMPORTAMENTO DE CRIAÇÃO DE PROJETO
+
+## Ao criar um projeto, o usuário deve definir
+- nome
+- descrição
+- equipe
+- metodologia
+
+## Após seleção da metodologia
+A plataforma deve:
+- criar a estrutura inicial de views;
+- aplicar labels e navegação adequadas;
+- definir a aba principal inicial;
+- sugerir organização coerente com o método.
+
+## Regra
+A escolha da metodologia deve gerar efeito real e visível na estrutura do projeto.
+
+---
+
+# 11. ALTERAÇÃO DE METODOLOGIA
+
+## Regra do MVP
+Evitar suportar mudança livre e complexa de metodologia no primeiro ciclo.
+
+## Recomendação
+Se a mudança existir:
+- exigir confirmação;
+- explicar impacto nas views;
+- preservar dados existentes quando possível;
+- impedir perdas silenciosas.
+
+## Regra prática
+No MVP, preferir metodologia definida na criação e mantida estável.
+
+---
+
+# 12. COPY E SINALIZAÇÃO POR METODOLOGIA
+
+## Regra
+A UI deve comunicar a metodologia do projeto de forma explícita e discreta.
+
+## Exemplos
+- badge no header do projeto;
+- labels adequados nas tabs;
+- CTA compatíveis com a metodologia.
+
+## Exemplos de CTA por metodologia
+### Ágil
+- Adicionar ao backlog
+- Planejar sprint
+- Ver sprint atual
+
+### Kanban
+- Criar item
+- Ver board
+- Atualizar fluxo
+
+### Lista simples
+- Adicionar item
+- Ver lista
+
+### Planejamento macro
+- Adicionar marco
+- Ver Gantt
+- Ver timeline
+
+---
+
+# 13. RELAÇÃO ENTRE METODOLOGIA E COPILOT
+
+## Regra
+As sugestões do Copilot devem respeitar a metodologia do projeto.
+
+### Em projeto ágil
+Copilot deve priorizar:
+- resumo da sprint;
+- backlog;
+- impedimentos;
+- progresso iterativo.
+
+### Em projeto kanban
+Copilot deve priorizar:
+- fluxo atual;
+- itens bloqueados;
+- throughput e gargalos;
+- próximos passos.
+
+### Em lista simples
+Copilot deve priorizar:
+- organização de itens;
+- atualização de status;
+- resumo simples do projeto.
+
+### Em planejamento macro
+Copilot deve priorizar:
+- marcos;
+- fases;
+- dependências;
+- andamento geral;
+- riscos e atrasos macro.
+
+## Regra
+IA contextual deve respeitar o modelo mental da metodologia.
+
+---
+
+# 14. RELAÇÃO ENTRE METODOLOGIA E TRACKING
+
+## Propriedade obrigatória
+Eventos dentro de projeto devem carregar:
+- `methodology`
+
+## Objetivo
+Permitir análise de:
+- adoção por metodologia;
+- views mais usadas;
+- fricções por estrutura;
+- efetividade do setup inicial.
+
+---
+
+# 15. REGRAS ESPECÍFICAS DE GANTT
+
+## O Gantt deve suportar
+- marcos;
+- fases;
+- duração;
+- datas de início e fim;
+- dependências;
+- agrupamento por iniciativa ou fase.
+
+## O Gantt não precisa suportar no MVP
+- edição ultra-avançada por arrastar múltiplas dependências;
+- baseline;
+- caminho crítico completo;
+- forecast preditivo;
+- replanejamento automatizado;
+- múltiplos calendários complexos.
+
+## Regras de UX do Gantt
+- leitura primeiro, edição depois;
+- cabeçalho temporal claro;
+- relação entre item e barra temporal evidente;
+- dependências legíveis;
+- atraso ou risco visível sem poluição;
+- bom comportamento em dark mode premium.
+
+---
+
+# 16. ANTI-PADRÕES
+
+Evitar:
+- tratar metodologia como decoração;
+- mostrar todas as views para todos os projetos;
+- chamar board genérico de “ágil” sem sprint/backlog;
+- misturar fluxo contínuo com iteração sem clareza;
+- adicionar complexidade acima da maturidade do time;
+- deixar metodologia invisível ao usuário;
+- usar Gantt como centro operacional de times que trabalham melhor por board/lista.
+
+---
+
+# 17. CHECKLIST DE IMPLEMENTAÇÃO
+
+Antes de lançar uma metodologia, validar:
+
+- Qual problema operacional ela resolve?
+- Qual é a view principal?
+- Quais views são obrigatórias?
+- O que fica de fora?
+- Como o header do projeto sinaliza a metodologia?
+- Como o Copilot adapta suas sugestões?
+- Como o tracking captura esse contexto?
+- Há sobreposição desnecessária com outras metodologias?
+- O time consegue entender a diferença entre essas opções?
+- A estrutura ajuda ou atrapalha o onboarding?
+
+## Regra final
+Se a metodologia não alterar de forma clara a estrutura e o modo de operar do projeto, ela não está bem implementada.
