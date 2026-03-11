@@ -33,10 +33,10 @@ export function Sidebar() {
             {/* Workspace Header */}
             <div className="h-14 flex items-center px-4 border-b border-sidebar-border shrink-0">
                 <div className="flex items-center gap-2 font-mono font-semibold text-sidebar-foreground">
-                    <div className="size-6 rounded bg-primary/20 flex items-center justify-center text-primary">
-                        Ac
+                    <div className="size-6 rounded bg-primary/20 flex items-center justify-center text-primary text-[10px]">
+                        Fl
                     </div>
-                    Acme Corp
+                    Flyprod
                 </div>
             </div>
 

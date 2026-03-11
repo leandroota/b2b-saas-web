@@ -18,7 +18,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "B2B SaaS Platform",
+  title: "Flyprod",
   description: "Unified work, projects and knowledge with AI.",
 };
 
