@@ -7,6 +7,7 @@ import {
     MessageSquare,
     Activity,
     BookText,
+    LayoutDashboard,
     Zap,
     Settings,
 } from "lucide-react";
@@ -19,6 +20,7 @@ import { ModeToggle } from "@/components/mode-toggle";
 
 const navItems = [
     { icon: Home, label: "Home", href: "/" },
+    { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
     { icon: FolderKanban, label: "Projetos", href: "/projects" },
     { icon: MessageSquare, label: "Chat", href: "/chat" },
     { icon: Activity, label: "Feed", href: "/feed" },
