@@ -1,0 +1,546 @@
+---
+description: Regra-mãe para cada módulo da plataforma: Home, Projeto, Chat, Feed, Wiki, Copilot.
+globs: *
+---
+# 05-module-matrix.mdc
+
+## Objetivo
+Garantir que cada módulo da plataforma nasça com papel claro, comportamento consistente, estados obrigatórios e critérios de UX inegociáveis.
+
+## Regra-mãe
+Cada módulo deve ter:
+- um objetivo primário explícito;
+- uma ação principal evidente;
+- separação clara de responsabilidade em relação aos outros módulos;
+- estados obrigatórios: loading, empty, error, success, disabled;
+- comportamento coerente com o papel do produto.
+
+---
+
+# MATRIZ PRÁTICA POR TELA
+
+## 1. HOME
+
+### Objetivo principal
+Ser o hub diário do usuário, mostrando rapidamente:
+- o que mudou;
+- o que exige ação;
+- quais contextos importam agora.
+
+### Pergunta que a tela deve responder
+"O que eu preciso ver e fazer agora?"
+
+### Papel no produto
+A Home é a entrada principal e o organizador de contexto.  
+Ela não é um mural caótico nem uma rede social genérica.
+
+### Conteúdo prioritário
+- timeline relevante;
+- filtro entre “Geral” e “Projetos que participo”;
+- pendências e itens urgentes;
+- Spaces recentes;
+- chats recentes;
+- acessos rápidos para retomar trabalho.
+
+### Ação principal
+Retomar contexto e navegar para o próximo ponto de trabalho.
+
+### Ações secundárias
+- trocar filtro;
+- abrir projeto;
+- abrir Space;
+- abrir chat;
+- salvar aprendizado;
+- favoritar post.
+
+### Gatilhos de retorno
+- menção;
+- mudança em projeto;
+- nova publicação relevante;
+- item bloqueado;
+- item concluído;
+- resumo novo do Copilot.
+
+### Recompensa percebida
+- clareza imediata;
+- sensação de controle;
+- entendimento rápido do que mudou;
+- retomada de contexto sem esforço.
+
+### Anti-padrões
+- excesso de cards e widgets concorrendo;
+- feed irrelevante;
+- métricas sem contexto;
+- Home virar dashboard pesado;
+- Home virar mural social sem utilidade.
+
+### Estados obrigatórios
+- loading com skeleton claro;
+- empty com CTA útil;
+- error com retry;
+- success para ações rápidas;
+- disabled quando houver ação indisponível.
+
+### Regras de UX
+- a primeira dobra deve comunicar prioridade;
+- o filtro de timeline deve ser sempre visível;
+- não misturar informação urgente com conteúdo leve sem hierarquia;
+- o usuário deve entender a Home em menos de 5 segundos.
+
+### Componentes esperados
+- header global;
+- sidebar principal;
+- filtro da timeline;
+- cards de publicação;
+- bloco de pendências;
+- bloco de Spaces/chats recentes.
+
+---
+
+## 2. PROJETO
+
+### Objetivo principal
+Ser o núcleo operacional do trabalho, onde execução, conversa, atividade, wiki e IA coexistem com contexto.
+
+### Pergunta que a tela deve responder
+"Como este projeto está e o que eu faço nele agora?"
+
+### Papel no produto
+Projeto é o ambiente de trabalho principal.  
+Ele não pode parecer um hub genérico nem uma coleção solta de abas.
+
+### Conteúdo prioritário
+- cabeçalho com nome, status, metodologia, membros;
+- visualização principal conforme metodologia;
+- acesso à execução;
+- acesso à atividade;
+- acesso à wiki;
+- acesso ao chat;
+- acesso ao Copilot contextual.
+
+### Ação principal
+Executar trabalho no contexto correto.
+
+### Ações secundárias
+- alternar visualização;
+- criar item;
+- mover tarefa;
+- abrir thread;
+- consultar wiki;
+- pedir resumo ao Copilot.
+
+### Gatilhos de retorno
+- mudança em tarefa;
+- sprint iniciada/encerrada;
+- bloqueio;
+- nova decisão;
+- novo aprendizado salvo;
+- resumo semanal.
+
+### Recompensa percebida
+- progresso visível;
+- contexto unificado;
+- sensação de avanço;
+- menos troca de ferramenta.
+
+### Anti-padrões
+- muitas abas sem papel claro;
+- mesmas informações replicadas em várias views;
+- board, backlog e sprint sem diferença real;
+- chat escondido;
+- wiki desconectada do fluxo.
+
+### Estados obrigatórios
+- loading por view;
+- empty por visualização;
+- error por módulo;
+- success em salvamentos;
+- disabled por permissão/estado;
+- partial state quando um bloco falhar e os outros não.
+
+### Regras de UX
+- metodologia define conjunto inicial de views;
+- tabs devem refletir papel real da metodologia;
+- contexto do projeto deve permanecer visível;
+- cada view precisa ter CTA primário claro;
+- projeto arquivado deve ser somente leitura.
+
+### Componentes esperados
+- header de projeto;
+- tabs/view switcher;
+- board/list/backlog/sprint/timeline/activity/wiki/chat;
+- painel lateral opcional do Copilot;
+- indicadores leves de saúde do projeto.
+
+---
+
+## 3. CHAT
+
+### Objetivo principal
+Permitir coordenação rápida e contextual do trabalho.
+
+### Pergunta que a tela deve responder
+"Como eu resolvo isso rapidamente com as pessoas certas?"
+
+### Papel no produto
+Chat é para conversa rápida e alinhamento imediato.  
+Não substitui tarefa, feed nem wiki.
+
+### Conteúdo prioritário
+- lista de conversas/canais;
+- histórico da conversa;
+- composer;
+- contexto da conversa;
+- ações de IA por thread.
+
+### Ação principal
+Enviar mensagem e alinhar rapidamente.
+
+### Ações secundárias
+- resumir thread;
+- criar tarefa;
+- registrar decisão;
+- salvar aprendizado;
+- abrir contexto relacionado.
+
+### Gatilhos de retorno
+- menção;
+- resposta;
+- bloqueio;
+- dúvida operacional;
+- pedido de revisão.
+
+### Recompensa percebida
+- resolução rápida;
+- menos fricção;
+- menos troca de contexto;
+- conversa útil conectada ao trabalho.
+
+### Anti-padrões
+- chat virar depósito de decisão sem rastreabilidade;
+- chat duplicar feed;
+- chat sem contexto de projeto/grupo;
+- IA responder sozinha sem revisão.
+
+### Estados obrigatórios
+- loading;
+- empty com incentivo à primeira mensagem;
+- error de envio/carregamento;
+- success sutil;
+- disabled em contexto sem permissão;
+- partial state para histórico parcial.
+
+### Regras de UX
+- sempre mostrar o contexto da conversa;
+- thread importante deve poder virar ação;
+- composer sempre visível;
+- não esconder ações principais de IA em menus profundos;
+- resumo e conversão exigem revisão humana.
+
+### Componentes esperados
+- channel list;
+- conversation header;
+- message list;
+- composer;
+- actions menu por mensagem/thread;
+- panel de resumo/extração via Copilot.
+
+---
+
+## 4. FEED / TIMELINE
+
+### Objetivo principal
+Dar visibilidade assíncrona ao que importa no trabalho.
+
+### Pergunta que a tela deve responder
+"O que aconteceu de relevante e o que vale minha atenção?"
+
+### Papel no produto
+Feed é superfície de atualização e aprendizado.  
+Não é rede social casual nem substituto do chat.
+
+### Conteúdo prioritário
+- updates de projeto;
+- aprendizados;
+- decisões;
+- bloqueios;
+- marcos concluídos;
+- reconhecimento contextual.
+
+### Ação principal
+Consumir contexto e interagir de forma útil.
+
+### Ações secundárias
+- comentar;
+- favoritar;
+- salvar aprendizado;
+- abrir projeto relacionado;
+- promover para wiki.
+
+### Gatilhos de retorno
+- update importante;
+- conclusão de marco;
+- aprendizado salvo pelo time;
+- decisão registrada;
+- publicação em projeto que o usuário acompanha.
+
+### Recompensa percebida
+- visibilidade do trabalho;
+- descoberta de contexto útil;
+- reconhecimento;
+- aprendizado reaproveitável.
+
+### Anti-padrões
+- feed genérico;
+- posts sem vínculo com contexto;
+- incentivo a volume de postagem;
+- excesso de conteúdo irrelevante;
+- publicação automática por IA.
+
+### Estados obrigatórios
+- loading;
+- empty com explicação e CTA;
+- error com retry;
+- success para interações;
+- disabled para ações sem permissão.
+
+### Regras de UX
+- cada post deve ter contexto visível;
+- tipo de publicação deve ser explícito;
+- salvar aprendizado deve ser fácil;
+- comentários devem complementar, não poluir;
+- relevância > volume.
+
+### Componentes esperados
+- filter bar;
+- post card;
+- reaction/comment/save actions;
+- badges de contexto;
+- CTA de publicar atualização.
+
+---
+
+## 5. WIKI
+
+### Objetivo principal
+Preservar memória viva do projeto e reduzir perda de contexto.
+
+### Pergunta que a tela deve responder
+"O que já foi decidido, aprendido e documentado neste projeto?"
+
+### Papel no produto
+Wiki é a memória estruturada.  
+Ela não pode ser arquivo morto nem editor solto sem vínculo com o projeto.
+
+### Conteúdo prioritário
+- overview;
+- decisões;
+- funcional;
+- técnico;
+- FAQ;
+- aprendizados;
+- páginas recentes/fixadas.
+
+### Ação principal
+Consultar ou registrar conhecimento útil.
+
+### Ações secundárias
+- criar página;
+- editar página;
+- promover aprendizado;
+- buscar conteúdo;
+- abrir referência de origem.
+
+### Gatilhos de retorno
+- onboarding em projeto;
+- dúvida recorrente;
+- decisão importante;
+- aprendizado salvo;
+- necessidade de recuperar contexto.
+
+### Recompensa percebida
+- segurança;
+- continuidade;
+- menos retrabalho;
+- menos dependência de memória oral.
+
+### Anti-padrões
+- wiki vazia e sem seed inicial;
+- páginas sem estrutura;
+- conteúdo sem dono ou data;
+- conteúdo promovido sem vínculo de origem;
+- wiki escondida.
+
+### Estados obrigatórios
+- loading;
+- empty com CTA claro;
+- error;
+- success ao salvar;
+- disabled para edição bloqueada;
+- partial state em navegação/página.
+
+### Regras de UX
+- toda página deve ter título e seção;
+- decisões devem ter data e responsável;
+- aprendizados promovidos devem manter rastreabilidade;
+- navegação deve ser simples e previsível;
+- leitura deve ser tão importante quanto edição.
+
+### Componentes esperados
+- wiki nav/sidebar;
+- page view;
+- editor;
+- metadata block;
+- promote-to-wiki action;
+- recent/fixed pages list.
+
+---
+
+## 6. COPILOT
+
+### Objetivo principal
+Reduzir esforço cognitivo e operacional dentro do contexto do trabalho.
+
+### Pergunta que a tela deve responder
+"Como a IA pode me ajudar aqui sem tirar meu controle?"
+
+### Papel no produto
+Copilot é camada de apoio.  
+Não é protagonista da plataforma e não age sozinho.
+
+### Conteúdo prioritário
+- intenções claras;
+- saída estruturada;
+- revisão humana;
+- ações aplicáveis ao contexto.
+
+### Ação principal
+Gerar resumo, estrutura, sugestão ou conversão útil.
+
+### Ações secundárias
+- resumir projeto;
+- resumir thread;
+- extrair tarefas;
+- gerar update;
+- sugerir aprendizado;
+- apoiar wiki;
+- recuperar contexto.
+
+### Gatilhos de retorno
+- excesso de contexto;
+- thread longa;
+- início/fim de sprint;
+- necessidade de publicar update;
+- dúvida sobre decisão anterior.
+
+### Recompensa percebida
+- economia de tempo;
+- clareza;
+- menos esforço de escrita;
+- menos perda de contexto.
+
+### Anti-padrões
+- IA publicar sem revisão;
+- IA responder como se fosse dona da verdade;
+- saídas vagas;
+- excesso de ações de IA em toda interface;
+- IA bloquear fluxo principal.
+
+### Estados obrigatórios
+- idle/default;
+- loading;
+- success com revisão;
+- error claro;
+- disabled sem contexto mínimo;
+- partial state quando contexto estiver incompleto.
+
+### Regras de UX
+- toda ação deve partir de uma intenção explícita;
+- saída deve ser editável e revisável;
+- Copilot não pode esconder origem do conteúdo;
+- falha da IA não pode impedir o trabalho manual;
+- sempre indicar de qual contexto a IA está lendo.
+
+### Componentes esperados
+- trigger button;
+- side panel or modal;
+- action list;
+- generated response block;
+- apply/edit/discard actions;
+- source/context indicators.
+
+---
+
+# MATRIZ RESUMIDA DE PAPÉIS
+
+| Módulo | Papel principal | Ação principal | Não deve virar |
+|---|---|---|---|
+| Home | Hub do dia | Retomar contexto | Dashboard caótico ou mural social |
+| Projeto | Núcleo operacional | Executar trabalho | Coleção confusa de abas |
+| Chat | Coordenação rápida | Conversar e alinhar | Repositório de decisão sem rastreio |
+| Feed | Atualização assíncrona | Compartilhar e consumir contexto | Rede social genérica |
+| Wiki | Memória viva | Consultar e registrar conhecimento | Arquivo morto |
+| Copilot | Apoio contextual | Resumir, estruturar, sugerir | Chatbot genérico ou autônomo |
+
+---
+
+# REGRAS TRANSVERSAIS
+
+## 1. Separação de responsabilidades
+- Chat = conversa rápida
+- Feed = atualização relevante
+- Tarefa = execução
+- Wiki = memória
+- Copilot = síntese e apoio
+
+## 2. Estados obrigatórios
+Toda tela deve ter:
+- loading
+- empty
+- error
+- success
+- disabled
+
+## 3. Contexto sempre visível
+Toda experiência deve deixar claro:
+- em que workspace o usuário está;
+- em que Space está;
+- em que projeto/grupo/chat está;
+- qual o impacto da ação.
+
+## 4. UX de fluxo
+Toda tela deve permitir:
+- entendimento rápido;
+- ação principal evidente;
+- feedback imediato;
+- retorno sem perda de contexto.
+
+## 5. Engajamento útil
+A plataforma deve reforçar:
+- progresso;
+- colaboração;
+- documentação;
+- reaproveitamento de conhecimento.
+
+Nunca reforçar:
+- ruído;
+- volume sem valor;
+- automação artificial;
+- gamificação vazia.
+
+---
+
+# CHECKLIST PARA QUALQUER NOVA TELA
+
+Antes de implementar qualquer novo módulo, validar:
+
+- Qual é o objetivo primário desta tela?
+- Que pergunta do usuário ela responde?
+- Qual é a ação principal?
+- Como ela se diferencia de Chat, Feed, Wiki e Projeto?
+- Quais estados obrigatórios ela possui?
+- O contexto está explícito?
+- O próximo passo está evidente?
+- Existe risco de ruído ou sobreposição?
+- O Copilot ajuda sem tomar controle?
+- Há microcopy clara para empty, error e success?

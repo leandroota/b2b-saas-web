@@ -1,0 +1,34 @@
+# B2B SaaS Platform - Core Architecture Rules
+
+## 1. Stack Tecnológico
+- **Framework:** Next.js 15 (App Router)
+- **Engine UI:** React 19 (Server Components por padrão)
+- **Styling:** Tailwind CSS v4 + PostCSS
+- **Componentes:** shadcn/ui (Radix UI under the hood)
+- **Linguagem:** TypeScript (Com tipagem estrita sempre habilitada)
+
+## 2. Padrão de Arquitetura Visual (Frontend Design)
+- **NUNCA crie interfaces que pareçam um "Painel Admin Genérico"**.
+- Sempre aplique a mentalidade Premium B2B:
+  - Adote as fontes do projeto (`Space Grotesk` para Display/Títulos e `DM Sans` para leitura longa/parágrafos).
+  - O estilo Base do projeto é **Dark Mode**, com contrastes profundos e impactantes.
+  - O espaçamento (*whitespace*) deve ser intencional. Não encha a tela sem respiro.
+- **Evite o botão azul padrão**. Busque cores com atitude e personalizadas para B2B high-end.
+
+## 3. Padrão Arquitetural (Feature-Sliced Design)
+Siga o padrão FSD rigorosamente. Nunca coloque lógicas de negócio ou regras específicas de módulos isolados em arquivos globais.
+
+- `src/app/`: Exclusivo para o roteamento do Next.js (páginas de roteamento, layouts mestre).
+- `src/features/[feature]/`: A raiz de cada domínio de negócio do SaaS. 
+  - Ex: `features/projects/`, `features/chat/`, `features/copilot/`.
+  - Dentro de cada `feature/` podem existir `components/`, `api/`, `hooks/` e `utils/` *locais* pertencentes *somente* àquele domínio.
+- `src/components/`: **APENAS componentes compartilháveis burros e globais** (Ex: Botões, Modais, Inputs do shadcn/ui).
+- `src/lib/`: Utilitários puros, formatadores, hooks agnósticos de domínio.
+- `src/store/`: Gestão do estado global do app (Zustand, Context, etc.).
+
+## 4. Práticas de Código e Integração
+- **Server Components Primeiro:** Qualquer página/componente Next.js deve nascer como *Server Component* por padrão. Somente adicione a diretiva `'use client'` no topo do arquivo se o componente precisar manipular eventos de mouse/teclado, gerenciar ciclo de vida (useEffect/useState), usar Context, ou precisar acessar APIs exclusivas do Browser.
+- Privilegie blocos e utilitários da biblioteca `@/components/ui/` do Shadcn antes de instalar novas deps visuais.
+- **Clean Code Frontend:** Desestruture props claras (não passe objetos genéricos ou props opacas). 
+- Funções utilitárias devem ser pequenas, puras, com parâmetros e retornos bem tipados via TypeScript.
+- **Validação:** Qualquer novo dado inputado pelo usuário no App (formulários do sistema B2B) deve prever uma validação usando **Zod** nativamente no front e backend (Sever Actions).
