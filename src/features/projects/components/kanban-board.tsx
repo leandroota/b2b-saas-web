@@ -9,6 +9,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Task, TaskStatus } from "../lib/task-schema";
 import { CreateTaskSheet } from "./create-task-sheet";
+import { useAppStore } from "@/store/use-app-store";
+import { useEffect } from "react";
 
 const COLUMNS: { id: TaskStatus; label: string }[] = [
     { id: "BACKLOG", label: "Backlog" },
@@ -29,6 +31,18 @@ export function KanbanBoard({ tasks }: KanbanBoardProps) {
     // UI State for task creation
     const [createTaskOpen, setCreateTaskOpen] = useState(false);
     const [defaultStatus, setDefaultStatus] = useState<TaskStatus>("TODO");
+    const { setProjectContext } = useAppStore();
+
+    // Broadcast project context for AI
+    useEffect(() => {
+        setProjectContext({
+            id: "active-proj", // Simplificação por enquanto
+            name: "Projeto Atual",
+            taskCount: boardTasks.length,
+            inProgressCount: boardTasks.filter(t => t.status === "IN_PROGRESS").length,
+            blockedCount: boardTasks.filter(t => t.priority === "URGENT").length, // Usando URGENt como proxy de bloqueio
+        });
+    }, [boardTasks, setProjectContext]);
 
     const handleCreateTask = (status: TaskStatus) => {
         setDefaultStatus(status);

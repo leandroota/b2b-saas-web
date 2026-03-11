@@ -19,6 +19,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { CopilotMessage } from "../lib/copilot-schema";
+import { useAppStore } from "@/store/use-app-store";
 
 const INITIAL_MESSAGES: CopilotMessage[] = [
     {
@@ -41,6 +42,7 @@ export function CopilotChat() {
     const [inputValue, setInputValue] = useState("");
     const [isTyping, setIsTyping] = useState(false);
     const scrollRef = useRef<HTMLDivElement>(null);
+    const { currentProjectContext, currentWikiContext } = useAppStore();
 
     const handleSendMessage = (text?: string) => {
         const finalContent = text || inputValue;
@@ -57,17 +59,40 @@ export function CopilotChat() {
         setInputValue("");
         setIsTyping(true);
 
-        // Simulate AI behavior
+        const lowerContent = finalContent.toLowerCase();
+
+        // Enhanced Contextual Intelligence
         setTimeout(() => {
+            let aiResponse = "Com base no contexto do seu projeto, analisei que você tem itens pendentes. Como posso ajudar a organizar?";
+
+            if (lowerContent.includes("resumir") || lowerContent.includes("tarefas")) {
+                if (currentProjectContext) {
+                    aiResponse = `📋 **Resumo de ${currentProjectContext.name}:** Você tem ${currentProjectContext.taskCount} tarefas totais. Atualmente, ${currentProjectContext.inProgressCount} estão em andamento e ${currentProjectContext.blockedCount} bloqueadas. Deseja que eu analise os impedimentos?`;
+                } else {
+                    aiResponse = "📋 **Resumo Geral:** Notei 12 tarefas totais no workspace, das quais 8 estão em 'In Progress'. Deseja um detalhamento por projeto?";
+                }
+            } else if (lowerContent.includes("bloqueios") || lowerContent.includes("gargalos")) {
+                const blockedCount = currentProjectContext?.blockedCount || 3;
+                aiResponse = `⚠️ **Análise de Bloqueios:** Identifiquei ${blockedCount} impedimentos críticos exigindo atenção. Posso gerar uma lista de responsáveis para você cobrar?`;
+            } else if (lowerContent.includes("wiki")) {
+                if (currentWikiContext) {
+                    aiResponse = `📚 **Wiki Insight:** Analisei suas ${currentWikiContext.pageCount} páginas. A última alteração foi em '${currentWikiContext.lastPageTitle}'. Gostaria de criar uma nova seção com base no roadmap?`;
+                } else {
+                    aiResponse = "📚 **Wiki Insight:** Acabei de analisar suas páginas da Wiki. Gostaria que eu sugerisse tópicos para novas páginas com base nas atividades recentes?";
+                }
+            } else if (lowerContent.includes("fsd") || lowerContent.includes("arquitetura")) {
+                aiResponse = "🏗️ **Arquitetura FSD:** Seu projeto usa Feature-Sliced Design. As camadas principais são: `app`, `pages`, `features`, `entities` e `shared`. Isso garante a modularidade do seu SaaS.";
+            }
+
             const aiMsg: CopilotMessage = {
                 id: Math.random().toString(36).substr(2, 9),
                 role: "assistant",
-                content: "Com base no contexto do seu projeto, analisei que você tem 3 tarefas em atraso e 2 discussões não resolvidas no chat. Gostaria que eu criasse um resumo para o time?",
+                content: aiResponse,
                 createdAt: new Date().toISOString(),
             };
-            setMessages(prev => [...prev, aiMsg]);
+            setMessages((prev: CopilotMessage[]) => [...prev, aiMsg]);
             setIsTyping(false);
-        }, 1500);
+        }, 1000);
     };
 
     useEffect(() => {

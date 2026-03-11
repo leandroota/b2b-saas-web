@@ -2,20 +2,25 @@
 
 import { useState } from "react";
 import {
-    Book,
-    FileText,
-    Plus,
     Search,
     ChevronRight,
+    FileText,
     Clock,
+    Plus,
+    Filter,
     Edit3,
-    MoreVertical,
-    Layers,
-    Star,
-    Save,
+    Check,
     X,
-    History
+    History,
+    MoreVertical,
+    ArrowLeft,
+    Book,
+    Layers,
+    Save,
+    Star
 } from "lucide-react";
+import { useAppStore } from "@/store/use-app-store";
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -80,6 +85,15 @@ export function WikiView() {
     const [isEditing, setIsEditing] = useState(false);
     const [editedContent, setEditedContent] = useState("");
     const [showHistory, setShowHistory] = useState(false);
+    const { setWikiContext } = useAppStore();
+
+    // Broadcast wiki context for AI
+    useEffect(() => {
+        setWikiContext({
+            pageCount: pages.length,
+            lastPageTitle: selectedPage.title
+        });
+    }, [pages, selectedPage, setWikiContext]);
 
     const categories = ["Geral", "Design", "Engenharia", "Produto"];
 
