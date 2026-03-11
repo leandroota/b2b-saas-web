@@ -93,19 +93,17 @@ export function WikiView() {
         setMounted(true);
     }, []);
 
-    if (!mounted) {
-        return <div className="flex h-full bg-background overflow-hidden relative" />;
-    }
-
     // Broadcast wiki context for AI
     useEffect(() => {
-        setWikiContext({
-            pageCount: pages.length,
-            lastPageTitle: selectedPage.title
-        });
-    }, [pages, selectedPage, setWikiContext]);
+        if (mounted) {
+            setWikiContext({
+                pageCount: pages.length,
+                lastPageTitle: selectedPage.title
+            });
+        }
+    }, [pages, selectedPage, setWikiContext, mounted]);
 
-    const categories = ["Geral", "Design", "Engenharia", "Produto"];
+    const categories = Array.from(new Set(pages.map(p => p.category)));
 
     const filteredPages = pages.filter((page: WikiPage) => {
         const matchesSearch = page.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -127,6 +125,8 @@ export function WikiView() {
         setSelectedPage({ ...selectedPage, content: editedContent, lastUpdatedAt: new Date().toISOString() });
         setIsEditing(false);
     };
+
+    if (!mounted) return <div className="h-full bg-background" />;
 
     return (
         <div className="flex h-full bg-background overflow-hidden relative">
