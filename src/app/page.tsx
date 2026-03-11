@@ -8,6 +8,7 @@ import {
   LayoutGrid
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { CreateProjectModal } from "@/features/projects/components/create-project-modal";
 
 export default function Home() {
   return (
@@ -23,9 +24,7 @@ export default function Home() {
           </p>
         </div>
         <div className="flex items-center space-x-2">
-          <Button className="font-mono">
-            Novo Projeto
-          </Button>
+          <CreateProjectModal />
         </div>
       </div>
 

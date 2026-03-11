@@ -2,8 +2,8 @@ import { create } from 'zustand';
 
 interface AppState {
     isCopilotOpen: boolean;
-    activeWorkspaceId: string | null;
-    activeTheme: 'system' | 'light' | 'dark'; // Though Next Themes handles it, we can keep track if needed for custom UI logic
+    workspaceId: string | null;
+    activeTheme: 'system' | 'light' | 'dark';
     toggleCopilot: () => void;
     setCopilotOpen: (isOpen: boolean) => void;
     setActiveWorkspace: (workspaceId: string) => void;
@@ -12,11 +12,11 @@ interface AppState {
 
 export const useAppStore = create<AppState>((set) => ({
     isCopilotOpen: false,
-    activeWorkspaceId: 'wksp_01', // Mock default workspace
-    activeTheme: 'dark', // Native premium B2B dark mode default
+    workspaceId: 'wksp_01',
+    activeTheme: 'dark',
 
     toggleCopilot: () => set((state) => ({ isCopilotOpen: !state.isCopilotOpen })),
     setCopilotOpen: (isOpen) => set({ isCopilotOpen: isOpen }),
-    setActiveWorkspace: (workspaceId) => set({ activeWorkspaceId: workspaceId }),
+    setActiveWorkspace: (workspaceId) => set({ workspaceId }),
     setActiveTheme: (theme) => set({ activeTheme: theme }),
 }));
