@@ -26,6 +26,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { useAppStore } from "@/store/use-app-store";
 import { PermissionGuard } from "@/components/auth/permission-guard";
 import { InviteMemberModal } from "./invite-member-modal";
+import { IntegrationsGallery } from "./integrations-gallery";
 
 export function SettingsView() {
     const { currentUser } = useAppStore();
@@ -61,6 +62,10 @@ export function SettingsView() {
                             <TabsTrigger value="team" className="gap-2 h-10 px-6 data-[state=active]:bg-background data-[state=active]:text-primary">
                                 <Users className="size-4" />
                                 <span className="text-xs font-bold uppercase tracking-wider">Equipe</span>
+                            </TabsTrigger>
+                            <TabsTrigger value="integrations" className="gap-2 h-10 px-6 data-[state=active]:bg-background data-[state=active]:text-primary">
+                                <Zap className="size-4" />
+                                <span className="text-xs font-bold uppercase tracking-wider">Integrações</span>
                             </TabsTrigger>
                         </TabsList>
 
@@ -260,6 +265,15 @@ export function SettingsView() {
                                     </TableBody>
                                 </Table>
                             </Card>
+                        </TabsContent>
+
+                        {/* Integrations Tab */}
+                        <TabsContent value="integrations" className="space-y-6 animate-in slide-in-from-bottom-2 duration-500">
+                            <div className="space-y-1">
+                                <h3 className="text-xl font-mono font-bold uppercase tracking-tight">Conectores de Ecossistema</h3>
+                                <p className="text-sm text-muted-foreground">Potencialize seu fluxo de trabalho conectando ferramentas externas.</p>
+                            </div>
+                            <IntegrationsGallery />
                         </TabsContent>
                     </Tabs>
                 </div>
