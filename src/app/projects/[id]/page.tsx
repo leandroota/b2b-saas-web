@@ -19,6 +19,7 @@ import { KanbanBoard } from "@/features/projects/components/kanban-board";
 import { TaskListView } from "@/features/projects/components/task-list-view";
 import { Task } from "@/features/projects/lib/task-schema";
 import { ProjectChat } from "@/features/chat/components/project-chat";
+import { WikiView } from "@/features/wiki/components/wiki-view";
 
 // Mock data for project recovery
 const mockProjects: Record<string, { name: string, methodology: ProjectMethodology, description: string, status: string }> = {
@@ -172,6 +173,8 @@ export default function ProjectPage() {
                         <KanbanBoard tasks={MOCK_TASKS} />
                     ) : activeTab === "list" ? (
                         <TaskListView tasks={MOCK_TASKS} />
+                    ) : activeTab === "wiki" ? (
+                        <WikiView />
                     ) : (
                         <div className="p-8 h-full overflow-auto">
                             <div className="rounded-xl border-2 border-dashed border-border h-full flex flex-col items-center justify-center text-center p-12 space-y-4">
