@@ -1,65 +1,148 @@
-import Image from "next/image";
+import {
+  ArrowRight,
+  Clock,
+  CheckCircle2,
+  MessageSquare,
+  AlertCircle,
+  FileText
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="flex-1 p-8 pt-6 space-y-8 max-w-7xl mx-auto">
+      {/* Header Section */}
+      <div className="flex items-end justify-between">
+        <div>
+          <h2 className="text-3xl font-mono font-bold tracking-tight text-foreground">
+            Bom dia, John.
+          </h2>
+          <p className="text-muted-foreground mt-2">
+            Aqui está o que exige sua atenção hoje e o que mudou recentemente.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <div className="flex items-center space-x-2">
+          <Button className="font-mono">
+            Novo Projeto
+          </Button>
         </div>
-      </main>
+      </div>
+
+      {/* Quick Metrics / Pendencies */}
+      <div className="grid gap-4 md:grid-cols-3">
+        <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-destructive/10 text-destructive rounded-lg">
+              <AlertCircle className="size-5" />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-muted-foreground">Bloqueios Ativos</p>
+              <h3 className="text-2xl font-bold font-mono">3</h3>
+            </div>
+          </div>
+        </div>
+
+        <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-primary/10 text-primary rounded-lg">
+              <CheckCircle2 className="size-5" />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-muted-foreground">Tarefas para Hoje</p>
+              <h3 className="text-2xl font-bold font-mono">5</h3>
+            </div>
+          </div>
+        </div>
+
+        <div className="rounded-xl border border-border bg-card p-6 shadow-sm">
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-secondary text-secondary-foreground rounded-lg">
+              <MessageSquare className="size-5" />
+            </div>
+            <div>
+              <p className="text-sm font-medium text-muted-foreground">Menções não lidas</p>
+              <h3 className="text-2xl font-bold font-mono">12</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid gap-8 md:grid-cols-7">
+        {/* Main Timeline Column */}
+        <div className="md:col-span-4 space-y-6">
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-mono font-semibold">Timeline Recente</h3>
+            <Button variant="outline" size="sm" className="h-8">
+              Filtrar
+            </Button>
+          </div>
+
+          <div className="space-y-4">
+            {/* Mock Timeline Item 1 */}
+            <div className="p-5 rounded-xl border border-border bg-card shadow-sm space-y-3">
+              <div className="flex items-center justify-between text-sm">
+                <span className="flex items-center gap-2 font-medium text-sidebar-primary">
+                  <span className="size-2 rounded-full bg-sidebar-primary" />
+                  Projeto Alpha
+                </span>
+                <span className="text-muted-foreground text-xs flex items-center gap-1">
+                  <Clock className="size-3" /> há 15 min
+                </span>
+              </div>
+              <p className="text-foreground text-sm leading-relaxed">
+                <span className="font-semibold">Sarah Jenkins</span> atualizou o status da tarefa <span className="font-mono bg-muted px-1 py-0.5 rounded text-xs">AL-102</span> para <span className="text-primary font-medium">Em Revisão</span>.
+              </p>
+            </div>
+
+            {/* Mock Timeline Item 2 */}
+            <div className="p-5 rounded-xl border border-border bg-card shadow-sm space-y-3">
+              <div className="flex items-center justify-between text-sm">
+                <span className="flex items-center gap-2 font-medium text-secondary-foreground">
+                  <span className="size-2 rounded-full bg-secondary-foreground" />
+                  Marketing Q3
+                </span>
+                <span className="text-muted-foreground text-xs flex items-center gap-1">
+                  <Clock className="size-3" /> há 45 min
+                </span>
+              </div>
+              <p className="text-foreground text-sm leading-relaxed">
+                <span className="font-semibold">Mike T.</span> salvou um novo aprendizado sobre conversão de landing pages que pode ser útil.
+              </p>
+              <div className="pt-2">
+                <Button variant="secondary" size="sm" className="h-8 gap-2">
+                  <FileText className="size-3" />
+                  Ler Aprendizado
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Sidebar/Context Column */}
+        <div className="md:col-span-3 space-y-6">
+          <h3 className="text-lg font-mono font-semibold">Projetos Ativos</h3>
+          <div className="space-y-3">
+            {[
+              { name: "Projeto Alpha", status: "No Prazo", color: "bg-primary" },
+              { name: "Integração SSO", status: "Risco", color: "bg-destructive" },
+              { name: "Marketing Q3", status: "No Prazo", color: "bg-primary" },
+            ].map((project) => (
+              <div key={project.name} className="flex items-center justify-between p-3 rounded-lg border border-border hover:bg-sidebar-accent cursor-pointer transition-colors group">
+                <div className="flex items-center gap-3">
+                  <div className={`size-8 rounded-md ${project.color}/10 flex items-center justify-center`}>
+                    <div className={`size-2.5 rounded-full ${project.color}`} />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-medium">{project.name}</h4>
+                    <p className="text-xs text-muted-foreground">{project.status}</p>
+                  </div>
+                </div>
+                <ArrowRight className="size-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { DM_Sans, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
+import { Sidebar } from "@/components/layout/sidebar";
+import { Header } from "@/components/layout/header";
+import { TooltipProvider } from "@/components/ui/tooltip";
+
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
   subsets: ["latin"],
@@ -25,9 +29,19 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${dmSans.variable} ${spaceGrotesk.variable} antialiased bg-background text-foreground`}
+        className={`${dmSans.variable} ${spaceGrotesk.variable} antialiased bg-background text-foreground h-screen overflow-hidden`}
       >
-        {children}
+        <TooltipProvider>
+          <div className="flex h-full w-full">
+            <Sidebar />
+            <div className="flex flex-col flex-1 min-w-0">
+              <Header />
+              <main className="flex-1 overflow-y-auto bg-background/50">
+                {children}
+              </main>
+            </div>
+          </div>
+        </TooltipProvider>
       </body>
     </html>
   );
