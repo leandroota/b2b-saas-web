@@ -26,6 +26,7 @@ const navItems = [
     { icon: MessageSquare, label: "Chat", href: "/chat" },
     { icon: Activity, label: "Feed", href: "/feed" },
     { icon: BookText, label: "Wiki", href: "/wiki" },
+    { icon: Settings, label: "Configurações", href: "/settings" },
 ];
 
 export function Sidebar() {
