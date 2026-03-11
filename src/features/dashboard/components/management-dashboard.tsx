@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
     LayoutDashboard,
     ArrowUpRight,
@@ -21,6 +21,7 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
+import { DashboardSkeleton } from "@/components/layout/skeletons";
 
 const MOCK_KPIS = [
     { label: "Projetos Ativos", value: "12", change: "+2", indicator: "up", icon: LayoutDashboard },
@@ -37,6 +38,15 @@ const MOCK_PROJECT_HEALTH = [
 ];
 
 export function ManagementDashboard() {
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setIsLoading(false), 1200);
+        return () => clearTimeout(timer);
+    }, []);
+
+    if (isLoading) return <DashboardSkeleton />;
+
     return (
         <div className="p-8 space-y-8 animate-in fade-in duration-700">
             {/* Header */}

@@ -11,6 +11,7 @@ import { Task, TaskStatus } from "../lib/task-schema";
 import { CreateTaskSheet } from "./create-task-sheet";
 import { useAppStore } from "@/store/use-app-store";
 import { useEffect } from "react";
+import { KanbanSkeleton } from "@/components/layout/skeletons";
 
 const COLUMNS: { id: TaskStatus; label: string }[] = [
     { id: "BACKLOG", label: "Backlog" },
@@ -25,8 +26,14 @@ interface KanbanBoardProps {
 }
 
 export function KanbanBoard({ tasks }: KanbanBoardProps) {
+    const [isLoading, setIsLoading] = useState(true);
     // Basic state to hold tasks, in a real app this would use a more robust state manager or optimistic UI
     const [boardTasks, setBoardTasks] = useState(tasks);
+
+    useEffect(() => {
+        const timer = setTimeout(() => setIsLoading(false), 800);
+        return () => clearTimeout(timer);
+    }, []);
 
     // UI State for task creation
     const [createTaskOpen, setCreateTaskOpen] = useState(false);
@@ -43,6 +50,8 @@ export function KanbanBoard({ tasks }: KanbanBoardProps) {
             blockedCount: boardTasks.filter(t => t.priority === "URGENT").length, // Usando URGENt como proxy de bloqueio
         });
     }, [boardTasks, setProjectContext]);
+
+    if (isLoading) return <KanbanSkeleton />;
 
     const handleCreateTask = (status: TaskStatus) => {
         setDefaultStatus(status);

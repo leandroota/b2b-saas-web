@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { useAppStore } from "@/store/use-app-store";
 import { useEffect } from "react";
+import { PermissionGuard } from "@/components/auth/permission-guard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -225,15 +226,16 @@ export function WikiView() {
 
                     <div className="flex items-center gap-2">
                         {!isEditing ? (
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={handleEdit}
-                                className="h-8 gap-2 text-xs font-bold uppercase tracking-wider border-primary/20 text-primary hover:bg-primary/10 transition-all hover:scale-105"
-                            >
-                                <Edit3 className="size-3.5" />
-                                Editar
-                            </Button>
+                            <PermissionGuard role="ADMIN">
+                                <Button
+                                    variant="ghost"
+                                    size="icon-xs"
+                                    className="size-8 text-muted-foreground hover:bg-primary/10 hover:text-primary transition-all"
+                                    onClick={handleEdit}
+                                >
+                                    <Edit3 className="size-3.5" />
+                                </Button>
+                            </PermissionGuard>
                         ) : (
                             <>
                                 <Button

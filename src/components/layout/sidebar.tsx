@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { useAppStore } from "@/store/use-app-store";
+import { ModeToggle } from "@/components/mode-toggle";
 import {
     Home,
     FolderKanban,
@@ -15,12 +17,11 @@ import {
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useAppStore } from '@/store/use-app-store'; // Added useAppStore import
-import { ModeToggle } from "@/components/mode-toggle";
+import { PermissionGuard } from "@/components/auth/permission-guard";
 
 const navItems = [
     { icon: Home, label: "Home", href: "/" },
-    { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
+    { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard", role: 'ADMIN' },
     { icon: FolderKanban, label: "Projetos", href: "/projects" },
     { icon: MessageSquare, label: "Chat", href: "/chat" },
     { icon: Activity, label: "Feed", href: "/feed" },
@@ -28,7 +29,7 @@ const navItems = [
 ];
 
 export function Sidebar() {
-    const { isCopilotOpen, toggleCopilot } = useAppStore();
+    const { isCopilotOpen, toggleCopilot, currentUser, setUserRole } = useAppStore();
 
     return (
         <aside className="w-64 border-r border-sidebar-border bg-sidebar flex flex-col h-full shrink-0">
@@ -44,19 +45,31 @@ export function Sidebar() {
 
             {/* Primary Navigation */}
             <nav className="flex-1 overflow-y-auto p-3 space-y-1">
-                {navItems.map((item) => (
-                    <Link key={item.href} href={item.href}>
-                        <span
-                            className={cn(
-                                "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
-                                "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-                            )}
-                        >
-                            <item.icon className="size-4" />
-                            {item.label}
-                        </span>
-                    </Link>
-                ))}
+                {navItems.map((item) => {
+                    const content = (
+                        <Link key={item.href} href={item.href}>
+                            <span
+                                className={cn(
+                                    "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                                    "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                                )}
+                            >
+                                <item.icon className="size-4" />
+                                {item.label}
+                            </span>
+                        </Link>
+                    );
+
+                    if (item.role) {
+                        return (
+                            <PermissionGuard key={item.href} role={item.role as any}>
+                                {content}
+                            </PermissionGuard>
+                        );
+                    }
+
+                    return content;
+                })}
 
                 <div className="pt-4 pb-2">
                     <div className="px-3 text-xs font-mono font-semibold text-sidebar-foreground/50 mb-2 uppercase tracking-widest">
@@ -79,7 +92,20 @@ export function Sidebar() {
             </nav>
 
             {/* User Footer */}
-            <div className="p-3 border-t border-sidebar-border shrink-0">
+            <div className="p-3 border-t border-sidebar-border shrink-0 space-y-3">
+                {/* Role Switcher Test */}
+                <div className="flex items-center justify-between px-3 py-1 bg-muted/30 rounded-lg">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Cargo</span>
+                    <select
+                        className="bg-transparent text-[10px] font-bold uppercase focus:outline-none"
+                        value={currentUser.role}
+                        onChange={(e) => setUserRole(e.target.value as any)}
+                    >
+                        <option value="ADMIN">Admin</option>
+                        <option value="MEMBER">Member</option>
+                    </select>
+                </div>
+
                 <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-sidebar-accent transition-colors cursor-pointer">
                     <Avatar className="size-8 rounded-md">
                         <AvatarImage src="https://github.com/shadcn.png" />
