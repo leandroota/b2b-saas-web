@@ -1,0 +1,113 @@
+---
+description: Regras de UI e styling com Shadcn/ui, Tailwind v4, dark mode premium, tipografia, superfícies, spacing e consistência visual.
+globs: *
+---
+# 03-ui-and-styling.mdc
+
+## Objetivo
+Definir regras de UI e styling consistentes usando Shadcn/ui, Tailwind v4 e foco total numa estética B2B "Dark Mode Premium", prezando tipografia, superfícies claras e consistência de espaçamento.
+
+## Regra-mãe
+Todo estilo deve derivar dos tokens globais, respeitando o Dark Mode Premium, garantindo acessibilidade, consistência e alta sofisticação visual — nunca com classes CSS arbitrárias ou mágicas.
+
+---
+
+# 1. PRINCÍPIOS GERAIS DE UI
+
+## 1. Menos é B2B Premium
+Evite bordas desnecessárias, cores gritantes e sombras saturadas. Refine. O contraste da tipografia e o espaço negativo são as ferramentas principais de delimitação de zonas.
+
+## 2. Abstraia Classes Longas no Tailwind
+Não espalhe `className="flex items-center justify-center p-4 bg-red-500 rounded-md shadow-md text-white font-bold ..."` repetidamente. Use abstrações `CVA (class-variance-authority)` para componentes e limite-se a micro-ajustes nas views.
+
+## 3. Dark Mode Nativo, Não Adicional
+O sistema é nativamente **Dark Mode Premium**. Cores desaturadas, pretos azulados profundos e acentos vibrantes neon. Todo Design System é desenhado tendo sombras internas de card levemente acentuadas e borders muito finas (`border-border/40`).
+
+---
+
+# 2. TOKENS E TAILWIND V4
+
+## O Sistema de Cores (via Globals.css / Tailwind Variables)
+- `background`: Sempre referenciar por `bg-background`
+- `foreground`: Texto primário global puro.
+- `card` e `popover`: Para modais e painéis suspensos, usar os fundos leves por default.
+- `primary`: É vibrante (`oklch(0.85 0.15 140)`) para CTAs e ênfase visual extrema em pequenas doses.
+- `muted` e `muted-foreground`: Para elementos não focos de atenção (subtextos, datas distantes, rótulos de colunas do Gantt).
+
+## Proibições de Tailwind
+Não use cores hardcoded: `text-[#123123]` ou `bg-gray-800`.
+Utilize SEMPRE os tokens semânticos: `bg-accent`, `text-destructive-foreground`.
+Isso garante a mudança perfeita de temas (se aplicável), mas principalmente preserva a coesão do Dark Mode.
+
+---
+
+# 3. BASE VISUAL / SHADCN/UI
+
+## Regra de Utilização do Shadcn
+O Shadcn atua como base limpa de componentes primitivos. Antes de criar qualquer componente (Select, Modal, Combobox, Accordion), você deve instalar o correspondente via CLI do Shadcn (`npx shadcn@latest add ...`).
+
+## Estilizando Componentes Base
+Os componentes do Shadcn adicionados à pasta `src/components/ui` PODEM (e devem) ser ajustados levemente aos Tokens e Borders Premium do B2B SaaS (Bordas translúcidas, hover styles com backgrounds opacos). Mas nunca altere a estrutura bruta de acessibilidade/funcionalidade do Radix subjacente.
+
+---
+
+# 4. TIPOGRAFIA (ESCALA E CARÁTER)
+
+## Fontes Configuradas
+- **Display/Títulos**: `Space Grotesk` (`var(--font-space-grotesk)` -> `font-mono`). Tem uma leitura arquitetônica, elegante e com traços técnicos. Use em números estelares de Dashboard, KPIs, cabeçalho principal do Projeto.
+- **Body/Textos Longos**: `DM Sans` (`var(--font-dm-sans)` -> `font-sans`). Para leitura prolongada, chat, wiki, descrições de tarefas. Confortável.
+
+## Pesos de Fonte
+- `font-medium` para maioria dos links, dados de tabela e títulos subjacentes.
+- `font-bold` para dar extrema urgência visual ou numerais grandes.
+- Evite `font-light` ou `font-thin` no Dark Mode Premium; textos fracos em fundos pretos "sangram" e desaparecem, invista pelo menos em `normal / 400` balanceando com forte contraste do `text-muted-foreground`.
+
+---
+
+# 5. SUPERFÍCIES E BORDAS
+
+## Profundidade
+O Dark Mode moderno não usa grandes montanhas de sombras com Gaussian blurs brancos que estouram.
+Garantir profundidade por `border` super controlada (`border border-border/50`) ou pequenas variações no espectro da luminosidade. O container principal reside em `bg-background` ou um `bg-zinc-950` liso, e elementos elevados utilizam `bg-card` ou `bg-sidebar`.
+
+## Glassmorphism com Sabedoria
+Pode-se usar o padrão `backdrop-blur-md bg-background/60` para:
+- Headers flutuantes que interagem com o scroll (ex. Wiki e Projetos).
+- Drawers e Overlays.
+- Topbar global.
+
+---
+
+# 6. ESPAÇAMENTO, GAPS E LAYOUT
+
+## Regras
+- Utilize escalas consistentes, privilegiando ritmos visuais baseados em base 4.
+- `gap-4`, `p-6` para containers generosos.
+- `gap-2` para elementos em botões e small chips.
+- Evite grids misturados com displays absolutos improvisados. Use `flex` majoritariamente para o alinhamento centralizado. Grids para alinhamentos em dashboards, feeds e cartões emparelhados de Home.
+
+---
+
+# 7. ANIMAÇÕES, MICRO-INTERAÇÕES E EFEITOS
+
+## O Foco em Motion Útil
+O B2B Software precisa ser produtivo. Animação deve servir para comunicar estado.
+- Skeletons precisam piscar (Pulse) de forma elegante (baixa opacidade, nada tão gritante).
+- Usar `tw-animate-css` na medida, como nas views de slide in de Dropdowns e Modals.
+- Usar transições orgânicas nos botões (`transition-colors duration-200`). Nunca mudar de fundo seco e grotesco sem transição, exceto em componentes em tempo real de extrema alta densidade.
+
+## Efeito "Global Light Source" ou Neon Leve
+Sempre que pertinente, aplique um highlight muito sútil ao longo das bordas das interações para emular software premium. (Isso eleva a percepção B2B de simples para sofisticado).
+
+---
+
+# 8. ANTI-PADRÕES DE UI E ESTILIZAÇÃO
+
+Evitar:
+- Uso de Cores e Medidas Mágicas (e.g. `w-[314px]` ao redor de layout ao invés de classes relativas e breakpoints).
+- Estilos Inlines a não ser onde a computação do React determine uma dinâmica de layout intransferível.
+- Interfaces coloridas demais. O Premium respira fundo neutro (Preto/Grafite profundo) com pontos solitários e intensos de cores semânticas vibrantes.
+- Uso de componentes criados na mão copiando Shadcn, sempre utilize a base correta para preservar A11y e escalabilidade (como os componentes `Accessible Radix/shadcn`).
+
+## Regra final
+Toda implementação de UI precisa parecer propositada. Se existir uma borda de tabela inconsistente com a borda de um cartão de chat, é um erro de engenharia de layout no sistema de classes semântico do Tailwind. Utilize de variáveis nativas.

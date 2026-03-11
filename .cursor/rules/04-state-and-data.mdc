@@ -1,0 +1,117 @@
+---
+description: Regras de estado, fetch de dados, Server Actions, Zustand, cache, sincronização e separação de estado de UI e estado central.
+globs: *
+---
+# 04-state-and-data.mdc
+
+## Objetivo
+Definir como lidar com o fluxo de dados na aplicação: fetch, Server Actions, estado global (Zustand), sincronização de cache e o limite claro entre Server State (domínio) e Client State (interface).
+
+## Regra-mãe
+O estado deve viver o mais próximo possível de onde é usado. O backend e o cache do servidor processam o "Server State" (estado do domínio). O cliente (via URL, useState, Zustand) processa apenas "Client State" (estado efêmero ou da view).
+
+---
+
+# 1. PRINCÍPIOS GERAIS
+
+## 1. Não duplique o banco de dados no Frontend
+O Frontend não precisa de uma réplica síncrona do banco em Redux/Zustand. Use Server Components para passar apenas a "visão" atual aos Client Components.
+
+## 2. Server State é do Server
+A lógica de entidades de domínio (Task, Project, User) deve ser resolvida no servidor.
+
+## 3. A mutação é atômica e previsível
+Use Server Actions para mutar dados, não endpoints `/api` pesados, a menos que uma API externa precise interagir com nosso serviço.
+
+## 4. O Loading State é obrigatório em mutações
+Sempre controle o estado de espera e travamento ("pending") enquanto uma Server Action responde ou falha, prevenindo cliques duplos e erros não capturados na UX.
+
+---
+
+# 2. SERVER STATE VS CLIENT STATE (A FRONTEIRA)
+
+## Server State (Domínio)
+- O que é: Tasks, Projetos, Equipes, Configurações do User.
+- Como Lidar: Puxar via Data Fetching em React Server Components e manter o tráfego de dados usando Server Actions e `revalidateTag`/`revalidatePath`.
+- Não guarde em: Estado Global (Zustand) sem extremo critério.
+
+## Client State (Visual)
+- O que é: "A sidebar está aberta?", "Qual tab eu selecionei agora?", "A cor do tema é Dark?", "Filtros e ordenações locais".
+- Como Lidar: `useState` para pequenos escopos. **URL Query Params** para estado compartilhável (Filtros, Tabs Principais, Pesquisa). `Zustand` para stores puramente voláteis de UX (Contexto Global de Interface).
+
+---
+
+# 3. MUTAÇÕES DE DADOS (SERVER ACTIONS E OPTIMISTIC UI)
+
+## O Padrão Ouro de Next.js
+Execute interações que modificam dados (Criar Tarefa, Completar Etapa) desta forma:
+1. Usuário envia formulário/ação.
+2. A UI aplica "Optimistic Update" local e reativo via `useOptimistic` se necessário para velocidade B2B.
+3. Server Action processa a inserção no servidor.
+4. O servidor utiliza `revalidatePath` ou `revalidateTag` indicando que a página/dados alterou.
+5. Server Component automaticamente busca o valor de verdade de base e passa para frente como prop.
+
+## Controle com Server Actions
+Sempre envolva a Action num helper de formatação assíncrona.
+- Validação: O servidor valida o payload através de bibliotecas tipadas (Zod), nunca conde com validação exclusiva do client.
+
+---
+
+# 4. ESTADO GLOBAL COM ZUSTAND
+
+## Quando Usar Zustand
+1. Sincronizar o estado da interface que várias Features precisam acessar sem ter que furar Server Components via drill de contextos React muito custosos (Exemplo: Carrinho flutuante persistente de rascunhos de Copilot).
+2. Manter a sessão temporal rápida do usuário no front onde a URL Store não ajuda.
+
+## Regras de Zustand
+- Lidar com Múltiplas Stores: Não jogue tudo em uma "GlobalStore". Se a funcionalidade for de Chat, crie um `useChatStore`. Se for de Projeto, crie um `useProjectStore`.
+- Evite Zustand para Guardar Fetch de Dados Pesado de Banco: Para isso, use o Fetch Cache Nativo do Server.
+
+---
+
+# 5. ESTADO BASEADO NA URL (SEARCH PARAMS)
+
+## Regra Definitiva
+"Se o usuário copiar o link atual no browser e compartilhar para o colega de trabalho, a tela destino DEVE carregar nos mesmos moldes".
+
+## Aplicação Prática
+Armazene na URL (em SearchParams):
+- Parâmetros de pesquisa: `/?q=projeto-tal`
+- Filtros Ativos de Tabela ou Kanban: `/?status=em-progresso`
+- Visões da Metodologia do Usuário: `/?view=gantt`
+- Abas Seccionadas e Paginações ativas: `/?page=2`
+
+Esse estado URL permite que Server Components interpretem a query no lado do servidor, gerando HTML instantâneo com a view certa do usuário *antes mesmo de baixar o Javascript*.
+
+---
+
+# 6. SINCRONIZAÇÃO E CACHE (FETCH API NEXT.JS)
+
+## Controle de Stale-Time (Cache Fresco)
+Você tem controle granular na fetch API nativa. Quando chamar APIs/Bancos externos no Server Component:
+- `{ cache: "force-cache" }`: Apenas configs da plataforma imutáveis.
+- `{ next: { revalidate: 60 } }`: Bom para agregadores de Feed de Atividades sociais onde não importa um micro-delay.
+- `{ cache: "no-store" }`: O padrão geral em dashboard corporativos confidenciais! Toda vez o servidor olha localmente os dados, garantindo frescor em dashboards densos.
+
+Revalidações ativas pós Server Actions quebram esse ciclo e reinjetam a nova lista no servidor.
+
+---
+
+# 7. TRATAMENTO LOCAL E HOOKS
+
+## UseReducer e UseState
+- Mantenha `useState` isolado ao arquivo físico mais abaixo possível da tela de components (O Input interativo, O Toggle visual simples).
+- Use `useReducer` em modais complexos muito espalhados dentro da mesma feature (ex: Gantt Editor de Barras com múltiplos sub-inputs de Data e Horário relativos uns aos outros).
+
+---
+
+# 8. ANTI-PADRÕES DE STATE E DATA
+
+Evitar:
+- Context API Genérica e "God": Evite embrulhar todo o root layout com inúmeros Providers complexos `(<AppProvider><ProjectProvider><UserProvider>...`) se você pode enviar props do server ao topo da Feature-Slice.
+- Hydration Mismatch: Usar estado cliente derivado de `typeof window !== "undefined"` resultando em saltos na tela após render. 
+- Componentes Clientes que "escutam" Redux e buscam todos os dados da entidade global pesando o JS para os browsers.
+- Salvar segredos, keys, logs de acesso ao state em qualquer camada publicável ao usuário em stores Zustand. Use apenas para UX.
+
+## Regra final
+O Client State ajuda o usuário a "navegar" e "ver". O Server State define "o que existe" no banco. Nunca misture os dois por preguiça de engenhar fronteiras via props.

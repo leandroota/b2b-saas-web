@@ -1,0 +1,140 @@
+---
+description: Regras de arquitetura da aplicação em Next.js, incluindo Server Components vs Client Components, estrutura de pastas e padrões de implementação.
+globs: *
+---
+# 02-nextjs-architecture.mdc
+
+## Objetivo
+Definir as regras de arquitetura da aplicação em Next.js, incluindo Server Components vs Client Components, estrutura de pastas e padrões de implementação.
+
+## Regra-mãe
+A arquitetura deve privilegiar a performance do usuário, a separação clara de responsabilidades (FSD) e o uso semântico e nativo dos recursos do App Router do Next.js.
+
+---
+
+# 1. PRINCÍPIOS GERAIS
+
+## 1. O servidor é a fonte principal de verdade
+Sempre prefira buscar dados, validar regras e renderizar componentes no servidor antes de delegar para o cliente.
+
+## 2. Separação Estrita de Responsabilidades
+Código de infraestrutura, lógica de negócio e interface devem permanecer desacoplados, seguindo uma adaptação pragmática do Feature-Sliced Design (FSD).
+
+## 3. Modularidade Real
+Módulos (Projects, Chat, Feed, etc.) não devem conhecer detalhes internos uns dos outros, comunicando-se através de interfaces (APIs) claramente definidas.
+
+## 4. Evitar Dependências Desnecessárias de Client
+Se um componente interativo precisa estar no Client, isole a interatividade na "folha" da árvore de componentes, mantendo os componentes "pais" no Server.
+
+---
+
+# 2. ESTRUTURA DE PASTAS (FEATURE-SLICED DESIGN)
+
+## `src/app/` (Routing Layer)
+Apenas roteamento, layouts de página, injeção de metadata, e Server Components de entrada (`page.tsx`, `layout.tsx`, `loading.tsx`, `error.tsx`). Não deve conter lógica de negócio pesada.
+
+## `src/features/` (Módulos/Domínio)
+O coração da aplicação. Contém módulos isolados pelo contexto de negócio:
+- `auth/`
+- `projects/`
+- `chat/`
+- `social/` (ou feed)
+- `wiki/`
+- `copilot/`
+
+Cada feature contêm internamente seus próprios `components`, `actions` (server actions), `store` (estado) e `utils`.
+
+## `src/components/` (Shared UI Layer)
+Componentes puramente visuais, burros, e sem contexto de negócio.
+- `ui/` (Shadcn UI Base Components)
+- `layout/` (Global Sidebar, Global Header, Core Shell)
+- `shared/` (Módulos globais como EmptyStates, ErrorBoundaries que cruzam features).
+
+## `src/lib/` (Infrastructure Layer)
+Configurações, clientes globais (ex: Prisma, Supabase, Axios), type defs genéricos, utils universais (ex: `cn` formatação de data).
+
+## `src/store/` (Global App State)
+Estado estritamente global que precisa atravessar features (ex: Theme, User Session, Current Active Workspace).
+
+---
+
+# 3. SERVER COMPONENT VS CLIENT COMPONENT REGRA GERAL
+
+## React Server Components (RSC) é o PADRÃO
+Todo componente deve nascer como Server Component (sem `"use client"`).
+
+## Quando usar Server Components
+- Buscar dados diretamente no banco de dados ou APIs.
+- Acessar dependências seguras do lado do servidor (tokens, chaves, variáveis de ambiente).
+- Renderizar grandes dependências que não precisam ir para o bundle do cliente.
+- Reduzir o JavaScript na página.
+
+## Quando usar Client Components (`"use client"`)
+- O componente precisa de `useState`, `useReducer`, `useEffect`.
+- Ele escuta eventos nativos do DOM (`onClick`, `onChange`, inputs).
+- Ele utiliza Web APIs nativas do navegador (window, document, localStorage).
+- Consome Contextos React (`useContext`).
+
+## Regra de Interseção (O Padrão Componente Misto)
+Passe Server Components como `children` para Client Components para evitar que toda a árvore vire Client.
+
+---
+
+# 4. DATA FETCHING SECRETS E SSR
+
+## Fetching Direto
+Prefira fazer fetching de dados diretamente no Server Component usando blocos assíncronos:
+```tsx
+export default async function ProjectPage({ params }) {
+  const data = await getProject(params.id);
+  // ...
+}
+```
+
+## Otimização de Cascata (Waterfall)
+Traga respostas paralelas com `Promise.all` se independentes.
+
+## Cache e Revalidação Estrita
+- Use a lógica nativa de `fetch` do Next.js.
+- Configure tempos de revalidação adequados. (Revalidate de 60s para feed genérico, e revalidações sob demanda baseadas em tags automáticas com Server Actions para Projetos/Task).
+
+---
+
+# 5. MUTAÇÃO: SERVER ACTIONS É A NORMA
+
+## Regra Definitiva
+Para alterar estado, banco de dados ou atualizar entidade, **use Server Actions** exclusivas. Não crie Route Handlers (`route.ts`) convencionais apenas para CRUD.
+
+## Organização da Action
+As Server Actions devem residir dentro de sua respectiva Feature (`src/features/projects/actions/create-project.ts`).
+
+## Feedback e Optimistic UI
+Sempre retorne um objeto padrão da action:
+```ts
+{ success: boolean; data?: any; error?: string }
+```
+Invista em `useActionState` (ou `useFormState`) e combine com `useOptimistic` no Client Component para não prender a interface enquanto a ação roda no servidor.
+
+---
+
+# 6. BOUNDARIES COMPORTAMENTAIS E ERRO
+
+## `loading.tsx`
+Toda rota longa estrutural deve possuir um Skeleton que represente a arquitetura visual daquela view (não apenas um spinner seco).
+
+## `error.tsx` e `not-found.tsx`
+Deve reter o estilo premium. Evite páginas de erro nativas e crie um ErrorBoundary para renderizar estados visuais degradados, mas mantendo a navegação do Shell (Sidebar/TopBar) ativa para o usuário sair dali.
+
+---
+
+# 7. ANTI-PADRÕES DE ARQUITETURA
+
+Evitar:
+- Adicionar `"use client"` no Layout Global ou no começo do Arquivo Principal da Página.
+- Prop Drilling de mais de 3 níveis de profundidade (use Context ou Stores globais para estados persistentes em features).
+- Fazer Data Fetching complexo dentro de rotas de rotina via Client Side (`useEffect` + `fetch`) sem motivo.
+- Route Handlers (`/api/...`) usados para lógicas onde um Server Action seria suficiente de forma nativa e isolada.
+- Exportar lógicas e hooks do negócio para fora da sua Feature (`src/features/*`).
+
+## Regra final
+Se uma alteração numa tela de Chat quebrar inesperadamente o Kanban do Projeto, nossa arquitetura (FSD) falhou no isolamento de fronteiras. Reflexão rigorosa em cada importação.
