@@ -14,12 +14,16 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Task } from "../lib/task-schema";
 import { MoreHorizontal, Calendar, MessageSquare, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { CreateTaskSheet } from "./create-task-sheet";
+import { useState } from "react";
 
 interface TaskListViewProps {
     tasks: Task[];
 }
 
 export function TaskListView({ tasks }: TaskListViewProps) {
+    const [createTaskOpen, setCreateTaskOpen] = useState(false);
+
     const getPriorityColor = (priority: string) => {
         switch (priority) {
             case "URGENT": return "bg-destructive/10 text-destructive border-destructive/20";
@@ -115,11 +119,21 @@ export function TaskListView({ tasks }: TaskListViewProps) {
             </div>
 
             <div className="mt-4 flex justify-end">
-                <Button variant="ghost" size="sm" className="text-xs font-mono text-muted-foreground hover:text-foreground gap-2">
+                <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-xs font-mono text-muted-foreground hover:text-foreground gap-2"
+                    onClick={() => setCreateTaskOpen(true)}
+                >
                     <Plus className="size-3" />
                     Adicionar nova tarefa
                 </Button>
             </div>
+
+            <CreateTaskSheet
+                open={createTaskOpen}
+                onOpenChange={setCreateTaskOpen}
+            />
         </div>
     );
 }
