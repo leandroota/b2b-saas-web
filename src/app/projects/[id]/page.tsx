@@ -22,6 +22,10 @@ import { ProjectChat } from "@/features/chat/components/project-chat";
 import { WikiView } from "@/features/wiki/components/wiki-view";
 import { ProjectFiles } from "@/features/projects/components/project-files";
 import { ProjectAICockpit } from "@/features/projects/components/project-ai-cockpit";
+import { ActivityFeed } from "@/features/social/components/activity-feed";
+import { Publisher } from "@/features/social/components/publisher";
+import { ExecutionInsights } from "@/features/dashboard/components/execution-insights";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useAppStore } from "@/store/use-app-store";
@@ -115,8 +119,8 @@ export default function ProjectPage() {
 
     // Set initial tab based on methodology
     useEffect(() => {
-        if (projectData.methodology === "AGILE") setActiveTab("kanban");
-        else if (projectData.methodology === "KANBAN") setActiveTab("kanban");
+        if (projectData.methodology === "AGILE") setActiveTab("feed");
+        else if (projectData.methodology === "KANBAN") setActiveTab("feed");
         else if (projectData.methodology === "LIST") setActiveTab("list");
         else if (projectData.methodology === "PLANNING") setActiveTab("wiki");
         else setActiveTab("overview");
@@ -202,7 +206,22 @@ export default function ProjectPage() {
                             transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
                             className="h-full"
                         >
-                            {activeTab === "kanban" ? (
+                            {activeTab === "feed" ? (
+                                <div className="h-full flex flex-col overflow-hidden bg-card/5">
+                                    <Publisher />
+                                    <div className="flex-1 relative overflow-hidden">
+                                        <ScrollArea className="h-full">
+                                            <div className="max-w-3xl mx-auto px-8 py-10 space-y-8">
+                                                <div className="flex items-center gap-3 px-4 mb-4">
+                                                    <div className="size-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px] shadow-primary" />
+                                                    <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">Log de Atividades do Projeto</h3>
+                                                </div>
+                                                <ActivityFeed />
+                                            </div>
+                                        </ScrollArea>
+                                    </div>
+                                </div>
+                            ) : activeTab === "kanban" ? (
                                 <KanbanBoard tasks={MOCK_TASKS} />
                             ) : activeTab === "list" ? (
                                 <TaskListView tasks={MOCK_TASKS} />
@@ -235,15 +254,23 @@ export default function ProjectPage() {
                 </div>
             </div>
 
-            {/* 3. Integrated Project Chat Sidebar */}
-            <motion.aside
-                initial={{ x: 20, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                className="hidden lg:flex w-[350px] xl:w-[450px] shrink-0 flex-col bg-card/10 border-l border-border h-full relative"
-            >
-                <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.02] to-transparent pointer-events-none" />
-                <ProjectChat />
-            </motion.aside>
+            {/* 3. Right Column Architecture: Integrated Intelligence Cockpit */}
+            <div className="hidden lg:flex h-full overflow-hidden border-l border-border bg-card/5">
+                {/* 3.1 Contextual Insights */}
+                <div className="w-[380px] shrink-0 border-r border-border/50">
+                    <ExecutionInsights />
+                </div>
+
+                {/* 3.2 Integrated Project Chat */}
+                <motion.aside
+                    initial={{ x: 20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    className="w-[350px] xl:w-[450px] shrink-0 flex flex-col bg-card/10 h-full relative"
+                >
+                    <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.02] to-transparent pointer-events-none" />
+                    <ProjectChat />
+                </motion.aside>
+            </div>
         </div>
     );
 }

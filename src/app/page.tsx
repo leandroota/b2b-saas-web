@@ -2,21 +2,29 @@
 
 import { useAppStore } from "@/store/use-app-store";
 import { useEffect, useState } from "react";
-import { Publisher } from "@/features/social/components/publisher";
-import { ActivityFeed } from "@/features/social/components/activity-feed";
-import { ExecutionInsights } from "@/features/dashboard/components/execution-insights";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Badge } from "@/components/ui/badge";
+import { ManagementDashboard } from "@/features/dashboard/components/management-dashboard";
 import {
-  FolderKanban,
-  Users,
-  FileText,
-  Calendar
+  LayoutDashboard,
+  ChevronDown,
+  Zap,
+  Activity,
+  FolderKanban
 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+  DropdownMenuLabel
+} from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 
 export default function Home() {
-  const { currentUser, projects } = useAppStore();
+  const { projects } = useAppStore();
+  const router = useRouter();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -26,57 +34,63 @@ export default function Home() {
   if (!mounted) return <div className="h-full bg-background" />;
 
   return (
-    <div className="flex flex-col h-full bg-background/50 overflow-hidden">
-      {/* 1. Integrated Premium Header */}
-      <header className="shrink-0 border-b border-border bg-background px-8 py-6">
-        <div className="max-w-[1600px] mx-auto flex items-center justify-between gap-8">
-          {/* Project Identity */}
-          <div className="flex items-center gap-4">
-            <div className="size-12 rounded-[1.25rem] bg-primary flex items-center justify-center shadow-2xl shadow-primary/20 ring-1 ring-white/10">
-              <FolderKanban className="size-6 text-white" />
-            </div>
-            <div className="space-y-1">
+    <div className="flex flex-col h-full bg-background/50 overflow-hidden relative">
+      {/* Unified Hub Header with Project Selector */}
+      <header className="shrink-0 border-b border-border/50 bg-card/30 backdrop-blur-md px-8 py-4 z-20">
+        <div className="max-w-[1600px] mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-6">
+            <div className="flex flex-col">
+              <h1 className="text-sm font-black font-mono tracking-[0.2em] uppercase text-primary mb-0.5">Workspace Intelligence</h1>
               <div className="flex items-center gap-2">
-                <h1 className="text-xl font-black font-mono tracking-tighter uppercase">Projeto Alpha</h1>
-                <Badge variant="outline" className="text-[8px] font-black tracking-widest px-1.5 h-4 bg-primary/5 border-primary/20 text-primary">SPRINT 12</Badge>
-              </div>
-              <div className="flex items-center gap-3 text-[10px] font-bold text-muted-foreground uppercase tracking-widest">
-                <span className="flex items-center gap-1.5"><Users className="size-3 text-primary/60" /> 8 Membros</span>
-                <span className="flex items-center gap-1.5"><FileText className="size-3 text-primary/60" /> 42 Docs</span>
-                <span className="flex items-center gap-1.5 border-l border-border pl-3 text-primary"><Calendar className="size-3" /> Cronograma Ativo</span>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="h-auto p-0 hover:bg-transparent group outline-none">
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl font-black font-mono tracking-tighter uppercase group-hover:text-primary transition-colors">Vision Cockpit</span>
+                      <ChevronDown className="size-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                    </div>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-64 rounded-2xl border-border/50 bg-card/90 backdrop-blur-xl shadow-2xl p-2" align="start">
+                    <DropdownMenuLabel className="text-[10px] font-black uppercase tracking-widest text-muted-foreground px-3 py-2">Mudar Contexto</DropdownMenuLabel>
+                    <DropdownMenuItem className="rounded-xl py-2.5 gap-3 cursor-pointer">
+                      <LayoutDashboard className="size-4 text-primary" />
+                      <span className="font-bold text-xs uppercase tracking-tight">Overview Global</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator className="bg-border/50 mx-2 my-1.5" />
+                    {Object.values(projects as any).map((proj: any) => (
+                      <DropdownMenuItem
+                        key={proj.id}
+                        className="rounded-xl py-2.5 gap-3 cursor-pointer"
+                        onClick={() => router.push(`/projects/${proj.id}`)}
+                      >
+                        <div className="size-6 rounded-lg bg-primary/10 flex items-center justify-center">
+                          <FolderKanban className="size-3 text-primary" />
+                        </div>
+                        <span className="font-bold text-xs uppercase tracking-tight">{proj.name}</span>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </div>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-primary/5 border border-primary/10">
+              <Zap className="size-4 text-primary animate-pulse" />
+              <span className="text-[10px] font-black uppercase tracking-widest text-primary">82% Efficiency</span>
+            </div>
+            <Button variant="secondary" className="h-10 rounded-xl font-bold text-[10px] uppercase tracking-widest px-4 border border-border/50">
+              Relatórios Export
+            </Button>
           </div>
         </div>
       </header>
 
-      <div className="flex flex-1 overflow-hidden">
-        {/* 2. Center Column: Social Pulse & Timeline */}
-        <main className="flex-1 flex flex-col min-w-0 border-r border-border h-full overflow-hidden bg-card/5">
-          <Publisher />
-
-          <div className="flex-1 relative overflow-hidden">
-            <ScrollArea className="h-full">
-              <div className="max-w-3xl mx-auto px-8 py-10 space-y-8">
-                <div className="flex items-center gap-3 px-4 mb-4">
-                  <div className="size-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px] shadow-primary" />
-                  <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">Postagens do Projeto</h3>
-                </div>
-                <ActivityFeed />
-              </div>
-            </ScrollArea>
-          </div>
-        </main>
-
-        {/* 3. Right Column: Execution Intelligence */}
-        <motion.div
-          initial={{ x: 20, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          className="hidden xl:block shrink-0 h-full"
-        >
-          <ExecutionInsights />
-        </motion.div>
-      </div>
+      <main className="flex-1 overflow-y-auto">
+        <div className="max-w-[1600px] mx-auto">
+          <ManagementDashboard />
+        </div>
+      </main>
     </div>
   );
 }

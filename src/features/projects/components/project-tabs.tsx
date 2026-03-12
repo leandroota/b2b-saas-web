@@ -10,7 +10,8 @@ import {
     Target,
     Layers,
     FileCode,
-    Sparkles
+    Sparkles,
+    Activity
 } from "lucide-react";
 import { ProjectMethodology } from "../lib/project-schema";
 
@@ -24,6 +25,7 @@ export function ProjectTabs({ methodology, activeTab, onTabChange }: ProjectTabs
     // Define tabs based on methodology
     const getTabsForMethodology = (method: ProjectMethodology) => {
         const baseTabs = [
+            { id: "feed", label: "Atividades", icon: Activity },
             { id: "wiki", label: "Wiki", icon: BookText },
             { id: "files", label: "Arquivos", icon: FileCode },
             { id: "ai-agents", label: "Agentes IA", icon: Sparkles },
