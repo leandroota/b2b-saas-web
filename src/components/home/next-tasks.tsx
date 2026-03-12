@@ -67,13 +67,6 @@ export function NextTasks() {
                                     : "bg-card/30 border-border/50 hover:border-primary/30 hover:bg-card/50 hover:scale-[1.02]"
                             )}
                         >
-                            {/* Hover CTA Indicator */}
-                            <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px] z-20">
-                                <div className="bg-primary text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 shadow-2xl">
-                                    Acessar Kanban
-                                    <ChevronRight className="size-3" />
-                                </div>
-                            </div>
 
                             {isUrgent && (
                                 <div className="absolute top-0 right-0 p-4">
@@ -97,11 +90,11 @@ export function NextTasks() {
                                     </span>
                                 </div>
 
-                                <div className="space-y-1">
-                                    <h4 className="font-bold text-xs uppercase leading-tight tracking-tight group-hover:text-primary transition-colors line-clamp-2">
+                                <div className="space-y-2 pr-4">
+                                    <h4 className="font-bold text-xs uppercase leading-tight tracking-tight group-hover:text-primary group-hover:translate-x-1 transition-all duration-300 line-clamp-2">
                                         {task.title}
                                     </h4>
-                                    <p className="text-[9px] text-muted-foreground font-medium uppercase tracking-tighter italic">
+                                    <p className="text-[9px] text-muted-foreground font-medium uppercase tracking-tighter italic group-hover:translate-x-1 transition-all duration-300">
                                         Story: {task.story || 'General Execution'}
                                     </p>
                                 </div>
@@ -110,6 +103,12 @@ export function NextTasks() {
                                     <Clock className="size-3 text-muted-foreground" />
                                     <span className="text-[10px] font-bold text-muted-foreground">AGORA</span>
                                 </div>
+                            </div>
+
+
+                            {/* Perspective Chevron */}
+                            <div className="absolute right-[-10px] top-1/2 -translate-y-1/2 opacity-0 group-hover:right-4 group-hover:opacity-100 transition-all duration-500 pointer-events-none">
+                                <ChevronRight className="size-4 text-primary" />
                             </div>
 
                             {/* Background Glow for Urgent */}
