@@ -51,30 +51,24 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                     <AnimatePresence>
                         {isVisible && (
                             <>
-                                {/* Subtle Backdrop */}
-                                <motion.div
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    exit={{ opacity: 0 }}
-                                    onClick={() => useAppStore.getState().closeMessaging()}
-                                    className="fixed inset-0 bg-background/20 backdrop-blur-[2px] z-40"
-                                />
 
                                 <motion.aside
-                                    initial={{ x: "100%" }}
-                                    animate={{ x: 0 }}
-                                    exit={{ x: "100%" }}
-                                    transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                                    initial={{ width: 0, opacity: 0 }}
+                                    animate={{ width: 420, opacity: 1 }}
+                                    exit={{ width: 0, opacity: 0 }}
+                                    transition={{ type: "spring", damping: 30, stiffness: 300 }}
                                     className={cn(
-                                        "fixed top-0 right-0 h-full w-[420px] border-l border-border bg-background z-50 flex flex-col shadow-[-20px_0_50px_rgba(0,0,0,0.2)]",
+                                        "h-full border-l border-border bg-background flex flex-col shrink-0 overflow-hidden",
                                     )}
                                 >
-                                    {/* Render based on current open state or fallback to last active during exit */}
-                                    {renderedComponent === 'copilot' ? (
-                                        <CopilotChat />
-                                    ) : renderedComponent === 'messaging' ? (
-                                        <MessagingDrawer />
-                                    ) : null}
+                                    <div className="w-[420px] h-full flex flex-col">
+                                        {/* Render based on current open state or fallback to last active during exit */}
+                                        {renderedComponent === 'copilot' ? (
+                                            <CopilotChat />
+                                        ) : renderedComponent === 'messaging' ? (
+                                            <MessagingDrawer />
+                                        ) : null}
+                                    </div>
                                 </motion.aside>
                             </>
                         )}

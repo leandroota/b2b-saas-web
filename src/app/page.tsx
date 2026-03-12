@@ -26,6 +26,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { PermissionGuard } from "@/components/auth/permission-guard";
 import { NextTasks } from "@/components/home/next-tasks";
 import { ProjectGoalMonitor } from "@/components/home/project-goal-monitor";
+import { RecentChatsWidget } from "@/components/home/recent-chats-widget";
 
 export default function Home() {
   const { projects } = useAppStore();
@@ -104,18 +105,10 @@ export default function Home() {
                     {/* 2. Tasks Grid (Next 2) */}
                     <NextTasks />
 
-                    {/* 3. Strategy Header - Pinned Left */}
-                    <div className="space-y-6">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <Activity className="size-4 text-primary" />
-                          <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">Monitor de Metas Estratégicas</h2>
-                        </div>
-                        <Badge variant="outline" className="text-[8px] font-black tracking-widest uppercase border-primary/20 text-primary">Status Global</Badge>
-                      </div>
-                      <div className="grid grid-cols-1 gap-4">
-                        <ProjectGoalMonitor />
-                      </div>
+                    {/* 3. Execution & Strategy Feed */}
+                    <div className="space-y-12">
+                      <ProjectGoalMonitor />
+                      <RecentChatsWidget />
                     </div>
                   </div>
                 }>
