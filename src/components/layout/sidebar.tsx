@@ -14,8 +14,8 @@ import {
     Zap,
     Settings,
     Brain,
-    Plus,
     ChevronRight,
+    ListTodo,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -27,6 +27,7 @@ const navItems = [
     { icon: Home, label: "Home", href: "/" },
     { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard", role: 'ADMIN' },
     { icon: FolderKanban, label: "Projetos", href: "/projects" },
+    { icon: ListTodo, label: "Tarefas", href: "/tasks" },
     { icon: Settings, label: "Configurações", href: "/settings" },
 ];
 
