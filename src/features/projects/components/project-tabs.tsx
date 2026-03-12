@@ -23,7 +23,6 @@ export function ProjectTabs({ methodology, activeTab, onTabChange }: ProjectTabs
     const getTabsForMethodology = (method: ProjectMethodology) => {
         const baseTabs = [
             { id: "wiki", label: "Wiki", icon: BookText },
-            { id: "chat", label: "Chat", icon: MessageSquare },
         ];
 
         switch (method) {
