@@ -46,9 +46,9 @@ export function SettingsView() {
         <div className="flex flex-col h-full bg-background/50 overflow-hidden relative">
             {/* Premium Standard Header */}
             <header className="shrink-0 border-b border-border/50 bg-card/30 backdrop-blur-md px-8 py-6 z-20">
-                <div className="max-w-5xl mx-auto flex items-center justify-between">
+                <div className="flex items-center justify-between">
                     <div className="flex flex-col">
-                        <h1 className="text-sm font-black font-mono tracking-[0.2em] uppercase text-primary mb-0.5">Control Center</h1>
+                        <h1 className="text-[10px] font-black font-mono tracking-[0.3em] uppercase text-primary mb-1">Control Center</h1>
                         <div className="flex items-center gap-2">
                             <span className="text-3xl font-black font-mono tracking-tighter uppercase text-foreground">Configurações</span>
                         </div>
@@ -64,33 +64,51 @@ export function SettingsView() {
             </header>
 
             <div className="flex-1 overflow-y-auto p-8">
-                <div className="max-w-5xl mx-auto">
-                    <Tabs defaultValue="profile" className="space-y-8">
-                        <TabsList className="bg-card/50 border border-border p-1 h-12">
-                            <TabsTrigger value="profile" className="gap-2 h-10 px-6 data-[state=active]:bg-background data-[state=active]:text-primary">
-                                <User className="size-4" />
-                                <span className="text-xs font-bold uppercase tracking-wider">Perfil</span>
+                <div className="flex flex-col h-full">
+                    <Tabs defaultValue="profile" className="space-y-10">
+                        <TabsList className="bg-transparent border-b border-border rounded-none p-0 h-12 w-full justify-start gap-10">
+                            <TabsTrigger
+                                value="profile"
+                                className="relative rounded-none border-b-2 border-transparent px-0 pb-3 h-full data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-primary font-mono font-black text-[10px] uppercase tracking-[0.2em] transition-all hover:text-primary/70"
+                            >
+                                <User className="size-3.5 mr-2" />
+                                Perfil
                             </TabsTrigger>
-                            <TabsTrigger value="workspace" className="gap-2 h-10 px-6 data-[state=active]:bg-background data-[state=active]:text-primary">
-                                <Building2 className="size-4" />
-                                <span className="text-xs font-bold uppercase tracking-wider">Workspace</span>
+                            <TabsTrigger
+                                value="workspace"
+                                className="relative rounded-none border-b-2 border-transparent px-0 pb-3 h-full data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-primary font-mono font-black text-[10px] uppercase tracking-[0.2em] transition-all hover:text-primary/70"
+                            >
+                                <Building2 className="size-3.5 mr-2" />
+                                Workspace
                             </TabsTrigger>
-                            <TabsTrigger value="team" className="gap-2 h-10 px-6 data-[state=active]:bg-background data-[state=active]:text-primary">
-                                <Users className="size-4" />
-                                <span className="text-xs font-bold uppercase tracking-wider">Equipe</span>
+                            <TabsTrigger
+                                value="team"
+                                className="relative rounded-none border-b-2 border-transparent px-0 pb-3 h-full data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-primary font-mono font-black text-[10px] uppercase tracking-[0.2em] transition-all hover:text-primary/70"
+                            >
+                                <Users className="size-3.5 mr-2" />
+                                Equipe
                             </TabsTrigger>
-                            <TabsTrigger value="integrations" className="gap-2 h-10 px-6 data-[state=active]:bg-background data-[state=active]:text-primary">
-                                <Zap className="size-4" />
-                                <span className="text-xs font-bold uppercase tracking-wider">Integrações</span>
+                            <TabsTrigger
+                                value="integrations"
+                                className="relative rounded-none border-b-2 border-transparent px-0 pb-3 h-full data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-primary font-mono font-black text-[10px] uppercase tracking-[0.2em] transition-all hover:text-primary/70"
+                            >
+                                <Zap className="size-3.5 mr-2" />
+                                Integrações
                             </TabsTrigger>
                             <PermissionGuard role="ADMIN">
-                                <TabsTrigger value="automation" className="gap-2 h-10 px-6 data-[state=active]:bg-background data-[state=active]:text-primary">
-                                    <Workflow className="size-4" />
-                                    <span className="text-xs font-bold uppercase tracking-wider">Automação</span>
+                                <TabsTrigger
+                                    value="automation"
+                                    className="relative rounded-none border-b-2 border-transparent px-0 pb-3 h-full data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-primary font-mono font-black text-[10px] uppercase tracking-[0.2em] transition-all hover:text-primary/70"
+                                >
+                                    <Workflow className="size-3.5 mr-2" />
+                                    Automação
                                 </TabsTrigger>
-                                <TabsTrigger value="branding" className="gap-2 h-10 px-6 data-[state=active]:bg-background data-[state=active]:text-primary">
-                                    <Palette className="size-4" />
-                                    <span className="text-xs font-bold uppercase tracking-wider">Personalização</span>
+                                <TabsTrigger
+                                    value="branding"
+                                    className="relative rounded-none border-b-2 border-transparent px-0 pb-3 h-full data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-primary font-mono font-black text-[10px] uppercase tracking-[0.2em] transition-all hover:text-primary/70"
+                                >
+                                    <Palette className="size-3.5 mr-2" />
+                                    Personalização
                                 </TabsTrigger>
                             </PermissionGuard>
                         </TabsList>
