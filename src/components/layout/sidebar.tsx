@@ -130,21 +130,6 @@ export function Sidebar() {
                 "p-3 border-t border-sidebar-border shrink-0 space-y-3 transition-all",
                 isSidebarCollapsed && "items-center px-2"
             )}>
-                {/* Role Switcher Test */}
-                {!isSidebarCollapsed && (
-                    <div className="flex items-center justify-between px-3 py-1 bg-muted/30 rounded-lg animate-in fade-in duration-300">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Cargo</span>
-                        <select
-                            className="bg-transparent text-[10px] font-bold uppercase focus:outline-none"
-                            value={currentUser.role}
-                            onChange={(e) => setUserRole(e.target.value as any)}
-                        >
-                            <option value="ADMIN">Admin</option>
-                            <option value="MEMBER">Member</option>
-                        </select>
-                    </div>
-                )}
-
                 <div className={cn(
                     "flex items-center gap-3 rounded-xl transition-all cursor-pointer",
                     !isSidebarCollapsed ? "px-3 py-2 hover:bg-sidebar-accent" : "justify-center p-0 hover:text-primary"

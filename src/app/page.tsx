@@ -54,12 +54,28 @@ export default function Home() {
             <div className="flex items-center gap-3 pr-4 border-r border-border/30">
               <div className="flex -space-x-2">
                 {[1, 2, 3].map(v => (
-                  <div key={v} className="size-8 rounded-full border-2 border-background bg-muted overflow-hidden">
+                  <div
+                    key={v}
+                    onClick={() => useAppStore.getState().openConversation({
+                      id: `u${v}`,
+                      type: 'person',
+                      name: v === 1 ? "Ana Luiza" : v === 2 ? "Felipe Silva" : "Sarah Chen",
+                      context: v === 1 ? "Designer Sênior" : v === 2 ? "Produtor Executivo" : "Líder de QA",
+                      status: 'online',
+                      avatar: `https://avatar.vercel.sh/${v}`
+                    })}
+                    className="size-8 rounded-full border-2 border-background bg-muted overflow-hidden cursor-pointer hover:scale-110 hover:z-30 transition-all active:scale-95"
+                  >
                     <img src={`https://avatar.vercel.sh/${v}`} alt="" className="size-full object-cover" />
                   </div>
                 ))}
               </div>
-              <span className="text-[10px] font-black text-muted-foreground uppercase">+12 ONLINE</span>
+              <span
+                onClick={() => useAppStore.getState().openMessaging()}
+                className="text-[10px] font-black text-muted-foreground uppercase cursor-pointer hover:text-primary transition-colors"
+              >
+                +12 ONLINE
+              </span>
             </div>
 
             <div className="flex items-center gap-4">
