@@ -27,6 +27,9 @@ import { ActivityFeed } from "@/features/social/components/activity-feed";
 import { Publisher } from "@/features/social/components/publisher";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { PermissionGuard } from "@/components/auth/permission-guard";
+import { NextTasks } from "@/components/home/next-tasks";
+import { ProjectGoalMonitor } from "@/components/home/project-goal-monitor";
+import { Users, MoreHorizontal, Plus } from "lucide-react";
 
 export default function Home() {
   const { projects } = useAppStore();
@@ -108,30 +111,59 @@ export default function Home() {
 
       <main className="flex-1 overflow-hidden">
         <div className="h-full flex overflow-hidden">
-          {/* Main Content Area: Dashboard */}
+          {/* Main Content Area: Dashboard & Exec Center */}
           <ScrollArea className="flex-1">
-            <div className="max-w-[1400px] mx-auto">
+            <div className="max-w-[1600px] mx-auto p-8">
               <PermissionGuard role="ADMIN" fallback={
-                <div className="p-12 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
-                  <div className="space-y-2">
-                    <h1 className="text-4xl font-black font-mono tracking-tighter uppercase">Bem-vindo, Colaborador</h1>
-                    <p className="text-muted-foreground font-medium uppercase tracking-widest text-xs italic">Você faz parte da elite produtiva da Flyprod.</p>
+                <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+                  <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-border/30">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <h1 className="text-4xl font-black font-mono tracking-tighter uppercase">Foco no Fluxo</h1>
+                        <div className="size-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px] shadow-primary" />
+                      </div>
+                      <p className="text-muted-foreground font-medium uppercase tracking-[0.2em] text-[10px] italic">Bem-vindo à elite produtiva da Flyprod.</p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="flex -space-x-2">
+                        {[1, 2, 3].map(v => (
+                          <div key={v} className="size-8 rounded-full border-2 border-background bg-muted overflow-hidden">
+                            <img src={`https://avatar.vercel.sh/${v}`} alt="" className="size-full object-cover" />
+                          </div>
+                        ))}
+                      </div>
+                      <span className="text-[10px] font-bold text-muted-foreground uppercase">+12 ONLINE</span>
+                    </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-6">
-                    <div className="p-8 rounded-3xl border border-border/50 bg-card/10 backdrop-blur-sm space-y-4">
-                      <div className="size-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                  {/* Immediate Action: Next 2 Tasks */}
+                  <NextTasks />
+
+                  {/* Context Cards */}
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div className="p-8 rounded-[2.5rem] border border-border/50 bg-card/10 backdrop-blur-sm space-y-4 hover:bg-card/20 transition-all group">
+                      <div className="size-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center group-hover:scale-110 transition-transform">
                         <FolderKanban className="size-6 text-primary" />
                       </div>
-                      <h3 className="font-bold font-mono uppercase tracking-tight">Seus Projetos</h3>
-                      <p className="text-xs text-muted-foreground leading-relaxed">Acompanhe as entregas e discussões nos canais específicos onde você está alocado.</p>
+                      <h3 className="font-bold font-mono uppercase tracking-tight">Estratégia</h3>
+                      <p className="text-[11px] text-muted-foreground leading-relaxed uppercase tracking-tight font-medium">Acompanhe as entregas e discussões nos canais específicos onde você está alocado.</p>
                     </div>
-                    <div className="p-8 rounded-3xl border border-border/50 bg-card/10 backdrop-blur-sm space-y-4">
-                      <div className="size-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+
+                    <div className="p-8 rounded-[2.5rem] border border-border/50 bg-card/10 backdrop-blur-sm space-y-4 hover:bg-card/20 transition-all group">
+                      <div className="size-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
                         <MessageSquare className="size-6 text-blue-500" />
                       </div>
-                      <h3 className="font-bold font-mono uppercase tracking-tight">Pulso Social</h3>
-                      <p className="text-xs text-muted-foreground leading-relaxed">Fique por dentro das atualizações do time no feed à direita.</p>
+                      <h3 className="font-bold font-mono uppercase tracking-tight">Comunicação</h3>
+                      <p className="text-[11px] text-muted-foreground leading-relaxed uppercase tracking-tight font-medium">Pulso social centralizado. Reaja, comente e colabore em tempo real.</p>
+                    </div>
+
+                    <div className="p-8 rounded-[2.5rem] border border-border/50 bg-primary/5 backdrop-blur-sm space-y-4 hover:bg-primary/10 transition-all group relative overflow-hidden">
+                      <div className="size-12 rounded-2xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20 group-hover:rotate-12 transition-transform">
+                        <Zap className="size-6 text-white" />
+                      </div>
+                      <h3 className="font-bold font-mono uppercase tracking-tight">Impacto</h3>
+                      <p className="text-[11px] text-muted-foreground leading-relaxed uppercase tracking-tight font-medium">Mantenha seu ritmo de entrega acima da média e suba no ranking do workspace.</p>
+                      <div className="absolute -bottom-4 -right-4 size-24 bg-primary/5 rounded-full blur-3xl" />
                     </div>
                   </div>
                 </div>
@@ -141,26 +173,36 @@ export default function Home() {
             </div>
           </ScrollArea>
 
-          {/* Social Hub Area: Global Feed */}
-          <aside className="w-[450px] shrink-0 border-l border-border/50 bg-card/5 flex flex-col overflow-hidden">
-            <div className="p-6 border-b border-border/50 bg-card/30 backdrop-blur-md">
-              <div className="flex items-center gap-2 mb-1">
-                <Activity className="size-4 text-primary" />
-                <h2 className="text-xs font-black font-mono tracking-widest uppercase text-primary">Live Workspace Pulse</h2>
-              </div>
-              <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-tighter italic">Merge de atividades de todos os seus projetos</p>
-            </div>
-
+          {/* Combined Execution Hub & Social Pulse */}
+          <aside className="w-[500px] shrink-0 border-l border-border/50 bg-card/5 flex flex-col overflow-hidden">
             <div className="flex-1 overflow-hidden flex flex-col">
-              <PermissionGuard role="ADMIN">
-                <div className="px-6 py-4 bg-muted/5 border-b border-border/30">
-                  <Publisher />
-                </div>
-              </PermissionGuard>
-
               <ScrollArea className="flex-1">
-                <div className="p-6">
-                  <ActivityFeed />
+                <div className="flex flex-col min-h-full">
+                  {/* Execution Monitor Section */}
+                  <div className="p-8 border-b border-border/30 bg-primary/5">
+                    <ProjectGoalMonitor />
+                  </div>
+
+                  {/* Live Pulse Section */}
+                  <div className="flex-1">
+                    <div className="p-8 border-b border-border/50 bg-card/30 backdrop-blur-md sticky top-0 z-10">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Activity className="size-4 text-primary" />
+                        <h2 className="text-xs font-black font-mono tracking-widest uppercase text-primary">Live Workspace Pulse</h2>
+                      </div>
+                      <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-tighter italic opacity-60">Merge de atividades de todos os seus projetos</p>
+                    </div>
+
+                    <PermissionGuard role="ADMIN">
+                      <div className="px-8 py-4 bg-muted/5 border-b border-border/30">
+                        <Publisher />
+                      </div>
+                    </PermissionGuard>
+
+                    <div className="p-8">
+                      <ActivityFeed />
+                    </div>
+                  </div>
                 </div>
               </ScrollArea>
             </div>
