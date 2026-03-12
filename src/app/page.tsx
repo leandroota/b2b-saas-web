@@ -43,14 +43,13 @@ export default function Home() {
               <h1 className="text-sm font-black font-mono tracking-[0.2em] uppercase text-primary mb-0.5">Workspace Intelligence</h1>
               <div className="flex items-center gap-2">
                 <DropdownMenu>
-                  <DropdownMenuTrigger className="h-auto p-0 hover:bg-transparent group outline-none">
+                  <DropdownMenuTrigger className="h-auto p-0 hover:bg-transparent group outline-none border-none ring-0">
                     <div className="flex items-center gap-2">
                       <span className="text-2xl font-black font-mono tracking-tighter uppercase group-hover:text-primary transition-colors">Vision Cockpit</span>
-                      <ChevronDown className="size-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                      <ChevronDown className="size-5 ml-2 text-muted-foreground group-hover:text-primary transition-colors" />
                     </div>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-64 rounded-2xl border-border/50 bg-card/90 backdrop-blur-xl shadow-2xl p-2" align="start">
-                    <DropdownMenuLabel className="text-[10px] font-black uppercase tracking-widest text-muted-foreground px-3 py-2">Mudar Contexto</DropdownMenuLabel>
                     <DropdownMenuItem className="rounded-xl py-2.5 gap-3 cursor-pointer">
                       <LayoutDashboard className="size-4 text-primary" />
                       <span className="font-bold text-xs uppercase tracking-tight">Overview Global</span>
