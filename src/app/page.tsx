@@ -8,7 +8,8 @@ import {
   ChevronDown,
   Zap,
   Activity,
-  FolderKanban
+  FolderKanban,
+  MessageSquare
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -110,7 +111,33 @@ export default function Home() {
           {/* Main Content Area: Dashboard */}
           <ScrollArea className="flex-1">
             <div className="max-w-[1400px] mx-auto">
-              <ManagementDashboard />
+              <PermissionGuard role="ADMIN" fallback={
+                <div className="p-12 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-1000">
+                  <div className="space-y-2">
+                    <h1 className="text-4xl font-black font-mono tracking-tighter uppercase">Bem-vindo, Colaborador</h1>
+                    <p className="text-muted-foreground font-medium uppercase tracking-widest text-xs italic">Você faz parte da elite produtiva da Flyprod.</p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="p-8 rounded-3xl border border-border/50 bg-card/10 backdrop-blur-sm space-y-4">
+                      <div className="size-12 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center">
+                        <FolderKanban className="size-6 text-primary" />
+                      </div>
+                      <h3 className="font-bold font-mono uppercase tracking-tight">Seus Projetos</h3>
+                      <p className="text-xs text-muted-foreground leading-relaxed">Acompanhe as entregas e discussões nos canais específicos onde você está alocado.</p>
+                    </div>
+                    <div className="p-8 rounded-3xl border border-border/50 bg-card/10 backdrop-blur-sm space-y-4">
+                      <div className="size-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+                        <MessageSquare className="size-6 text-blue-500" />
+                      </div>
+                      <h3 className="font-bold font-mono uppercase tracking-tight">Pulso Social</h3>
+                      <p className="text-xs text-muted-foreground leading-relaxed">Fique por dentro das atualizações do time no feed à direita.</p>
+                    </div>
+                  </div>
+                </div>
+              }>
+                <ManagementDashboard />
+              </PermissionGuard>
             </div>
           </ScrollArea>
 
