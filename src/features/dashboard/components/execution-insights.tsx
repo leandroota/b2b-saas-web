@@ -29,9 +29,19 @@ export function ExecutionInsights() {
     ];
 
     const PROJECT_CHATS = [
-        { id: "p1", name: "#geral", context: "Comunicação Geral", participants: 12, unread: 2 },
-        { id: "p2", name: "#dev-frontend", context: "Arquitetura & UI", participants: 4, unread: 0 },
-        { id: "p3", name: "#design-ops", context: "Design System", participants: 3, unread: 0 },
+        {
+            id: "p1",
+            name: "Projeto Alpha",
+            context: "Main execution flow",
+            participants: 12,
+            unread: 2,
+            children: [
+                { id: "p1-sub1", name: "DEV-FRONTEND", participants: 4, unread: 1 },
+                { id: "p1-sub2", name: "API-DOCS", participants: 3, unread: 0 },
+            ]
+        },
+        { id: "p2", name: "Integração SSO", context: "Authentication Layer", participants: 8, unread: 0 },
+        { id: "p3", name: "Marketing Q3", context: "Campaigns & Growth", participants: 5, unread: 0 },
     ];
 
     return (
@@ -170,30 +180,57 @@ export function ExecutionInsights() {
 
                     <div className="space-y-1">
                         {PROJECT_CHATS.map((chat) => (
-                            <button
-                                key={chat.id}
-                                onClick={() => openConversation({
-                                    id: chat.id,
-                                    type: 'project',
-                                    name: chat.name,
-                                    context: chat.context,
-                                    participants: chat.participants
-                                })}
-                                className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-muted/50 transition-all group"
-                            >
-                                <div className="flex items-center gap-3">
-                                    <div className="size-8 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary border border-secondary/20 group-hover:bg-secondary group-hover:text-white transition-colors">
-                                        <Hash className="size-4" />
+                            <div key={chat.id} className="space-y-1">
+                                <button
+                                    onClick={() => openConversation({
+                                        id: chat.id,
+                                        type: 'project',
+                                        name: chat.name,
+                                        context: chat.context,
+                                        participants: chat.participants
+                                    })}
+                                    className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-muted/50 transition-all group"
+                                >
+                                    <div className="flex items-center gap-3">
+                                        <div className="size-8 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary border border-secondary/20 group-hover:bg-secondary group-hover:text-white transition-colors">
+                                            <Hash className="size-4" />
+                                        </div>
+                                        <div className="text-left">
+                                            <p className="text-[11px] font-bold tracking-tight uppercase">{chat.name}</p>
+                                            <p className="text-[9px] text-muted-foreground font-medium uppercase tracking-widest">{chat.participants} membros</p>
+                                        </div>
                                     </div>
-                                    <div className="text-left">
-                                        <p className="text-[11px] font-bold tracking-tight uppercase">{chat.name}</p>
-                                        <p className="text-[9px] text-muted-foreground font-medium uppercase tracking-widest">{chat.participants} membros</p>
+                                    {chat.unread > 0 && (
+                                        <Badge className="h-4 px-1.5 rounded-full text-[8px] bg-primary font-bold animate-pulse">{chat.unread}</Badge>
+                                    )}
+                                </button>
+
+                                {chat.children && (
+                                    <div className="pl-6 space-y-1 relative">
+                                        <div className="absolute left-3.5 top-0 bottom-4 w-px bg-border/40" />
+                                        {chat.children.map((sub) => (
+                                            <button
+                                                key={sub.id}
+                                                onClick={() => openConversation({
+                                                    id: sub.id,
+                                                    type: 'project',
+                                                    name: sub.name,
+                                                    participants: sub.participants
+                                                })}
+                                                className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-muted/30 transition-all group/sub"
+                                            >
+                                                <div className="flex items-center gap-2">
+                                                    <div className="size-1.5 rounded-full bg-border group-hover/sub:bg-primary transition-colors" />
+                                                    <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider group-hover/sub:text-foreground">#{sub.name}</span>
+                                                </div>
+                                                {sub.unread > 0 && (
+                                                    <Badge className="h-3.5 px-1 rounded-full text-[7px] bg-primary/20 text-primary font-bold">{sub.unread}</Badge>
+                                                )}
+                                            </button>
+                                        ))}
                                     </div>
-                                </div>
-                                {chat.unread > 0 && (
-                                    <Badge className="h-4 px-1.5 rounded-full text-[8px] bg-primary font-bold animate-pulse">{chat.unread}</Badge>
                                 )}
-                            </button>
+                            </div>
                         ))}
                     </div>
                 </div>

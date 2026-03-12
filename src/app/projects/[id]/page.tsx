@@ -8,7 +8,8 @@ import {
     Share2,
     Star,
     MoreHorizontal,
-    Plus
+    Plus,
+    MessageSquare
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -116,6 +117,7 @@ export default function ProjectPage() {
     // Fallback to avoid error if id not in mock
     const projectData = mockProjects[id] || mockProjects["proj_01"];
     const [activeTab, setActiveTab] = useState("");
+    const [isChatOpen, setIsChatOpen] = useState(false); // Closed by default
 
     // Set initial tab based on methodology
     useEffect(() => {
@@ -257,19 +259,48 @@ export default function ProjectPage() {
             {/* 3. Right Column Architecture: Integrated Intelligence Cockpit */}
             <div className="hidden lg:flex h-full overflow-hidden border-l border-border bg-card/5">
                 {/* 3.1 Contextual Insights */}
-                <div className="w-[380px] shrink-0 border-r border-border/50">
+                <div className="w-[380px] shrink-0 border-r border-border/50 relative">
                     <ExecutionInsights />
+
+                    {/* Floating Toggle for Chat Sidebar */}
+                    {!isChatOpen && (
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => setIsChatOpen(true)}
+                            className="absolute -right-5 top-1/2 -translate-y-1/2 size-10 rounded-full bg-card border border-border shadow-xl z-20 hover:scale-110 transition-all hover:bg-primary hover:text-white"
+                        >
+                            <MessageSquare className="size-4" />
+                        </Button>
+                    )}
                 </div>
 
-                {/* 3.2 Integrated Project Chat */}
-                <motion.aside
-                    initial={{ x: 20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    className="w-[350px] xl:w-[450px] shrink-0 flex flex-col bg-card/10 h-full relative"
-                >
-                    <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.02] to-transparent pointer-events-none" />
-                    <ProjectChat />
-                </motion.aside>
+                {/* 3.2 Integrated Project Chat (Collapsible) */}
+                <AnimatePresence>
+                    {isChatOpen && (
+                        <motion.aside
+                            initial={{ width: 0, opacity: 0 }}
+                            animate={{ width: 450, opacity: 1 }}
+                            exit={{ width: 0, opacity: 0 }}
+                            transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+                            className="shrink-0 flex flex-col bg-card/10 h-full relative"
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.02] to-transparent pointer-events-none" />
+
+                            {/* Close Trigger */}
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => setIsChatOpen(false)}
+                                className="absolute top-6 left-4 z-50 size-8 rounded-lg hover:bg-destructive/10 hover:text-destructive"
+                            >
+                                <Plus className="size-4 rotate-45" />
+                            </Button>
+
+                            <ProjectChat />
+                        </motion.aside>
+                    )}
+                </AnimatePresence>
             </div>
         </div>
     );
