@@ -25,7 +25,7 @@ import { PermissionGuard } from "@/components/auth/permission-guard";
 const navItems = [
     { icon: Home, label: "Home", href: "/" },
     { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard", role: 'ADMIN' },
-    { icon: FolderKanban, label: "Projetos", href: "/projects", hasQuickAdd: true },
+    { icon: FolderKanban, label: "Projetos", href: "/projects" },
     { icon: Settings, label: "Configurações", href: "/settings" },
 ];
 
@@ -64,12 +64,6 @@ export function Sidebar() {
                                         {item.label}
                                     </span>
                                 </Link>
-
-                                {item.hasQuickAdd && (
-                                    <button className="mr-2 size-6 rounded bg-primary/10 flex items-center justify-center text-primary opacity-0 group-hover/row:opacity-100 hover:bg-primary/20 transition-all">
-                                        <Plus className="size-3" />
-                                    </button>
-                                )}
                             </div>
 
                             {/* Nested Projects (Level 2) - Only for "Projetos" */}
