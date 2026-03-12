@@ -9,9 +9,20 @@ import {
     Star,
     MoreHorizontal,
     Plus,
+    ChevronDown,
+    LayoutDashboard,
+    FolderKanban,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+    DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
 import { ProjectTabs } from "@/features/projects/components/project-tabs";
 import { ProjectMethodology } from "@/features/projects/lib/project-schema";
 import { Badge } from "@/components/ui/badge";
@@ -110,7 +121,8 @@ const MOCK_TASKS: Task[] = [
 export default function ProjectPage() {
     const params = useParams();
     const id = params.id as string;
-    const { currentUser } = useAppStore();
+    const router = useRouter();
+    const { currentUser, projects } = useAppStore();
 
     // Fallback to avoid error if id not in mock
     const projectData = mockProjects[id] || mockProjects["proj_01"];
@@ -144,7 +156,46 @@ export default function ProjectPage() {
                                     </div>
                                     <div>
                                         <div className="flex items-center gap-3">
-                                            <h1 className="text-2xl font-black font-mono tracking-tighter uppercase">{projectData.name}</h1>
+                                            <DropdownMenu>
+                                                <DropdownMenuTrigger className="h-auto p-0 hover:bg-transparent group outline-none border-none ring-0 focus:ring-0">
+                                                    <div className="flex items-center gap-2">
+                                                        <h1 className="text-2xl font-black font-mono tracking-tighter uppercase group-hover:text-primary transition-colors">{projectData.name}</h1>
+                                                        <ChevronDown className="size-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                                                    </div>
+                                                </DropdownMenuTrigger>
+                                                <DropdownMenuContent className="w-80 rounded-2xl border-border/50 bg-card/90 backdrop-blur-xl shadow-2xl p-2 select-none" align="start">
+                                                    <div className="px-3 py-2 border-b border-border/50 mb-1 flex items-center justify-between">
+                                                        <span className="text-[10px] font-black uppercase text-muted-foreground tracking-widest">Alternar Contexto</span>
+                                                        <Badge variant="secondary" className="text-[8px] h-4">Alpha v1.2</Badge>
+                                                    </div>
+                                                    <DropdownMenuItem
+                                                        onClick={() => router.push('/')}
+                                                        className="rounded-xl py-3 gap-3 cursor-pointer group hover:bg-primary/10 transition-all font-bold text-xs uppercase tracking-tight"
+                                                    >
+                                                        <LayoutDashboard className="size-4 text-primary group-hover:scale-110 transition-transform" />
+                                                        Overview Global
+                                                    </DropdownMenuItem>
+                                                    <DropdownMenuSeparator className="bg-border/50 mx-2 my-2" />
+                                                    {projects.map((proj) => (
+                                                        <DropdownMenuItem
+                                                            key={proj.id}
+                                                            className={cn(
+                                                                "rounded-xl py-3 gap-3 cursor-pointer group transition-all",
+                                                                proj.id === id ? "bg-primary/10" : "hover:bg-primary/5"
+                                                            )}
+                                                            onClick={() => router.push(`/projects/${proj.id === 'p1' ? 'proj_01' : proj.id === 'p2' ? 'proj_02' : 'proj_03'}`)}
+                                                        >
+                                                            <div className={`size-8 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20 ${proj.color || 'text-primary'}`}>
+                                                                <FolderKanban className="size-4" />
+                                                            </div>
+                                                            <div className="flex flex-col">
+                                                                <span className="font-bold text-[11px] uppercase tracking-tighter group-hover:text-primary transition-colors">{proj.name}</span>
+                                                                <span className="text-[8px] text-muted-foreground uppercase font-mono">{proj.status} • Global Context</span>
+                                                            </div>
+                                                        </DropdownMenuItem>
+                                                    ))}
+                                                </DropdownMenuContent>
+                                            </DropdownMenu>
                                             <Badge variant="outline" className={cn(
                                                 "text-[8px] font-black tracking-widest px-2 h-4 border-primary/20 text-primary",
                                                 projectData.status === "Crítico" && "bg-destructive/10 text-destructive border-destructive/20"
