@@ -11,7 +11,8 @@ import {
     Command,
     Plus,
     RefreshCcw,
-    Bot
+    Bot,
+    GripHorizontal
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -116,7 +117,9 @@ export function CopilotChat() {
             <div className="flex flex-col border-b border-border/50 bg-primary/5 sticky top-0 z-10">
                 {/* Drag Handle Bar */}
                 <div className="flex justify-center py-2">
-                    <div className="w-12 h-1.5 rounded-full bg-muted-foreground/20 cursor-grab active:cursor-grabbing" />
+                    <div className="flex items-center justify-center p-1.5 rounded-full hover:bg-primary/5 transition-colors cursor-grab active:cursor-grabbing text-muted-foreground/30">
+                        <GripHorizontal className="size-4" />
+                    </div>
                 </div>
                 <div className="h-14 flex items-center justify-between px-6">
                     <div className="flex items-center gap-3">

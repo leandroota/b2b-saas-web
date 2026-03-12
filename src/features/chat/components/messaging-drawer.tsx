@@ -94,7 +94,9 @@ export function MessagingDrawer() {
                     <div className="flex flex-col border-b border-border/50 bg-card/30 backdrop-blur-md sticky top-0 z-10 p-6 pt-2">
                         {/* Drag Handle Bar */}
                         <div className="flex justify-center py-2 -mt-1 mb-2">
-                            <div className="w-12 h-1.5 rounded-full bg-muted-foreground/20 cursor-grab active:cursor-grabbing" />
+                            <div className="flex items-center justify-center p-1.5 rounded-full hover:bg-primary/5 transition-colors cursor-grab active:cursor-grabbing text-muted-foreground/30">
+                                <GripHorizontal className="size-4" />
+                            </div>
                         </div>
 
                         <div className="flex items-center justify-between mb-6">
@@ -206,8 +208,10 @@ export function MessagingDrawer() {
                     {/* Chat Header */}
                     <div className="flex flex-col border-b border-border/50 bg-card/30 backdrop-blur-md sticky top-0 z-10">
                         {/* Drag Handle Bar */}
-                        <div className="flex justify-center py-2">
-                            <div className="w-12 h-1.5 rounded-full bg-muted-foreground/20 cursor-grab active:cursor-grabbing" />
+                        <div className="flex justify-center py-1">
+                            <div className="flex items-center justify-center p-1.5 rounded-full hover:bg-primary/5 transition-colors cursor-grab active:cursor-grabbing text-muted-foreground/30">
+                                <GripHorizontal className="size-4" />
+                            </div>
                         </div>
                         <div className="h-14 flex items-center justify-between px-6">
                             <div className="flex items-center gap-3">
