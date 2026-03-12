@@ -6,9 +6,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AlertCircle, Clock, ChevronRight, CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 export function NextTasks() {
     const { tasks, projects, currentUser } = useAppStore();
+    const router = useRouter();
 
     // Filter tasks for current user and not done
     const userTasks = tasks.filter(t => t.assigneeId === currentUser.id && t.status !== 'DONE');
@@ -57,13 +59,22 @@ export function NextTasks() {
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: idx * 0.1 }}
+                            onClick={() => router.push(`/projects/${task.projectId === 'p1' ? 'proj_01' : task.projectId === 'p2' ? 'proj_02' : 'proj_03'}?taskId=${task.id}`)}
                             className={cn(
-                                "group relative p-5 rounded-[2rem] border transition-all duration-500 overflow-hidden",
+                                "group relative p-5 rounded-2xl border transition-all duration-500 overflow-hidden cursor-pointer",
                                 isUrgent
-                                    ? "bg-primary/5 border-primary/20 shadow-lg shadow-primary/5 active:scale-[0.98]"
-                                    : "bg-card/30 border-border/50 hover:border-primary/30 hover:bg-card/50"
+                                    ? "bg-primary/5 border-primary/20 shadow-lg shadow-primary/5 hover:scale-[1.02] active:scale-[0.98]"
+                                    : "bg-card/30 border-border/50 hover:border-primary/30 hover:bg-card/50 hover:scale-[1.02]"
                             )}
                         >
+                            {/* Hover CTA Indicator */}
+                            <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px] z-20">
+                                <div className="bg-primary text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 shadow-2xl">
+                                    Acessar Kanban
+                                    <ChevronRight className="size-3" />
+                                </div>
+                            </div>
+
                             {isUrgent && (
                                 <div className="absolute top-0 right-0 p-4">
                                     <div className="size-1.5 rounded-full bg-primary animate-ping" />

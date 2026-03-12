@@ -12,9 +12,9 @@ export function ProjectGoalMonitor() {
 
     // Filter projects for members: only where they are involved
     // For admins: all projects
-    const visibleProjects = currentUser.role === 'ADMIN'
+    const visibleProjects = (currentUser.role === 'ADMIN'
         ? projects
-        : projects.filter(p => p.involvedMembers.includes(currentUser.email));
+        : projects.filter(p => p.involvedMembers.includes(currentUser.email))).slice(0, 3);
 
     return (
         <div className="space-y-6">
@@ -39,7 +39,7 @@ export function ProjectGoalMonitor() {
                             initial={{ opacity: 0, x: 20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ delay: idx * 0.05 }}
-                            className="group p-4 rounded-3xl border border-border/40 bg-card/20 backdrop-blur-sm hover:border-primary/30 transition-all duration-300"
+                            className="group p-4 rounded-2xl border border-border/40 bg-card/20 backdrop-blur-sm hover:border-primary/30 transition-all duration-300"
                         >
                             <div className="flex items-start justify-between mb-3">
                                 <div className="space-y-1">
