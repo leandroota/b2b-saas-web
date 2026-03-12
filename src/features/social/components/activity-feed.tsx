@@ -98,9 +98,9 @@ export function ActivityFeed() {
         : activities.filter(a => involvedProjectIds.includes(a.projectId));
 
     return (
-        <div className="flex flex-col h-full bg-background/50">
+        <div className="flex flex-col h-full bg-transparent">
             {/* Feed Header */}
-            <div className="p-6 border-b border-border bg-background">
+            <div className="py-6 border-b border-border bg-transparent">
                 <div className="flex items-center justify-between mb-6">
                     <h2 className="text-xl font-bold font-mono uppercase tracking-tight">Atividade do Workspace</h2>
                     <Badge variant="secondary" className="font-mono text-[10px] uppercase">Ao vivo</Badge>
@@ -130,7 +130,7 @@ export function ActivityFeed() {
 
             {/* Feed Content */}
             <ScrollArea className="flex-1">
-                <div className="p-6 space-y-6">
+                <div className="py-6 space-y-6">
                     {displayedActivities.map((activity) => (
                         <div key={activity.id} className="relative pl-8 group">
                             {/* Timeline Connector */}

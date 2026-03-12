@@ -17,7 +17,7 @@ export function Publisher() {
     if (currentUser.role !== 'ADMIN') return null;
 
     return (
-        <div className="p-8 border-b border-border bg-background/50 backdrop-blur-sm">
+        <div className="py-6 border-b border-border bg-background/30 backdrop-blur-sm">
             <div className="flex gap-4">
                 <Avatar className="size-10 rounded-2xl border-2 border-primary/20">
                     <AvatarImage src={`https://i.pravatar.cc/100?u=${currentUser.id}`} />

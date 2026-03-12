@@ -41,7 +41,7 @@ export default function Home() {
   return (
     <div className="flex flex-col h-full bg-background/50 overflow-hidden relative">
       {/* 1. Dashboard Header - Pinned to Edges, No Centering */}
-      <header className="shrink-0 border-b border-border/50 bg-card/30 backdrop-blur-md px-10 py-5 z-20">
+      <header className="shrink-0 border-b border-border/50 bg-card/30 backdrop-blur-md px-8 py-5 z-20">
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-6">
             <div className="flex flex-col">
