@@ -15,8 +15,25 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
+import { useAppStore } from "@/store/use-app-store";
+import { Hash, MessageSquare } from "lucide-react";
 
 export function ExecutionInsights() {
+    const { openConversation, openMessaging } = useAppStore();
+
+    const TEAM_MEMBERS = [
+        { id: "user_1", name: "Felipe Designer", avatar: "https://i.pravatar.cc/100?u=user1", role: "UI Designer", context: "Flyprod Dashboard", status: "online" as const },
+        { id: "user_2", name: "Alex Rivera", avatar: "https://i.pravatar.cc/100?u=user2", role: "Engenheiro Frontend", context: "Marketing Q3", status: "online" as const },
+        { id: "user_3", name: "Sarah Jordão", avatar: "https://i.pravatar.cc/100?u=user3", role: "UX Researcher", context: "User Interviews", status: "away" as const },
+        { id: "user_4", name: "Ana Clara", avatar: "https://i.pravatar.cc/100?u=user4", role: "Backend Lead", context: "Auth Service", status: "online" as const },
+    ];
+
+    const PROJECT_CHATS = [
+        { id: "p1", name: "#geral", context: "Comunicação Geral", participants: 12, unread: 2 },
+        { id: "p2", name: "#dev-frontend", context: "Arquitetura & UI", participants: 4, unread: 0 },
+        { id: "p3", name: "#design-ops", context: "Design System", participants: 3, unread: 0 },
+    ];
+
     return (
         <aside className="w-96 shrink-0 border-l border-border bg-card/10 flex flex-col h-full overflow-hidden">
             <div className="p-8 space-y-8 overflow-y-auto">
@@ -116,16 +133,68 @@ export function ExecutionInsights() {
 
                     <div className="flex items-center gap-2 px-1">
                         <div className="flex -space-x-3 overflow-hidden">
-                            {[1, 2, 3, 4].map((i) => (
-                                <Avatar key={i} className="size-9 border-4 border-background ring-2 ring-transparent hover:ring-primary/20 transition-all cursor-pointer">
-                                    <AvatarImage src={`https://i.pravatar.cc/100?u=user${i}`} />
-                                    <AvatarFallback>U{i}</AvatarFallback>
+                            {TEAM_MEMBERS.map((member) => (
+                                <Avatar
+                                    key={member.id}
+                                    onClick={() => openConversation({
+                                        id: member.id,
+                                        type: 'person',
+                                        name: member.name,
+                                        role: member.role,
+                                        context: member.context,
+                                        avatar: member.avatar,
+                                        status: member.status
+                                    })}
+                                    className="size-9 border-4 border-background ring-2 ring-transparent hover:ring-primary/20 transition-all cursor-pointer hover:-translate-y-1"
+                                >
+                                    <AvatarImage src={member.avatar} />
+                                    <AvatarFallback>{member.name[0]}</AvatarFallback>
                                 </Avatar>
                             ))}
                         </div>
-                        <button className="size-9 rounded-full bg-muted/50 border border-dashed border-border flex items-center justify-center hover:bg-muted transition-colors">
+                        <button
+                            onClick={openMessaging}
+                            className="size-9 rounded-full bg-muted/50 border border-dashed border-border flex items-center justify-center hover:bg-muted transition-colors"
+                        >
                             <span className="text-[10px] font-black text-muted-foreground">+4</span>
                         </button>
+                    </div>
+                </div>
+
+                {/* 4. Project Chats */}
+                <div className="space-y-4 pt-4 border-t border-border/40">
+                    <div className="flex items-center gap-2 px-1">
+                        <MessageSquare className="size-3.5 text-primary" />
+                        <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Chats do Projeto</h3>
+                    </div>
+
+                    <div className="space-y-1">
+                        {PROJECT_CHATS.map((chat) => (
+                            <button
+                                key={chat.id}
+                                onClick={() => openConversation({
+                                    id: chat.id,
+                                    type: 'project',
+                                    name: chat.name,
+                                    context: chat.context,
+                                    participants: chat.participants
+                                })}
+                                className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-muted/50 transition-all group"
+                            >
+                                <div className="flex items-center gap-3">
+                                    <div className="size-8 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary border border-secondary/20 group-hover:bg-secondary group-hover:text-white transition-colors">
+                                        <Hash className="size-4" />
+                                    </div>
+                                    <div className="text-left">
+                                        <p className="text-[11px] font-bold tracking-tight uppercase">{chat.name}</p>
+                                        <p className="text-[9px] text-muted-foreground font-medium uppercase tracking-widest">{chat.participants} membros</p>
+                                    </div>
+                                </div>
+                                {chat.unread > 0 && (
+                                    <Badge className="h-4 px-1.5 rounded-full text-[8px] bg-primary font-bold animate-pulse">{chat.unread}</Badge>
+                                )}
+                            </button>
+                        ))}
                     </div>
                 </div>
             </div>
