@@ -41,8 +41,8 @@ export default function Home() {
 
   return (
     <div className="flex flex-col h-full bg-background/50 overflow-hidden relative">
-      {/* 1. Dashboard Header - Pinned to Edges, No Centering */}
-      <header className="shrink-0 border-b border-border/50 bg-card/30 backdrop-blur-md px-8 py-5 z-20">
+      {/* 1. Dashboard Header - Pinned to Edges, No Centering, Absolute Left Grid */}
+      <header className="shrink-0 border-b border-border/50 bg-card/30 backdrop-blur-md px-8 py-6 z-20">
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-6">
             <div className="flex flex-col">
@@ -126,7 +126,7 @@ export default function Home() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3 text-left">
                     <div className="size-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px] shadow-primary" />
-                    <h2 className="text-xs font-black font-mono tracking-[0.3em] uppercase text-muted-foreground">Atividades do Workspace</h2>
+                    <h2 className="text-[10px] font-black font-mono tracking-[0.3em] uppercase text-muted-foreground">Workspace Pulse</h2>
                   </div>
                   <Badge variant="outline" className="text-[8px] font-black tracking-[0.2em] uppercase border-primary/20 text-primary">Ao Vivo</Badge>
                 </div>
