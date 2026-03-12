@@ -116,7 +116,17 @@ export function ActivityFeed() {
                     </div>
                     {[1, 2, 3].map((i) => (
                         <div key={i} className="flex flex-col items-center gap-2 shrink-0">
-                            <div className="size-14 rounded-full p-0.5 border-2 border-primary cursor-pointer active:scale-95 transition-all">
+                            <div
+                                onClick={() => useAppStore.getState().openConversation({
+                                    id: `u${i + 10}`,
+                                    type: 'person',
+                                    name: `Membro ${i}`,
+                                    context: i === 1 ? "Product Manager" : i === 2 ? "Analista de Dados" : "Suporte Técnico",
+                                    status: 'online',
+                                    avatar: `https://avatar.vercel.sh/${i + 10}`
+                                })}
+                                className="size-14 rounded-full p-0.5 border-2 border-primary cursor-pointer active:scale-95 transition-all hover:scale-105"
+                            >
                                 <Avatar className="size-full">
                                     <AvatarImage src={`https://avatar.vercel.sh/${i + 10}`} />
                                     <AvatarFallback>U</AvatarFallback>
@@ -203,7 +213,19 @@ export function ActivityFeed() {
                                             <ThumbsUp className="size-3" />
                                             Curtir
                                         </Button>
-                                        <Button variant="ghost" size="icon-xs" className="h-7 w-auto px-2 gap-1.5 text-[10px] font-bold uppercase tracking-wider text-muted-foreground hover:text-primary">
+                                        <Button
+                                            variant="ghost"
+                                            size="icon-xs"
+                                            className="h-7 w-auto px-2 gap-1.5 text-[10px] font-bold uppercase tracking-wider text-muted-foreground hover:text-primary"
+                                            onClick={() => useAppStore.getState().openConversation({
+                                                id: activity.userId,
+                                                type: 'person',
+                                                name: activity.userName,
+                                                context: `Discussão sobre: ${activity.content}`,
+                                                status: 'online',
+                                                avatar: `https://i.pravatar.cc/100?u=${activity.user?.id || activity.userId}`
+                                            })}
+                                        >
                                             <MessageSquare className="size-3" />
                                             Comentar
                                         </Button>
