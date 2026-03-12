@@ -9,7 +9,6 @@ import {
   Zap,
   Activity,
   FolderKanban,
-  MessageSquare
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -21,7 +20,6 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
 import { ActivityFeed } from "@/features/social/components/activity-feed";
 import { Publisher } from "@/features/social/components/publisher";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -42,15 +40,15 @@ export default function Home() {
 
   return (
     <div className="flex flex-col h-full bg-background/50 overflow-hidden relative">
-      {/* 1. Dashboard Header */}
-      <header className="shrink-0 border-b border-border/50 bg-card/30 backdrop-blur-md px-8 py-4 z-20">
-        <div className="max-w-[1600px] mx-auto flex items-center justify-between">
+      {/* 1. Dashboard Header - Pinned to Edges, No Centering */}
+      <header className="shrink-0 border-b border-border/50 bg-card/30 backdrop-blur-md px-10 py-5 z-20">
+        <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-6">
             <div className="flex flex-col">
               <h1 className="text-sm font-black font-mono tracking-[0.2em] uppercase text-primary mb-0.5">Workspace Intelligence</h1>
               <div className="flex items-center gap-2">
                 <DropdownMenu>
-                  <DropdownMenuTrigger className="h-auto p-0 hover:bg-transparent group outline-none border-none ring-0">
+                  <DropdownMenuTrigger className="h-auto p-0 hover:bg-transparent group outline-none border-none ring-0 focus:ring-0">
                     <div className="flex items-center gap-2">
                       <span className="text-2xl font-black font-mono tracking-tighter uppercase group-hover:text-primary transition-colors">Vision Cockpit</span>
                       <ChevronDown className="size-5 ml-2 text-muted-foreground group-hover:text-primary transition-colors" />
@@ -105,15 +103,15 @@ export default function Home() {
       <main className="flex-1 overflow-hidden">
         <div className="h-full flex overflow-hidden">
 
-          {/* LADO ESQUERDO (50%): ENGENHO DE EXECUÇÃO */}
+          {/* LADO ESQUERDO (50%): ENGENHO DE EXECUÇÃO - Left Aligned, High Density */}
           <div className="w-1/2 h-full flex flex-col border-r border-border/30 bg-card/5">
             <ScrollArea className="flex-1">
-              <div className="p-10 space-y-12">
+              <div className="p-8 space-y-10">
                 <PermissionGuard role="ADMIN" fallback={
-                  <div className="space-y-12">
-                    {/* 1. Welcome Header */}
-                    <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-border/30">
-                      <div className="space-y-1">
+                  <div className="space-y-10">
+                    {/* 1. Welcome Header - Left Aligned Title/Sub, Right Aligned Stats */}
+                    <div className="flex items-end justify-between gap-6 pb-6 border-b border-border/30">
+                      <div className="space-y-1 text-left">
                         <div className="flex items-center gap-2">
                           <h1 className="text-4xl font-black font-mono tracking-tighter uppercase">Foco no Fluxo</h1>
                           <div className="size-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px] shadow-primary" />
@@ -135,11 +133,14 @@ export default function Home() {
                     {/* 2. Tasks Grid (Next 2) */}
                     <NextTasks />
 
-                    {/* 3. Strategy & Impact Section */}
-                    <div className="space-y-8 pt-4">
-                      <div className="flex items-center gap-3">
-                        <Activity className="size-4 text-primary" />
-                        <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">Monitor de Metas Estratégicas</h2>
+                    {/* 3. Strategy Header - Pinned Left */}
+                    <div className="space-y-6">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <Activity className="size-4 text-primary" />
+                          <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">Monitor de Metas Estratégicas</h2>
+                        </div>
+                        <Badge variant="outline" className="text-[8px] font-black tracking-widest uppercase border-primary/20 text-primary">Status Global</Badge>
                       </div>
                       <div className="grid grid-cols-1 gap-4">
                         <ProjectGoalMonitor />
@@ -154,12 +155,12 @@ export default function Home() {
             </ScrollArea>
           </div>
 
-          {/* LADO DIREITO (50%): PULSO DO WORKSPACE */}
+          {/* LADO DIREITO (50%): PULSO DO WORKSPACE - High Density Feed */}
           <div className="w-1/2 h-full flex flex-col bg-background/30">
             <ScrollArea className="flex-1">
-              <div className="p-10 space-y-10">
-                <div className="flex items-center justify-between px-4">
-                  <div className="flex items-center gap-3">
+              <div className="p-8 space-y-10">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3 text-left">
                     <div className="size-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px] shadow-primary" />
                     <h2 className="text-xs font-black font-mono tracking-[0.3em] uppercase text-muted-foreground">Atividades do Workspace</h2>
                   </div>
