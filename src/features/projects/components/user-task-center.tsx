@@ -101,8 +101,8 @@ export function UserTaskCenter() {
 
     return (
         <div className="flex-1 flex flex-col min-h-0 bg-background overflow-y-auto">
-            {/* Profile Header Area */}
-            <div className="relative group/cover shrink-0">
+            {/* Profile Header Area - Height expanded to 2.5x (192px * 2.5 = 480px) */}
+            <div className="relative group/cover shrink-0 h-[480px] flex flex-col justify-end">
                 {/* Cover Backdrop */}
                 <div className={cn(
                     "absolute inset-0 transition-all duration-700",
