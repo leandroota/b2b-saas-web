@@ -20,6 +20,9 @@ import { TaskListView } from "@/features/projects/components/task-list-view";
 import { Task } from "@/features/projects/lib/task-schema";
 import { ProjectChat } from "@/features/chat/components/project-chat";
 import { WikiView } from "@/features/wiki/components/wiki-view";
+import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { useAppStore } from "@/store/use-app-store";
 
 // Mock data for project recovery
 const mockProjects: Record<string, { name: string, methodology: ProjectMethodology, description: string, status: string }> = {
@@ -102,6 +105,7 @@ const MOCK_TASKS: Task[] = [
 export default function ProjectPage() {
     const params = useParams();
     const id = params.id as string;
+    const { currentUser } = useAppStore();
 
     // Fallback to avoid error if id not in mock
     const projectData = mockProjects[id] || mockProjects["proj_01"];
@@ -117,87 +121,123 @@ export default function ProjectPage() {
     }, [projectData.methodology]);
 
     return (
-        <div className="flex h-full bg-background overflow-hidden">
+        <div className="flex h-full bg-background/50 backdrop-blur-3xl overflow-hidden perspective-1000">
             {/* Main Content: Header + View */}
-            <div className="flex-1 flex flex-col min-w-0 bg-background/50">
-                {/* Project Header */}
-                <div className="px-8 pt-8 pb-6 border-b border-border bg-background">
-                    <div className="flex items-start justify-between mb-6">
-                        <div className="space-y-1">
-                            <div className="flex items-center gap-3">
-                                <h1 className="text-2xl font-mono font-bold tracking-tight">{projectData.name}</h1>
-                                <Button variant="ghost" size="icon-sm" className="text-muted-foreground hover:text-yellow-500">
-                                    <Star className="size-4" />
-                                </Button>
-                                <Badge variant={projectData.status === "Crítico" ? "destructive" : "secondary"}>
-                                    {projectData.status}
-                                </Badge>
+            <div className="flex-1 flex flex-col min-w-0">
+                {/* 1. Floating Glass Header */}
+                <motion.div
+                    initial={{ y: -20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    className="px-8 pt-8 pb-6 z-10"
+                >
+                    <div className="p-6 rounded-[2rem] bg-card/30 backdrop-blur-md border border-border/50 shadow-2xl shadow-primary/5 space-y-6">
+                        <div className="flex items-start justify-between">
+                            <div className="space-y-1.5">
+                                <div className="flex items-center gap-3">
+                                    <div className="size-10 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
+                                        <Users className="size-5 text-white" />
+                                    </div>
+                                    <div>
+                                        <div className="flex items-center gap-3">
+                                            <h1 className="text-2xl font-black font-mono tracking-tighter uppercase">{projectData.name}</h1>
+                                            <Badge variant="outline" className={cn(
+                                                "text-[8px] font-black tracking-widest px-2 h-4 border-primary/20 text-primary",
+                                                projectData.status === "Crítico" && "bg-destructive/10 text-destructive border-destructive/20"
+                                            )}>
+                                                {projectData.status.toUpperCase()}
+                                            </Badge>
+                                        </div>
+                                        <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest mt-0.5">
+                                            {projectData.methodology} • SPRINT ATIVO
+                                        </p>
+                                    </div>
+                                    <Button variant="ghost" size="icon-xs" className="text-muted-foreground hover:text-yellow-500 transition-colors">
+                                        <Star className="size-4" />
+                                    </Button>
+                                </div>
                             </div>
-                            <p className="text-muted-foreground text-sm max-w-2xl leading-relaxed">
-                                {projectData.description}
-                            </p>
+
+                            <div className="flex items-center gap-3">
+                                <div className="flex -space-x-3 mr-4">
+                                    {[1, 2, 3].map((i) => (
+                                        <Avatar key={i} className="size-9 border-4 border-background ring-2 ring-transparent hover:ring-primary/20 transition-all cursor-pointer hover:-translate-y-1">
+                                            <AvatarImage src={`https://avatar.vercel.sh/${i}`} />
+                                            <AvatarFallback>U{i}</AvatarFallback>
+                                        </Avatar>
+                                    ))}
+                                    <button className="size-9 rounded-full bg-muted/50 border border-dashed border-border flex items-center justify-center hover:bg-muted transition-colors">
+                                        <Plus className="size-3 text-muted-foreground" />
+                                    </button>
+                                </div>
+                                <Button variant="outline" size="sm" className="gap-2 h-9 font-bold text-[10px] uppercase tracking-widest rounded-xl border-border/50">
+                                    <Share2 className="size-3.5" />
+                                    Compartilhar
+                                </Button>
+                                <Button variant="secondary" size="icon" className="size-9 rounded-xl">
+                                    <Settings2 className="size-4" />
+                                </Button>
+                            </div>
                         </div>
 
-                        <div className="flex items-center gap-2">
-                            <div className="flex -space-x-2 mr-4">
-                                {[1, 2, 3].map((i) => (
-                                    <Avatar key={i} className="size-8 border-2 border-background">
-                                        <AvatarImage src={`https://avatar.vercel.sh/${i}`} />
-                                        <AvatarFallback>U{i}</AvatarFallback>
-                                    </Avatar>
-                                ))}
-                                <Button variant="outline" size="icon-sm" className="size-8 rounded-full border-dashed bg-muted/50">
-                                    <Plus className="size-3" />
-                                </Button>
-                            </div>
-                            <Button variant="outline" size="sm" className="gap-2">
-                                <Share2 className="size-4" />
-                                Compartilhar
-                            </Button>
-                            <Button variant="outline" size="icon-sm">
-                                <Settings2 className="size-4" />
-                            </Button>
+                        <div className="pt-2 border-t border-border/40">
+                            <ProjectTabs
+                                methodology={projectData.methodology}
+                                activeTab={activeTab}
+                                onTabChange={setActiveTab}
+                            />
                         </div>
                     </div>
+                </motion.div>
 
-                    <ProjectTabs
-                        methodology={projectData.methodology}
-                        activeTab={activeTab}
-                        onTabChange={setActiveTab}
-                    />
-                </div>
-
-                {/* Tab Content */}
-                <div className="flex-1 overflow-hidden">
-                    {activeTab === "kanban" ? (
-                        <KanbanBoard tasks={MOCK_TASKS} />
-                    ) : activeTab === "list" ? (
-                        <TaskListView tasks={MOCK_TASKS} />
-                    ) : activeTab === "wiki" ? (
-                        <WikiView />
-                    ) : (
-                        <div className="p-8 h-full overflow-auto">
-                            <div className="rounded-xl border-2 border-dashed border-border h-full flex flex-col items-center justify-center text-center p-12 space-y-4">
-                                <div className="size-12 rounded-full bg-muted flex items-center justify-center">
-                                    <Settings2 className="size-6 text-muted-foreground" />
+                {/* 2. Content Area with Transitions */}
+                <div className="flex-1 overflow-hidden relative">
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={activeTab}
+                            initial={{ opacity: 0, y: 10, scale: 0.99 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, scale: 1.01 }}
+                            transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+                            className="h-full"
+                        >
+                            {activeTab === "kanban" ? (
+                                <KanbanBoard tasks={MOCK_TASKS} />
+                            ) : activeTab === "list" ? (
+                                <TaskListView tasks={MOCK_TASKS} />
+                            ) : activeTab === "wiki" ? (
+                                <WikiView />
+                            ) : (
+                                <div className="p-8 h-full overflow-auto">
+                                    <div className="rounded-[2.5rem] border-2 border-dashed border-border/40 h-full flex flex-col items-center justify-center text-center p-12 space-y-4 bg-card/5">
+                                        <div className="size-16 rounded-[1.5rem] bg-muted/30 flex items-center justify-center border border-border/50">
+                                            <Settings2 className="size-8 text-muted-foreground/50" />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <h2 className="text-xl font-black font-mono tracking-tighter uppercase">Em Construção</h2>
+                                            <p className="text-muted-foreground text-[11px] font-medium uppercase tracking-widest max-w-xs mx-auto">
+                                                O módulo {activeTab} está sendo calibrado para performance máxima.
+                                            </p>
+                                        </div>
+                                        <Button variant="secondary" className="font-bold text-[10px] uppercase tracking-widest h-9 px-6 rounded-xl">
+                                            Ver Roadmap
+                                        </Button>
+                                    </div>
                                 </div>
-                                <div>
-                                    <h2 className="text-lg font-mono font-semibold">Módulo {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} em construção</h2>
-                                    <p className="text-muted-foreground text-sm max-w-xs mx-auto">
-                                        Este módulo faz parte da {projectData.methodology} e será implementado nos próximos sprints.
-                                    </p>
-                                </div>
-                                <Button variant="secondary">Saiba mais sobre {projectData.methodology}</Button>
-                            </div>
-                        </div>
-                    )}
+                            )}
+                        </motion.div>
+                    </AnimatePresence>
                 </div>
             </div>
 
-            {/* Chat Sidebar Area */}
-            <aside className="hidden lg:flex w-[350px] xl:w-[450px] shrink-0 flex-col bg-background border-l border-border h-full">
+            {/* 3. Integrated Project Chat Sidebar */}
+            <motion.aside
+                initial={{ x: 20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                className="hidden lg:flex w-[350px] xl:w-[450px] shrink-0 flex-col bg-card/10 border-l border-border h-full relative"
+            >
+                <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.02] to-transparent pointer-events-none" />
                 <ProjectChat />
-            </aside>
+            </motion.aside>
         </div>
     );
 }
