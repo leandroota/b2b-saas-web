@@ -45,19 +45,32 @@ export default function Home() {
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-6">
             <div className="flex flex-col">
-              <h1 className="text-4xl font-black font-mono tracking-tighter uppercase">Vision Cockpit</h1>
-              <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-[0.2em] italic">Workspace Intelligence • Global Overview</p>
+              <h1 className="text-4xl font-black font-mono tracking-tighter uppercase">Foco no Fluxo</h1>
+              <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-[0.2em] italic">Sua zona de execução elite na Flyprod.</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-primary/5 border border-primary/10">
-              <Zap className="size-4 text-primary animate-pulse" />
-              <span className="text-[10px] font-black uppercase tracking-widest text-primary">82% Efficiency</span>
+          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-3 pr-4 border-r border-border/30">
+              <div className="flex -space-x-2">
+                {[1, 2, 3].map(v => (
+                  <div key={v} className="size-8 rounded-full border-2 border-background bg-muted overflow-hidden">
+                    <img src={`https://avatar.vercel.sh/${v}`} alt="" className="size-full object-cover" />
+                  </div>
+                ))}
+              </div>
+              <span className="text-[10px] font-black text-muted-foreground uppercase">+12 ONLINE</span>
             </div>
-            <Button variant="secondary" className="h-10 rounded-xl font-bold text-[10px] uppercase tracking-widest px-4 border border-border/50">
-              Relatórios Export
-            </Button>
+
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-primary/5 border border-primary/10">
+                <Zap className="size-4 text-primary animate-pulse" />
+                <span className="text-[10px] font-black uppercase tracking-widest text-primary">82% Efficiency</span>
+              </div>
+              <Button variant="secondary" className="h-10 rounded-xl font-bold text-[10px] uppercase tracking-widest px-4 border border-border/50">
+                Relatórios Export
+              </Button>
+            </div>
           </div>
         </div>
       </header>
@@ -71,26 +84,6 @@ export default function Home() {
               <div className="p-8 space-y-10">
                 <PermissionGuard role="ADMIN" fallback={
                   <div className="space-y-10">
-                    {/* 1. Welcome Header - Left Aligned Title/Sub, Right Aligned Stats */}
-                    <div className="flex items-end justify-between gap-6 pb-6 border-b border-border/30">
-                      <div className="space-y-1 text-left">
-                        <div className="flex items-center gap-2">
-                          <h1 className="text-4xl font-black font-mono tracking-tighter uppercase">Foco no Fluxo</h1>
-                          <div className="size-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px] shadow-primary" />
-                        </div>
-                        <p className="text-muted-foreground font-medium uppercase tracking-[0.2em] text-[10px] italic">Sua zona de execução elite na Flyprod.</p>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <div className="flex -space-x-2">
-                          {[1, 2, 3].map(v => (
-                            <div key={v} className="size-8 rounded-full border-2 border-background bg-muted overflow-hidden">
-                              <img src={`https://avatar.vercel.sh/${v}`} alt="" className="size-full object-cover" />
-                            </div>
-                          ))}
-                        </div>
-                        <span className="text-[10px] font-black text-muted-foreground uppercase">+12 ONLINE</span>
-                      </div>
-                    </div>
 
                     {/* 2. Tasks Grid (Next 2) */}
                     <NextTasks />
