@@ -49,7 +49,7 @@ export function Sidebar() {
             {/* Primary Navigation */}
             <nav className="flex-1 overflow-y-auto p-3 space-y-1">
                 {navItems.map((item: any) => {
-                    const isActive = false; // Placeholder for actual router logic
+                    const isActive = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
 
                     const content = (
                         <div key={item.href} className="group flex flex-col">
@@ -59,10 +59,10 @@ export function Sidebar() {
                                         className={cn(
                                             "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
                                             "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-                                            isActive && "bg-sidebar-accent text-sidebar-accent-foreground"
+                                            isActive && "bg-primary/10 text-primary font-bold"
                                         )}
                                     >
-                                        <item.icon className="size-4" />
+                                        <item.icon className={cn("size-4", isActive && "text-primary")} />
                                         {item.label}
                                     </span>
                                 </Link>
