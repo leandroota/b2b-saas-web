@@ -132,27 +132,27 @@ export function WikiView() {
         <div className="flex h-full bg-background overflow-hidden relative">
             {/* Wiki Navigation Sidebar */}
             <div className="w-72 shrink-0 border-r border-border bg-card/30 flex flex-col">
-                <div className="p-4 space-y-4">
-                    <div className="flex items-center justify-between">
+                {/* Premium Standard Header (Internal) */}
+                <header className="shrink-0 border-b border-border/50 bg-card/10 backdrop-blur-md p-4">
+                    <div className="flex items-center justify-between gap-4">
                         <div className="flex items-center gap-2">
                             <Book className="size-4 text-primary" />
-                            <h3 className="text-sm font-bold font-mono uppercase tracking-tight">Wiki</h3>
+                            <span className="text-sm font-black font-mono tracking-tighter uppercase text-foreground">Knowledge Nexus</span>
                         </div>
-                        <Button variant="ghost" size="icon-xs" className="size-7 hover:bg-primary/20 hover:text-primary transition-colors">
+                        <Button variant="ghost" size="icon-xs" className="size-8 hover:bg-primary/20 hover:text-primary transition-colors">
                             <Plus className="size-4" />
                         </Button>
                     </div>
-
-                    <div className="relative">
-                        <Search className="absolute left-2.5 top-2.5 size-4 text-muted-foreground" />
+                    <div className="mt-4 relative">
+                        <Search className="absolute left-2.5 top-2.5 size-3.5 text-muted-foreground" />
                         <Input
-                            placeholder="Buscar na Wiki..."
-                            className="pl-9 h-9 bg-background/50 border-border text-xs focus-visible:ring-primary/50"
+                            placeholder="Pesquisar..."
+                            className="pl-9 h-9 bg-background/40 border-border/50 text-[10px] uppercase font-bold tracking-widest focus-visible:ring-primary/30"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                         />
                     </div>
-                </div>
+                </header>
 
                 <ScrollArea className="flex-1">
                     <div className="px-2 py-2 space-y-6">

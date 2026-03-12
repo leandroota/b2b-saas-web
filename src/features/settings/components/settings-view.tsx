@@ -43,13 +43,25 @@ export function SettingsView() {
     };
 
     return (
-        <div className="flex flex-col h-full bg-background/50">
-            <div className="p-8 border-b border-border bg-card/30">
-                <div className="max-w-5xl mx-auto space-y-1">
-                    <h1 className="text-3xl font-mono font-bold tracking-tight uppercase">Configurações</h1>
-                    <p className="text-muted-foreground text-sm">Gerencie seu perfil, workspace e preferências da equipe.</p>
+        <div className="flex flex-col h-full bg-background/50 overflow-hidden relative">
+            {/* Premium Standard Header */}
+            <header className="shrink-0 border-b border-border/50 bg-card/30 backdrop-blur-md px-8 py-6 z-20">
+                <div className="max-w-5xl mx-auto flex items-center justify-between">
+                    <div className="flex flex-col">
+                        <h1 className="text-sm font-black font-mono tracking-[0.2em] uppercase text-primary mb-0.5">Control Center</h1>
+                        <div className="flex items-center gap-2">
+                            <span className="text-3xl font-black font-mono tracking-tighter uppercase text-foreground">Configurações</span>
+                        </div>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-primary/5 border border-primary/10">
+                            <Shield className="size-3.5 text-primary" />
+                            <span className="text-[9px] font-black uppercase tracking-widest text-primary">Acesso: {currentUser.role}</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </header>
 
             <div className="flex-1 overflow-y-auto p-8">
                 <div className="max-w-5xl mx-auto">

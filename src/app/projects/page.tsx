@@ -17,19 +17,28 @@ export default function ProjectsPage() {
 
     return (
         <div className="flex flex-col h-full bg-background/50 overflow-hidden">
-            {/* Header */}
-            <div className="px-8 py-6 border-b border-border bg-background">
+            {/* Premium Standard Header */}
+            <header className="shrink-0 border-b border-border/50 bg-card/30 backdrop-blur-md px-8 py-6 z-20">
                 <div className="flex items-center justify-between">
-                    <div>
-                        <h1 className="text-3xl font-mono font-bold tracking-tight text-foreground uppercase">Projetos</h1>
-                        <p className="text-muted-foreground mt-1 font-medium italic">Gerencie e acompanhe a evolução do seu workspace.</p>
+                    <div className="flex flex-col">
+                        <h1 className="text-sm font-black font-mono tracking-[0.2em] uppercase text-primary mb-0.5">Workspace Directory</h1>
+                        <div className="flex items-center gap-2">
+                            <span className="text-3xl font-black font-mono tracking-tighter uppercase text-foreground">Projetos Ativos</span>
+                        </div>
                     </div>
-                    <Button className="gap-2 font-mono font-bold uppercase tracking-widest text-[10px] h-9 px-4">
-                        <Plus className="size-4" />
-                        Novo Projeto
-                    </Button>
+
+                    <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-orange-500/5 border border-orange-500/10">
+                            <Star className="size-3.5 text-orange-500 animate-pulse" />
+                            <span className="text-[9px] font-black uppercase tracking-widest text-orange-500">Workspace Premium</span>
+                        </div>
+                        <Button className="gap-2 font-mono font-bold uppercase tracking-widest text-[10px] h-10 px-6 rounded-xl shadow-lg shadow-primary/20">
+                            <Plus className="size-4" />
+                            Novo Projeto
+                        </Button>
+                    </div>
                 </div>
-            </div>
+            </header>
 
             {/* Project Grid */}
             <div className="flex-1 overflow-y-auto p-8">
