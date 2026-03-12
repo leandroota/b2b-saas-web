@@ -45,46 +45,8 @@ export default function Home() {
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center gap-6">
             <div className="flex flex-col">
-              <h1 className="text-sm font-black font-mono tracking-[0.2em] uppercase text-primary mb-0.5">Workspace Intelligence</h1>
-              <div className="flex items-center gap-2">
-                <DropdownMenu>
-                  <DropdownMenuTrigger className="h-auto p-0 hover:bg-transparent group outline-none border-none ring-0 focus:ring-0">
-                    <div className="flex items-center gap-2">
-                      <span className="text-2xl font-black font-mono tracking-tighter uppercase group-hover:text-primary transition-colors">Vision Cockpit</span>
-                      <ChevronDown className="size-5 ml-2 text-muted-foreground group-hover:text-primary transition-colors" />
-                    </div>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-80 rounded-2xl border-border/50 bg-card/90 backdrop-blur-xl shadow-2xl p-2 select-none" align="start">
-                    <div className="px-3 py-2 border-b border-border/50 mb-1 flex items-center justify-between">
-                      <span className="text-[10px] font-black uppercase text-muted-foreground tracking-widest">Selecione o Contexto</span>
-                      <Badge variant="secondary" className="text-[8px] h-4">Alpha v1.2</Badge>
-                    </div>
-                    <DropdownMenuItem
-                      onClick={() => router.push('/')}
-                      className="rounded-xl py-3 gap-3 cursor-pointer group hover:bg-primary/10 transition-all font-bold text-xs uppercase tracking-tight"
-                    >
-                      <LayoutDashboard className="size-4 text-primary group-hover:scale-110 transition-transform" />
-                      Overview Global
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator className="bg-border/50 mx-2 my-2" />
-                    {Object.values(projects as any).map((proj: any) => (
-                      <DropdownMenuItem
-                        key={proj.id}
-                        className="rounded-xl py-3 gap-3 cursor-pointer group hover:bg-primary/5 transition-all"
-                        onClick={() => router.push(`/projects/${proj.id === 'p1' ? 'proj_01' : proj.id === 'p2' ? 'proj_02' : 'proj_03'}`)}
-                      >
-                        <div className={`size-8 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20 ${proj.color || 'text-primary'}`}>
-                          <FolderKanban className="size-4" />
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="font-bold text-[11px] uppercase tracking-tighter group-hover:text-primary transition-colors">{proj.name}</span>
-                          <span className="text-[8px] text-muted-foreground uppercase font-mono">{proj.status} • {proj.methodology}</span>
-                        </div>
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
+              <h1 className="text-4xl font-black font-mono tracking-tighter uppercase">Vision Cockpit</h1>
+              <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-[0.2em] italic">Workspace Intelligence • Global Overview</p>
             </div>
           </div>
 

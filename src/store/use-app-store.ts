@@ -4,6 +4,7 @@ export type UserRole = 'ADMIN' | 'MEMBER';
 
 interface AppState {
     isCopilotOpen: boolean;
+    isSidebarCollapsed: boolean;
     workspaceId: string | null;
     activeTheme: 'system' | 'light' | 'dark';
 
@@ -79,6 +80,7 @@ interface AppState {
     }>;
 
     toggleCopilot: () => void;
+    toggleSidebar: () => void;
     setCopilotOpen: (isOpen: boolean) => void;
     setActiveWorkspace: (workspaceId: string) => void;
     setActiveTheme: (theme: 'system' | 'light' | 'dark') => void;
@@ -110,6 +112,7 @@ export const useAppStore = create<AppState>((set) => ({
     },
 
     isMessagingOpen: false,
+    isSidebarCollapsed: false,
     unreadCount: 3,
     drawerLevel: 'inbox',
     activeConversation: null,
@@ -117,6 +120,9 @@ export const useAppStore = create<AppState>((set) => ({
     toggleCopilot: () => set((state) => ({
         isCopilotOpen: !state.isCopilotOpen,
         isMessagingOpen: false
+    })),
+    toggleSidebar: () => set((state) => ({
+        isSidebarCollapsed: !state.isSidebarCollapsed
     })),
     setCopilotOpen: (isOpen) => set((state) => ({
         isCopilotOpen: isOpen,
