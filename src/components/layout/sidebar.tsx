@@ -13,6 +13,8 @@ import {
     Zap,
     Settings,
     Brain,
+    Plus,
+    ChevronRight,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -22,13 +24,13 @@ import { PermissionGuard } from "@/components/auth/permission-guard";
 
 const navItems = [
     { icon: Home, label: "Home", href: "/" },
-    { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
-    { icon: FolderKanban, label: "Projetos", href: "/projects" },
+    { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard", role: 'ADMIN' },
+    { icon: FolderKanban, label: "Projetos", href: "/projects", hasQuickAdd: true },
     { icon: Settings, label: "Configurações", href: "/settings" },
 ];
 
 export function Sidebar() {
-    const { isCopilotOpen, toggleCopilot, currentUser, setUserRole } = useAppStore();
+    const { isCopilotOpen, toggleCopilot, currentUser, setUserRole, projects } = useAppStore();
 
     return (
         <aside className="w-64 border-r border-sidebar-border bg-sidebar flex flex-col h-full shrink-0">
@@ -45,18 +47,45 @@ export function Sidebar() {
             {/* Primary Navigation */}
             <nav className="flex-1 overflow-y-auto p-3 space-y-1">
                 {navItems.map((item: any) => {
+                    const isActive = false; // Placeholder for actual router logic
+
                     const content = (
-                        <Link key={item.href} href={item.href}>
-                            <span
-                                className={cn(
-                                    "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
-                                    "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                        <div key={item.href} className="group flex flex-col">
+                            <div className="flex items-center justify-between group/row">
+                                <Link href={item.href} className="flex-1">
+                                    <span
+                                        className={cn(
+                                            "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                                            "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                                            isActive && "bg-sidebar-accent text-sidebar-accent-foreground"
+                                        )}
+                                    >
+                                        <item.icon className="size-4" />
+                                        {item.label}
+                                    </span>
+                                </Link>
+
+                                {item.hasQuickAdd && (
+                                    <button className="mr-2 size-6 rounded bg-primary/10 flex items-center justify-center text-primary opacity-0 group-hover/row:opacity-100 hover:bg-primary/20 transition-all">
+                                        <Plus className="size-3" />
+                                    </button>
                                 )}
-                            >
-                                <item.icon className="size-4" />
-                                {item.label}
-                            </span>
-                        </Link>
+                            </div>
+
+                            {/* Nested Projects (Level 2) - Only for "Projetos" */}
+                            {item.label === "Projetos" && (
+                                <div className="mt-1 ml-7 flex flex-col space-y-0.5 border-l border-border/40 pl-2">
+                                    {projects.map((proj) => (
+                                        <Link key={proj.id} href={`/projects/${proj.id === 'p1' ? 'proj_01' : proj.id === 'p2' ? 'proj_02' : 'proj_03'}`}>
+                                            <span className="flex items-center gap-2 px-2 py-1.5 rounded-md text-[11px] font-bold uppercase tracking-tight text-muted-foreground hover:text-primary hover:bg-primary/5 transition-all">
+                                                <div className={cn("size-1.5 rounded-full", proj.color || "bg-primary")} />
+                                                {proj.name}
+                                            </span>
+                                        </Link>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                     );
 
                     if (item.role) {
