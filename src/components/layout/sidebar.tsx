@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useAppStore } from "@/store/use-app-store";
 import { ModeToggle } from "@/components/mode-toggle";
 import {
@@ -30,6 +31,7 @@ const navItems = [
 ];
 
 export function Sidebar() {
+    const pathname = usePathname();
     const { isCopilotOpen, toggleCopilot, currentUser, setUserRole, projects } = useAppStore();
 
     return (
