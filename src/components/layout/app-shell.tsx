@@ -50,27 +50,30 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                     {/* Global Interaction Sidebar (3rd Column) - TRUE OVERLAY */}
                     <AnimatePresence>
                         {isVisible && (
-                            <>
-
-                                <motion.aside
-                                    initial={{ width: 0, opacity: 0 }}
-                                    animate={{ width: 420, opacity: 1 }}
-                                    exit={{ width: 0, opacity: 0 }}
-                                    transition={{ type: "spring", damping: 30, stiffness: 300 }}
-                                    className={cn(
-                                        "h-full border-l border-border bg-background flex flex-col shrink-0 overflow-hidden",
-                                    )}
-                                >
-                                    <div className="w-[420px] h-full flex flex-col">
-                                        {/* Render based on current open state or fallback to last active during exit */}
-                                        {renderedComponent === 'copilot' ? (
-                                            <CopilotChat />
-                                        ) : renderedComponent === 'messaging' ? (
-                                            <MessagingDrawer />
-                                        ) : null}
-                                    </div>
-                                </motion.aside>
-                            </>
+                            <motion.div
+                                drag
+                                dragMomentum={false}
+                                dragConstraints={{ top: 0, left: -1000, right: 0, bottom: 0 }}
+                                initial={{ x: 440, opacity: 0, scale: 0.95 }}
+                                animate={{ x: 0, opacity: 1, scale: 1 }}
+                                exit={{ x: 440, opacity: 0, scale: 0.95 }}
+                                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                                className={cn(
+                                    "fixed top-20 right-6 bottom-6 w-[420px] z-50",
+                                    "bg-background border border-border shadow-[0_32px_64px_-16px_rgba(0,0,0,0.5)]",
+                                    "rounded-[2.5rem] overflow-hidden flex flex-col",
+                                    "cursor-default active:cursor-grabbing"
+                                )}
+                            >
+                                <div className="h-full flex flex-col relative">
+                                    {/* Render based on current open state or fallback to last active during exit */}
+                                    {renderedComponent === 'copilot' ? (
+                                        <CopilotChat />
+                                    ) : renderedComponent === 'messaging' ? (
+                                        <MessagingDrawer />
+                                    ) : null}
+                                </div>
+                            </motion.div>
                         )}
                     </AnimatePresence>
                 </div>

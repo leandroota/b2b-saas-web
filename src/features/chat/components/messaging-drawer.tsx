@@ -15,7 +15,8 @@ import {
     CheckCheck,
     Phone,
     Video,
-    MoreVertical
+    MoreVertical,
+    GripHorizontal
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -90,7 +91,12 @@ export function MessagingDrawer() {
                 /* INBOX LEVEL */
                 <>
                     {/* Inbox Header */}
-                    <div className="p-6 border-b border-border/50 bg-card/30 backdrop-blur-md sticky top-0 z-10">
+                    <div className="flex flex-col border-b border-border/50 bg-card/30 backdrop-blur-md sticky top-0 z-10 p-6 pt-2">
+                        {/* Drag Handle Bar */}
+                        <div className="flex justify-center py-2 -mt-1 mb-2">
+                            <div className="w-12 h-1.5 rounded-full bg-muted-foreground/20 cursor-grab active:cursor-grabbing" />
+                        </div>
+
                         <div className="flex items-center justify-between mb-6">
                             <div className="flex items-center gap-3">
                                 <div className="size-10 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20 text-primary">
@@ -127,7 +133,7 @@ export function MessagingDrawer() {
                         </div>
 
                         <TabsContent value="pessoas" className="flex-1 m-0">
-                            <ScrollArea className="h-[calc(100vh-210px)]">
+                            <ScrollArea className="h-full">
                                 <div className="p-2 space-y-1">
                                     {MOCK_DM_CONVS.map((conv) => (
                                         <button
@@ -165,7 +171,7 @@ export function MessagingDrawer() {
                         </TabsContent>
 
                         <TabsContent value="projetos" className="flex-1 m-0">
-                            <ScrollArea className="h-[calc(100vh-210px)]">
+                            <ScrollArea className="h-full">
                                 <div className="p-2 space-y-1">
                                     {MOCK_PROJECT_CONVS.map((conv) => (
                                         <button
@@ -198,52 +204,58 @@ export function MessagingDrawer() {
                 /* CHAT LEVEL */
                 <>
                     {/* Chat Header */}
-                    <div className="h-16 flex items-center justify-between px-6 border-b border-border/50 bg-card/30 backdrop-blur-md sticky top-0 z-10">
-                        <div className="flex items-center gap-3">
-                            <Button variant="ghost" size="icon-xs" onClick={backToInbox} className="size-8 -ml-2 text-muted-foreground">
-                                <ChevronLeft className="size-4" />
-                            </Button>
-                            <div className="relative">
-                                {activeConversation?.type === 'person' ? (
-                                    <>
-                                        <Avatar className="size-9 border border-border/50">
-                                            <AvatarImage src={activeConversation.avatar} />
-                                            <AvatarFallback className="text-xs font-bold bg-primary/10 text-primary">
-                                                {activeConversation?.name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || "CM"}
-                                            </AvatarFallback>
-                                        </Avatar>
-                                        <Circle className={cn(
-                                            "absolute -bottom-0.5 -right-0.5 size-3 fill-current border-2 border-background rounded-full",
-                                            activeConversation.status === "online" ? "text-green-500" : "text-orange-500"
-                                        )} />
-                                    </>
-                                ) : (
-                                    <div className="size-9 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary border border-secondary/20">
-                                        <Users className="size-5" />
-                                    </div>
-                                )}
-                            </div>
-                            <div>
-                                <h3 className="text-sm font-black font-mono tracking-tight uppercase flex items-center gap-2">
-                                    {activeConversation?.name || "Conversa"}
-                                    <Badge variant="outline" className="text-[8px] font-mono h-3.5 px-1 border-primary/20 text-primary">
-                                        {activeConversation?.type === 'person' ? 'TEAM' : 'GROUP'}
-                                    </Badge>
-                                </h3>
-                                <p className="text-[9px] text-muted-foreground font-bold uppercase tracking-widest leading-none">
-                                    {activeConversation?.context || "Carregando..."}
-                                    {activeConversation?.participants && ` • ${activeConversation.participants} p.`}
-                                </p>
-                            </div>
+                    <div className="flex flex-col border-b border-border/50 bg-card/30 backdrop-blur-md sticky top-0 z-10">
+                        {/* Drag Handle Bar */}
+                        <div className="flex justify-center py-2">
+                            <div className="w-12 h-1.5 rounded-full bg-muted-foreground/20 cursor-grab active:cursor-grabbing" />
                         </div>
+                        <div className="h-14 flex items-center justify-between px-6">
+                            <div className="flex items-center gap-3">
+                                <Button variant="ghost" size="icon-xs" onClick={backToInbox} className="size-8 -ml-2 text-muted-foreground">
+                                    <ChevronLeft className="size-4" />
+                                </Button>
+                                <div className="relative">
+                                    {activeConversation?.type === 'person' ? (
+                                        <>
+                                            <Avatar className="size-9 border border-border/50">
+                                                <AvatarImage src={activeConversation.avatar} />
+                                                <AvatarFallback className="text-xs font-bold bg-primary/10 text-primary">
+                                                    {activeConversation?.name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || "CM"}
+                                                </AvatarFallback>
+                                            </Avatar>
+                                            <Circle className={cn(
+                                                "absolute -bottom-0.5 -right-0.5 size-3 fill-current border-2 border-background rounded-full",
+                                                activeConversation.status === "online" ? "text-green-500" : "text-orange-500"
+                                            )} />
+                                        </>
+                                    ) : (
+                                        <div className="size-9 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary border border-secondary/20">
+                                            <Users className="size-5" />
+                                        </div>
+                                    )}
+                                </div>
+                                <div>
+                                    <h3 className="text-sm font-black font-mono tracking-tight uppercase flex items-center gap-2">
+                                        {activeConversation?.name || "Conversa"}
+                                        <Badge variant="outline" className="text-[8px] font-mono h-3.5 px-1 border-primary/20 text-primary">
+                                            {activeConversation?.type === 'person' ? 'TEAM' : 'GROUP'}
+                                        </Badge>
+                                    </h3>
+                                    <p className="text-[9px] text-muted-foreground font-bold uppercase tracking-widest leading-none">
+                                        {activeConversation?.context || "Carregando..."}
+                                        {activeConversation?.participants && ` • ${activeConversation.participants} p.`}
+                                    </p>
+                                </div>
+                            </div>
 
-                        <div className="flex items-center gap-1">
-                            <Button variant="ghost" size="icon-xs" className="size-8 text-muted-foreground">
-                                <Phone className="size-3.5" />
-                            </Button>
-                            <Button variant="ghost" size="icon-xs" onClick={closeMessaging} className="size-8 text-muted-foreground hover:text-destructive hover:bg-destructive/5">
-                                <X className="size-4" />
-                            </Button>
+                            <div className="flex items-center gap-1">
+                                <Button variant="ghost" size="icon-xs" className="size-8 text-muted-foreground">
+                                    <Phone className="size-3.5" />
+                                </Button>
+                                <Button variant="ghost" size="icon-xs" onClick={closeMessaging} className="size-8 text-muted-foreground hover:text-destructive hover:bg-destructive/5">
+                                    <X className="size-4" />
+                                </Button>
+                            </div>
                         </div>
                     </div>
 

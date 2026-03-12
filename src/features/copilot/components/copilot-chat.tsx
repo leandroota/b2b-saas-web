@@ -113,31 +113,37 @@ export function CopilotChat() {
     return (
         <div className="flex h-full flex-col bg-background/80 backdrop-blur-xl relative overflow-hidden">
             {/* Copilot Header */}
-            <div className="h-16 flex items-center justify-between px-6 border-b border-border/50 bg-primary/5 sticky top-0 z-10">
-                <div className="flex items-center gap-3">
-                    <div className="size-9 rounded-xl bg-primary flex items-center justify-center text-primary-foreground shadow-lg shadow-primary/20">
-                        <Sparkles className="size-5" />
-                    </div>
-                    <div>
-                        <h3 className="text-sm font-black font-mono tracking-tighter uppercase flex items-center gap-1.5">
-                            Fly Copilot
-                            <Badge variant="outline" className="text-[9px] font-mono h-4 border-primary/30 text-primary uppercase">v1.0</Badge>
-                        </h3>
-                        <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">IA Conectada ao Projeto</p>
-                    </div>
+            <div className="flex flex-col border-b border-border/50 bg-primary/5 sticky top-0 z-10">
+                {/* Drag Handle Bar */}
+                <div className="flex justify-center py-2">
+                    <div className="w-12 h-1.5 rounded-full bg-muted-foreground/20 cursor-grab active:cursor-grabbing" />
                 </div>
-                <div className="flex items-center gap-1">
-                    <Button variant="ghost" size="icon-xs" className="size-8 text-muted-foreground hover:text-foreground">
-                        <RefreshCcw className="size-3.5" />
-                    </Button>
-                    <Button
-                        variant="ghost"
-                        size="icon-xs"
-                        onClick={() => setCopilotOpen(false)}
-                        className="size-8 text-muted-foreground hover:text-destructive hover:bg-destructive/5"
-                    >
-                        <X className="size-4" />
-                    </Button>
+                <div className="h-14 flex items-center justify-between px-6">
+                    <div className="flex items-center gap-3">
+                        <div className="size-9 rounded-xl bg-primary flex items-center justify-center text-primary-foreground shadow-lg shadow-primary/20">
+                            <Sparkles className="size-5" />
+                        </div>
+                        <div>
+                            <h3 className="text-sm font-black font-mono tracking-tighter uppercase flex items-center gap-1.5">
+                                Fly Copilot
+                                <Badge variant="outline" className="text-[9px] font-mono h-4 border-primary/30 text-primary uppercase">v1.0</Badge>
+                            </h3>
+                            <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">IA Conectada ao Projeto</p>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-1">
+                        <Button variant="ghost" size="icon-xs" className="size-8 text-muted-foreground hover:text-foreground">
+                            <RefreshCcw className="size-3.5" />
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            size="icon-xs"
+                            onClick={() => setCopilotOpen(false)}
+                            className="size-8 text-muted-foreground hover:text-destructive hover:bg-destructive/5"
+                        >
+                            <X className="size-4" />
+                        </Button>
+                    </div>
                 </div>
             </div>
 
