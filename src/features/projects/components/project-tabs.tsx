@@ -34,16 +34,18 @@ export function ProjectTabs({ methodology, activeTab, onTabChange }: ProjectTabs
         switch (method) {
             case "AGILE":
                 return [
+                    { id: "feed", label: "Atividades", icon: Activity },
                     { id: "backlog", label: "Backlog", icon: Layers },
                     { id: "kanban", label: "Kanban", icon: Columns3 },
                     { id: "overview", label: "Visão Geral", icon: LayoutDashboard },
-                    ...baseTabs,
+                    ...baseTabs.filter(t => t.id !== "feed"),
                 ];
             case "LIST":
                 return [
+                    { id: "feed", label: "Atividades", icon: Activity },
                     { id: "list", label: "Lista", icon: ListTodo },
                     { id: "overview", label: "Visão Geral", icon: LayoutDashboard },
-                    ...baseTabs,
+                    ...baseTabs.filter(t => t.id !== "feed"),
                 ];
             case "PLANNING":
                 return [
@@ -55,9 +57,10 @@ export function ProjectTabs({ methodology, activeTab, onTabChange }: ProjectTabs
             case "KANBAN":
             default:
                 return [
+                    { id: "feed", label: "Atividades", icon: Activity },
                     { id: "kanban", label: "Kanban", icon: Columns3 },
                     { id: "overview", label: "Visão Geral", icon: LayoutDashboard },
-                    ...baseTabs,
+                    ...baseTabs.filter(t => t.id !== "feed"),
                 ];
         }
     };
