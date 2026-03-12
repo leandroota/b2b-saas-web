@@ -141,25 +141,24 @@ export default function ProjectPage() {
         <div className="flex h-full bg-background/50 backdrop-blur-3xl overflow-hidden perspective-1000">
             {/* Main Content: Header + View */}
             <div className="flex-1 flex flex-col min-w-0">
-                {/* 1. Floating Glass Header */}
-                <motion.div
+                <motion.header
                     initial={{ y: -20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    className="px-8 pt-8 pb-6 z-10"
+                    className="shrink-0 border-b border-border/50 bg-card/30 backdrop-blur-md px-8 py-6 z-20"
                 >
-                    <div className="p-6 rounded-[2rem] bg-card/30 backdrop-blur-md border border-border/50 shadow-2xl shadow-primary/5 space-y-6">
+                    <div className="flex flex-col space-y-6">
                         <div className="flex items-start justify-between">
-                            <div className="space-y-1.5">
-                                <div className="flex items-center gap-3">
+                            <div className="space-y-2">
+                                <div className="flex items-center gap-4">
                                     <div className="size-10 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
                                         <Users className="size-5 text-white" />
                                     </div>
-                                    <div>
+                                    <div className="flex flex-col">
                                         <div className="flex items-center gap-3">
                                             <DropdownMenu>
                                                 <DropdownMenuTrigger className="h-auto p-0 hover:bg-transparent group outline-none border-none ring-0 focus:ring-0">
                                                     <div className="flex items-center gap-2">
-                                                        <h1 className="text-2xl font-black font-mono tracking-tighter uppercase group-hover:text-primary transition-colors">{projectData.name}</h1>
+                                                        <h1 className="text-3xl font-black font-mono tracking-tighter uppercase group-hover:text-primary transition-colors">{projectData.name}</h1>
                                                         <ChevronDown className="size-4 text-muted-foreground group-hover:text-primary transition-colors" />
                                                     </div>
                                                 </DropdownMenuTrigger>
@@ -197,17 +196,17 @@ export default function ProjectPage() {
                                                 </DropdownMenuContent>
                                             </DropdownMenu>
                                             <Badge variant="outline" className={cn(
-                                                "text-[8px] font-black tracking-widest px-2 h-4 border-primary/20 text-primary",
+                                                "text-[9px] font-black tracking-widest px-2 h-4 border-primary/20 text-primary font-mono",
                                                 projectData.status === "Crítico" && "bg-destructive/10 text-destructive border-destructive/20"
                                             )}>
                                                 {projectData.status.toUpperCase()}
                                             </Badge>
                                         </div>
-                                        <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest mt-0.5">
+                                        <p className="text-[10px] text-muted-foreground font-black font-mono uppercase tracking-[0.2em] mt-1 italic">
                                             {projectData.methodology} • SPRINT ATIVO
                                         </p>
                                     </div>
-                                    <Button variant="ghost" size="icon-xs" className="text-muted-foreground hover:text-yellow-500 transition-colors">
+                                    <Button variant="ghost" size="icon-xs" className="text-muted-foreground hover:text-yellow-500 transition-colors ml-2">
                                         <Star className="size-4" />
                                     </Button>
                                 </div>
@@ -235,7 +234,7 @@ export default function ProjectPage() {
                             </div>
                         </div>
 
-                        <div className="pt-2 border-t border-border/40">
+                        <div className="pt-4 mt-2">
                             <ProjectTabs
                                 methodology={projectData.methodology}
                                 activeTab={activeTab}
@@ -243,7 +242,7 @@ export default function ProjectPage() {
                             />
                         </div>
                     </div>
-                </motion.div>
+                </motion.header>
 
                 {/* 2. Content Area with Transitions */}
                 <div className="flex-1 overflow-hidden relative">
@@ -261,7 +260,7 @@ export default function ProjectPage() {
                                     <Publisher />
                                     <div className="flex-1 relative overflow-hidden">
                                         <ScrollArea className="h-full">
-                                            <div className="max-w-3xl mx-auto px-8 py-10 space-y-8">
+                                            <div className="max-w-4xl mx-auto px-8 py-10 space-y-8">
                                                 <div className="flex items-center gap-3 px-4 mb-4">
                                                     <div className="size-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px] shadow-primary" />
                                                     <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">Log de Atividades do Projeto</h3>
