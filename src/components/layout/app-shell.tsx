@@ -6,6 +6,7 @@ import { Header } from "@/components/layout/header";
 import { CopilotChat } from "@/features/copilot/components/copilot-chat";
 import { MessagingDrawer } from "@/features/chat/components/messaging-drawer";
 import { useAppStore } from "@/store/use-app-store";
+import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
@@ -46,24 +47,38 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                         {children}
                     </main>
 
-                    {/* Global Interaction Sidebar (3rd Column) */}
-                    {mounted && (
-                        <aside
-                            className={cn(
-                                "absolute top-0 right-0 h-full w-[380px] border-l border-border bg-background z-20 flex flex-col shadow-[[-10px_0_30px_rgba(0,0,0,0.1)]] transition-transform duration-300 ease-in-out",
-                                isVisible
-                                    ? "translate-x-0"
-                                    : "translate-x-full"
-                            )}
-                        >
-                            {/* Render based on current open state or fallback to last active during exit */}
-                            {renderedComponent === 'copilot' ? (
-                                <CopilotChat />
-                            ) : renderedComponent === 'messaging' ? (
-                                <MessagingDrawer />
-                            ) : null}
-                        </aside>
-                    )}
+                    {/* Global Interaction Sidebar (3rd Column) - TRUE OVERLAY */}
+                    <AnimatePresence>
+                        {isVisible && (
+                            <>
+                                {/* Subtle Backdrop */}
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    onClick={() => useAppStore.getState().closeMessaging()}
+                                    className="fixed inset-0 bg-background/20 backdrop-blur-[2px] z-40"
+                                />
+
+                                <motion.aside
+                                    initial={{ x: "100%" }}
+                                    animate={{ x: 0 }}
+                                    exit={{ x: "100%" }}
+                                    transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                                    className={cn(
+                                        "fixed top-0 right-0 h-full w-[420px] border-l border-border bg-background z-50 flex flex-col shadow-[-20px_0_50px_rgba(0,0,0,0.2)]",
+                                    )}
+                                >
+                                    {/* Render based on current open state or fallback to last active during exit */}
+                                    {renderedComponent === 'copilot' ? (
+                                        <CopilotChat />
+                                    ) : renderedComponent === 'messaging' ? (
+                                        <MessagingDrawer />
+                                    ) : null}
+                                </motion.aside>
+                            </>
+                        )}
+                    </AnimatePresence>
                 </div>
             </div>
         </div>
