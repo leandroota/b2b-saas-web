@@ -8,7 +8,8 @@ import {
     TrendingUp,
     Zap,
     Rocket,
-    Target
+    Target,
+    ChevronRight
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -89,12 +90,15 @@ export function ExecutionInsights() {
                             { title: "Doc. de API V2", time: "Hoje, 17:00", color: "text-rose-500", bg: "bg-rose-500/5", border: "border-rose-500/20" },
                             { title: "Reunião Retrospectiva", time: "Amanhã, 10:00", color: "text-indigo-500", bg: "bg-indigo-500/5", border: "border-indigo-500/20" },
                         ].map((item) => (
-                            <div key={item.title} className={`p-4 rounded-2xl border ${item.border} ${item.bg} group cursor-pointer hover:scale-[1.02] transition-all`}>
-                                <h4 className={`text-[11px] font-bold ${item.color} uppercase tracking-tight`}>{item.title}</h4>
-                                <div className="flex items-center gap-2 mt-1 opacity-60">
-                                    <Clock className="size-3" />
-                                    <span className="text-[9px] font-bold uppercase tracking-widest">{item.time}</span>
+                            <div key={item.title} className={`p-4 rounded-2xl border ${item.border} ${item.bg} group cursor-pointer hover:scale-[1.02] transition-all flex items-center justify-between gap-4`}>
+                                <div className="space-y-1">
+                                    <h4 className={`text-[11px] font-bold ${item.color} uppercase tracking-tight`}>{item.title}</h4>
+                                    <div className="flex items-center gap-2 opacity-60">
+                                        <Clock className="size-3" />
+                                        <span className="text-[9px] font-bold uppercase tracking-widest">{item.time}</span>
+                                    </div>
                                 </div>
+                                <ChevronRight className="size-4 text-muted-foreground opacity-20 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
                             </div>
                         ))}
                     </div>
