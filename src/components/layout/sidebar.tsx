@@ -32,17 +32,31 @@ const navItems = [
 
 export function Sidebar() {
     const pathname = usePathname();
-    const { isCopilotOpen, toggleCopilot, currentUser, setUserRole, projects } = useAppStore();
+    const { isSidebarCollapsed, toggleSidebar, currentUser, setUserRole, projects } = useAppStore();
 
     return (
-        <aside className="w-64 border-r border-sidebar-border bg-sidebar flex flex-col h-full shrink-0">
+        <aside className={cn(
+            "border-r border-sidebar-border bg-sidebar flex flex-col h-full shrink-0 transition-all duration-300 relative group/sidebar",
+            isSidebarCollapsed ? "w-20" : "w-64"
+        )}>
+            {/* Collapse Toggle Button */}
+            <button
+                onClick={toggleSidebar}
+                className="absolute -right-3 top-20 size-6 rounded-full border border-sidebar-border bg-sidebar flex items-center justify-center z-50 hover:bg-sidebar-accent hover:text-primary transition-all opacity-0 group-hover/sidebar:opacity-100 shadow-xl"
+            >
+                <ChevronRight className={cn("size-3 transition-transform duration-300", !isSidebarCollapsed && "rotate-180")} />
+            </button>
+
             {/* Workspace Header */}
-            <div className="h-14 flex items-center px-4 border-b border-sidebar-border shrink-0">
+            <div className={cn(
+                "h-14 flex items-center border-b border-sidebar-border shrink-0 transition-all",
+                isSidebarCollapsed ? "justify-center" : "px-4"
+            )}>
                 <div className="flex items-center gap-2 font-mono font-semibold text-sidebar-foreground">
-                    <div className="size-6 rounded bg-primary/20 flex items-center justify-center text-primary text-[10px]">
+                    <div className="size-8 rounded-xl bg-primary/20 flex items-center justify-center text-primary text-xs font-black shadow-inner shadow-primary/10">
                         Fl
                     </div>
-                    Flyprod
+                    {!isSidebarCollapsed && <span className="animate-in fade-in slide-in-from-left-2 duration-300">Flyprod</span>}
                 </div>
             </div>
 
@@ -57,20 +71,21 @@ export function Sidebar() {
                                 <Link href={item.href} className="flex-1">
                                     <span
                                         className={cn(
-                                            "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                                            "flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-colors",
                                             "text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-                                            isActive && "bg-primary/10 text-primary font-bold"
+                                            isActive && "bg-primary/10 text-primary font-bold",
+                                            isSidebarCollapsed && "justify-center px-0"
                                         )}
                                     >
-                                        <item.icon className={cn("size-4", isActive && "text-primary")} />
-                                        {item.label}
+                                        <item.icon className={cn("size-5", isActive && "text-primary")} />
+                                        {!isSidebarCollapsed && <span className="animate-in fade-in slide-in-from-left-2 duration-300">{item.label}</span>}
                                     </span>
                                 </Link>
                             </div>
 
-                            {/* Nested Projects (Level 2) - Only for "Projetos" */}
-                            {item.label === "Projetos" && (
-                                <div className="mt-1 ml-7 flex flex-col space-y-0.5 border-l border-border/40 pl-2">
+                            {/* Nested Projects (Level 2) - Only for "Projetos" and NOT collapsed */}
+                            {item.label === "Projetos" && !isSidebarCollapsed && (
+                                <div className="mt-1 ml-7 flex flex-col space-y-0.5 border-l border-border/40 pl-2 animate-in fade-in slide-in-from-top-2 duration-300">
                                     {projects.map((proj) => {
                                         const projPath = `/projects/${proj.id === 'p1' ? 'proj_01' : proj.id === 'p2' ? 'proj_02' : 'proj_03'}`;
                                         const isProjActive = pathname === projPath;
@@ -111,37 +126,49 @@ export function Sidebar() {
             </nav>
 
             {/* User Footer */}
-            <div className="p-3 border-t border-sidebar-border shrink-0 space-y-3">
+            <div className={cn(
+                "p-3 border-t border-sidebar-border shrink-0 space-y-3 transition-all",
+                isSidebarCollapsed && "items-center px-2"
+            )}>
                 {/* Role Switcher Test */}
-                <div className="flex items-center justify-between px-3 py-1 bg-muted/30 rounded-lg">
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Cargo</span>
-                    <select
-                        className="bg-transparent text-[10px] font-bold uppercase focus:outline-none"
-                        value={currentUser.role}
-                        onChange={(e) => setUserRole(e.target.value as any)}
-                    >
-                        <option value="ADMIN">Admin</option>
-                        <option value="MEMBER">Member</option>
-                    </select>
-                </div>
+                {!isSidebarCollapsed && (
+                    <div className="flex items-center justify-between px-3 py-1 bg-muted/30 rounded-lg animate-in fade-in duration-300">
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Cargo</span>
+                        <select
+                            className="bg-transparent text-[10px] font-bold uppercase focus:outline-none"
+                            value={currentUser.role}
+                            onChange={(e) => setUserRole(e.target.value as any)}
+                        >
+                            <option value="ADMIN">Admin</option>
+                            <option value="MEMBER">Member</option>
+                        </select>
+                    </div>
+                )}
 
-                <div className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-sidebar-accent transition-colors cursor-pointer">
-                    <Avatar className="size-8 rounded-md">
+                <div className={cn(
+                    "flex items-center gap-3 rounded-xl transition-all cursor-pointer",
+                    !isSidebarCollapsed ? "px-3 py-2 hover:bg-sidebar-accent" : "justify-center p-0 hover:text-primary"
+                )}>
+                    <Avatar className={cn("rounded-xl transition-all", isSidebarCollapsed ? "size-10" : "size-8")}>
                         <AvatarImage src="https://github.com/shadcn.png" />
-                        <AvatarFallback className="rounded-md bg-sidebar-primary text-sidebar-primary-foreground">
+                        <AvatarFallback className="rounded-xl bg-sidebar-primary text-sidebar-primary-foreground">
                             JS
                         </AvatarFallback>
                     </Avatar>
-                    <div className="flex flex-col flex-1 min-w-0">
-                        <span className="text-sm font-medium truncate text-sidebar-foreground">
-                            John Smith
-                        </span>
-                        <span className="text-xs truncate text-sidebar-foreground/50">
-                            john@acme.com
-                        </span>
-                    </div>
-                    <ModeToggle />
-                    <Settings className="size-4 text-sidebar-foreground/50 shrink-0" />
+                    {!isSidebarCollapsed && (
+                        <>
+                            <div className="flex flex-col flex-1 min-w-0 animate-in fade-in slide-in-from-left-2 duration-300">
+                                <span className="text-sm font-medium truncate text-sidebar-foreground">
+                                    John Smith
+                                </span>
+                                <span className="text-xs truncate text-sidebar-foreground/50">
+                                    john@acme.com
+                                </span>
+                            </div>
+                            <ModeToggle />
+                            <Settings className="size-4 text-sidebar-foreground/50 shrink-0" />
+                        </>
+                    )}
                 </div>
             </div>
         </aside>
