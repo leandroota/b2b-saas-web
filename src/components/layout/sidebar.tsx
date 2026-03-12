@@ -71,14 +71,28 @@ export function Sidebar() {
                             {/* Nested Projects (Level 2) - Only for "Projetos" */}
                             {item.label === "Projetos" && (
                                 <div className="mt-1 ml-7 flex flex-col space-y-0.5 border-l border-border/40 pl-2">
-                                    {projects.map((proj) => (
-                                        <Link key={proj.id} href={`/projects/${proj.id === 'p1' ? 'proj_01' : proj.id === 'p2' ? 'proj_02' : 'proj_03'}`}>
-                                            <span className="flex items-center gap-2 px-2 py-1.5 rounded-md text-[11px] font-bold uppercase tracking-tight text-muted-foreground hover:text-primary hover:bg-primary/5 transition-all">
-                                                <div className={cn("size-1.5 rounded-full", proj.color || "bg-primary")} />
-                                                {proj.name}
-                                            </span>
-                                        </Link>
-                                    ))}
+                                    {projects.map((proj) => {
+                                        const projPath = `/projects/${proj.id === 'p1' ? 'proj_01' : proj.id === 'p2' ? 'proj_02' : 'proj_03'}`;
+                                        const isProjActive = pathname === projPath;
+
+                                        return (
+                                            <Link key={proj.id} href={projPath}>
+                                                <span className={cn(
+                                                    "flex items-center gap-2 px-2 py-1.5 rounded-md text-[11px] font-bold uppercase tracking-tight transition-all",
+                                                    isProjActive
+                                                        ? "text-primary bg-primary/5"
+                                                        : "text-muted-foreground hover:text-primary hover:bg-primary/5"
+                                                )}>
+                                                    <div className={cn(
+                                                        "size-1.5 rounded-full",
+                                                        proj.color || "bg-primary",
+                                                        isProjActive && "ring-2 ring-primary/20 ring-offset-1 ring-offset-transparent"
+                                                    )} />
+                                                    {proj.name}
+                                                </span>
+                                            </Link>
+                                        );
+                                    })}
                                 </div>
                             )}
                         </div>
