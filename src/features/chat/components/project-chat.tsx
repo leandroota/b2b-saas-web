@@ -57,10 +57,6 @@ export function ProjectChat() {
         setMounted(true);
     }, []);
 
-    if (!mounted) {
-        return <div className="flex h-full flex-col bg-background relative border-r border-border max-w-[400px] xl:max-w-[450px]" />;
-    }
-
     const handleSendMessage = () => {
         if (!inputValue.trim()) return;
 
@@ -83,10 +79,14 @@ export function ProjectChat() {
         }
     }, [messages]);
 
+    if (!mounted) {
+        return <div className="flex h-full flex-col bg-card/10 relative border-l border-border max-w-[400px] xl:max-w-[450px]" />;
+    }
+
     return (
-        <div className="flex h-full flex-col bg-background relative border-r border-border max-w-[400px] xl:max-w-[450px]">
+        <div className="flex h-full flex-col bg-transparent relative max-w-[400px] xl:max-w-[450px]">
             {/* Chat Header */}
-            <div className="h-14 flex items-center justify-between px-4 border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-10">
+            <div className="h-14 flex items-center justify-between px-4 border-b border-border bg-card/30 backdrop-blur-md sticky top-0 z-10">
                 <div className="flex items-center gap-3">
                     <div className="size-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
                         <Hash className="size-4" />
@@ -170,8 +170,8 @@ export function ProjectChat() {
             </ScrollArea>
 
             {/* Chat Input - Fixed at bottom */}
-            <div className="p-4 bg-background border-t border-border absolute bottom-0 left-0 right-0">
-                <div className="bg-muted/30 border border-border rounded-xl p-2 focus-within:ring-1 focus-within:ring-primary/20 focus-within:border-primary/30 transition-all">
+            <div className="p-4 bg-background/50 backdrop-blur-sm border-t border-border absolute bottom-0 left-0 right-0">
+                <div className="bg-muted/30 border border-border/50 rounded-xl p-2 focus-within:ring-1 focus-within:ring-primary/20 focus-within:border-primary/30 transition-all">
                     <Input
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
