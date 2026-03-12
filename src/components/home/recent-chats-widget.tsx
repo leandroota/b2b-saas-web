@@ -42,7 +42,7 @@ export function RecentChatsWidget() {
                     >
                         {item.type === 'person' ? (
                             <div className="relative">
-                                <Avatar className="size-10 rounded-xl border border-border/50">
+                                <Avatar className="size-10 rounded-full border border-border/50">
                                     <AvatarImage src={item.avatar} />
                                     <AvatarFallback>{item.name[0]}</AvatarFallback>
                                 </Avatar>

@@ -123,11 +123,11 @@ export function SettingsView() {
                                 <CardContent className="p-8 space-y-8">
                                     <div className="flex items-center gap-8">
                                         <div className="relative group">
-                                            <Avatar className="size-24 rounded-2xl border-2 border-primary/20">
+                                            <Avatar className="size-24 rounded-full border-2 border-primary/20">
                                                 <AvatarImage src="https://github.com/shadcn.png" />
                                                 <AvatarFallback>JS</AvatarFallback>
                                             </Avatar>
-                                            <div className="absolute inset-0 flex items-center justify-center bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl cursor-pointer">
+                                            <div className="absolute inset-0 flex items-center justify-center bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity rounded-full cursor-pointer">
                                                 <Upload className="size-6 text-primary" />
                                             </div>
                                         </div>
@@ -250,7 +250,7 @@ export function SettingsView() {
                                         <TableRow className="border-border/50 hover:bg-primary/5 transition-colors">
                                             <TableCell className="py-4">
                                                 <div className="flex items-center gap-3">
-                                                    <Avatar className="size-8 rounded-lg border border-border">
+                                                    <Avatar className="size-8 rounded-full border border-border">
                                                         <AvatarImage src="https://github.com/shadcn.png" />
                                                         <AvatarFallback>JS</AvatarFallback>
                                                     </Avatar>
@@ -280,7 +280,7 @@ export function SettingsView() {
                                         <TableRow className="border-border/50 hover:bg-primary/5 transition-colors">
                                             <TableCell className="py-4">
                                                 <div className="flex items-center gap-3">
-                                                    <Avatar className="size-8 rounded-lg border border-border">
+                                                    <Avatar className="size-8 rounded-full border border-border">
                                                         <AvatarFallback className="bg-orange-500/10 text-orange-500">MK</AvatarFallback>
                                                     </Avatar>
                                                     <div className="flex flex-col">

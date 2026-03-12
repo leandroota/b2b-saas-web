@@ -154,11 +154,11 @@ export function UserTaskCenter() {
                 <div className="max-w-7xl mx-auto px-8 relative">
                     <div className="flex items-end gap-6 -mt-12 pb-6 border-b border-border/40">
                         <div className="relative group/avatar">
-                            <Avatar className="size-28 rounded-[2rem] border-4 border-background shadow-2xl ring-1 ring-border/50 overflow-hidden">
+                            <Avatar className="size-28 rounded-full border-4 border-background shadow-2xl ring-1 ring-border/50 overflow-hidden">
                                 <AvatarImage src="https://github.com/shadcn.png" />
                                 <AvatarFallback className="text-2xl font-black bg-primary/10 text-primary">JS</AvatarFallback>
                             </Avatar>
-                            <button className="absolute inset-0 bg-black/40 opacity-0 group-hover/avatar:opacity-100 transition-all flex items-center justify-center text-white rounded-[2rem]">
+                            <button className="absolute inset-0 bg-black/40 opacity-0 group-hover/avatar:opacity-100 transition-all flex items-center justify-center text-white rounded-full">
                                 <Camera className="size-6" />
                             </button>
                         </div>

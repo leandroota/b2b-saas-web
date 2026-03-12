@@ -135,9 +135,9 @@ export function Sidebar() {
                     "flex items-center gap-3 rounded-xl transition-all cursor-pointer",
                     !isSidebarCollapsed ? "px-3 py-2 hover:bg-sidebar-accent" : "justify-center p-0 hover:text-primary"
                 )}>
-                    <Avatar className={cn("rounded-xl transition-all", isSidebarCollapsed ? "size-10" : "size-8")}>
+                    <Avatar className={cn("rounded-full transition-all border border-border/50", isSidebarCollapsed ? "size-10" : "size-8")}>
                         <AvatarImage src="https://github.com/shadcn.png" />
-                        <AvatarFallback className="rounded-xl bg-sidebar-primary text-sidebar-primary-foreground">
+                        <AvatarFallback className="rounded-full bg-sidebar-primary text-sidebar-primary-foreground">
                             JS
                         </AvatarFallback>
                     </Avatar>
