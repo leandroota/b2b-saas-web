@@ -181,7 +181,7 @@ export default function ProjectPage() {
                                                             "rounded-xl py-3 gap-3 cursor-pointer group transition-all",
                                                             proj.id === id ? "bg-primary/10" : "hover:bg-primary/5"
                                                         )}
-                                                        onClick={() => router.push(`/projects/${proj.id === 'p1' ? 'proj_01' : proj.id === 'p2' ? 'proj_02' : 'proj_03'}`)}
+                                                        onClick={() => router.push(`/projects/${proj.id}`)}
                                                     >
                                                         <div className={`size-8 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20 ${proj.color || 'text-primary'}`}>
                                                             <FolderKanban className="size-4" />

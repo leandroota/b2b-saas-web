@@ -9,8 +9,9 @@ import {
   Zap,
   Activity,
   FolderKanban,
-  UserPlus
+  Plus
 } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -56,38 +57,17 @@ export default function Home() {
 
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-3 pr-4 border-r border-border/30">
-              <div className="flex -space-x-2">
-                {[1, 2, 3].map(v => (
-                  <div
-                    key={v}
-                    onClick={() => useAppStore.getState().openConversation({
-                      id: `u${v}`,
-                      type: 'person',
-                      name: v === 1 ? "Ana Luiza" : v === 2 ? "Felipe Silva" : "Sarah Chen",
-                      context: v === 1 ? "Designer Sênior" : v === 2 ? "Produtor Executivo" : "Líder de QA",
-                      status: 'online',
-                      avatar: `https://avatar.vercel.sh/${v}`
-                    })}
-                    className="size-8 rounded-full border-2 border-background bg-muted overflow-hidden cursor-pointer hover:scale-110 hover:z-30 transition-all active:scale-95"
-                  >
-                    <img src={`https://avatar.vercel.sh/${v}`} alt="" className="size-full object-cover" />
-                  </div>
+              <div className="flex -space-x-3">
+                {[1, 2, 3].map((i) => (
+                  <Avatar key={i} className="size-9 border-4 border-background ring-2 ring-transparent hover:ring-primary/20 transition-all cursor-pointer hover:-translate-y-1">
+                    <AvatarImage src={`https://avatar.vercel.sh/${i}`} />
+                    <AvatarFallback>U{i}</AvatarFallback>
+                  </Avatar>
                 ))}
+                <button className="size-9 rounded-full bg-muted/50 border border-dashed border-border flex items-center justify-center hover:bg-muted transition-colors">
+                  <Plus className="size-3 text-muted-foreground" />
+                </button>
               </div>
-              <span
-                onClick={() => useAppStore.getState().openMessaging()}
-                className="text-[10px] font-black text-muted-foreground uppercase cursor-pointer hover:text-primary transition-colors"
-              >
-                +12 ONLINE
-              </span>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="size-8 rounded-full border border-dashed border-border/50 hover:border-primary/50 hover:bg-primary/5 transition-all group"
-                title="Convidar Colaborador"
-              >
-                <UserPlus className="size-3.5 text-muted-foreground group-hover:text-primary transition-colors" />
-              </Button>
             </div>
 
             <div className="flex items-center gap-4">
@@ -180,11 +160,9 @@ export default function Home() {
                   </DropdownMenu>
                 </div>
 
-                <div className="space-y-8">
+                <div className="bg-card/20 rounded-2xl border border-border/40 p-1">
                   <Publisher />
-                  <div className="bg-card/20 rounded-2xl border border-border/40 p-1">
-                    <ActivityFeed projectId={pulseFilter} />
-                  </div>
+                  <ActivityFeed projectId={pulseFilter} />
                 </div>
               </div>
             </ScrollArea>

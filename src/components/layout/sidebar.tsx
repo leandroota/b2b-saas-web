@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAppStore } from "@/store/use-app-store";
 import { ModeToggle } from "@/components/mode-toggle";
+import { useState } from "react";
 import {
     Home,
     FolderKanban,
@@ -34,6 +35,7 @@ const navItems = [
 export function Sidebar() {
     const pathname = usePathname();
     const { isSidebarCollapsed, toggleSidebar, currentUser, setUserRole, projects } = useAppStore();
+    const [isProjectsOpen, setIsProjectsOpen] = useState(() => pathname.startsWith('/projects'));
 
     return (
         <aside className={cn(
@@ -82,13 +84,21 @@ export function Sidebar() {
                                         {!isSidebarCollapsed && <span className="animate-in fade-in slide-in-from-left-2 duration-300">{item.label}</span>}
                                     </span>
                                 </Link>
+                                {item.label === "Projetos" && !isSidebarCollapsed && (
+                                    <button
+                                        onClick={(e) => { e.preventDefault(); setIsProjectsOpen(o => !o); }}
+                                        className="mr-1 p-1 rounded-md text-muted-foreground/60 hover:text-primary hover:bg-primary/5 transition-all"
+                                    >
+                                        <ChevronRight className={cn("size-3.5 transition-transform duration-200", isProjectsOpen && "rotate-90")} />
+                                    </button>
+                                )}
                             </div>
 
-                            {/* Nested Projects (Level 2) - Only for "Projetos" and NOT collapsed */}
-                            {item.label === "Projetos" && !isSidebarCollapsed && (
+                            {/* Nested Projects (Level 2) - Only for "Projetos", NOT collapsed, and expanded */}
+                            {item.label === "Projetos" && !isSidebarCollapsed && isProjectsOpen && (
                                 <div className="mt-1 ml-7 flex flex-col space-y-0.5 border-l border-border/40 pl-2 animate-in fade-in slide-in-from-top-2 duration-300">
                                     {projects.map((proj) => {
-                                        const projPath = `/projects/${proj.id === 'p1' ? 'proj_01' : proj.id === 'p2' ? 'proj_02' : 'proj_03'}`;
+                                        const projPath = `/projects/${proj.id}`;
                                         const isProjActive = pathname === projPath;
 
                                         return (

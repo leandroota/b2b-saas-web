@@ -46,7 +46,7 @@ export default function ProjectsPage() {
                     {displayedProjects.map((project) => (
                         <Link
                             key={project.id}
-                            href={`/projects/${project.id === 'p1' ? 'proj_01' : project.id === 'p2' ? 'proj_02' : 'proj_03'}`}
+                            href={`/projects/${project.id}`}
                             className="block group"
                         >
                             <div className="rounded-2xl border border-border bg-card/40 p-6 space-y-4 hover:bg-card hover:shadow-xl hover:shadow-primary/5 transition-all duration-300 relative overflow-hidden">

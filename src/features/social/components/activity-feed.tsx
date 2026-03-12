@@ -156,7 +156,7 @@ export function ActivityFeed({ projectId = 'all' }: ActivityFeedProps) {
 
             {/* Feed Content */}
             <ScrollArea className="flex-1">
-                <div className="py-6 space-y-6">
+                <div className="py-6 px-6 space-y-6">
                     {displayedActivities.map((activity) => (
                         <div key={activity.id} className="relative pl-8 group">
                             {/* Timeline Connector */}

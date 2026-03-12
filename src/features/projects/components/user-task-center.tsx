@@ -17,7 +17,8 @@ import {
     Camera,
     Image as ImageIcon,
     ChevronDown,
-    FolderKanban
+    FolderKanban,
+    Upload
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -59,7 +60,7 @@ export function UserTaskCenter() {
     const [statusFilter, setStatusFilter] = useState("ALL");
     const [priorityFilter, setPriorityFilter] = useState("ALL");
     const [projectFilter, setProjectFilter] = useState("ALL");
-    const [coverTheme, setCoverTheme] = useState("custom");
+    const [coverTheme, setCoverTheme] = useState("mesh-2");
 
     const filteredTasks = useMemo(() => {
         return tasks.filter(task => {
@@ -102,7 +103,7 @@ export function UserTaskCenter() {
     return (
         <div className="flex-1 flex flex-col min-h-0 bg-background overflow-y-auto">
             {/* Profile Header Area - Height expanded to 2.5x (192px * 2.5 = 480px) */}
-            <div className="relative group/cover shrink-0 h-[480px] flex flex-col justify-end">
+            <div className="relative group/cover shrink-0 h-[400px] flex flex-col justify-end">
                 {/* Cover Backdrop */}
                 <div className={cn(
                     "absolute inset-0 transition-all duration-700",
@@ -116,18 +117,52 @@ export function UserTaskCenter() {
                     <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:32px_32px]" />
                 </div>
 
+                {/* Bottom-to-top dark scrim for text legibility */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none" />
+
                 {/* Edit Cover Action */}
+                <div className="absolute top-4 right-4">
                 <DropdownMenu>
                     <DropdownMenuTrigger>
                         <div
                             role="button"
-                            className="absolute top-4 right-4 bg-background/50 backdrop-blur-md border border-border/50 opacity-0 group-hover/cover:opacity-100 transition-all font-bold text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 h-9 px-4 rounded-xl shadow-xl cursor-pointer hover:bg-background/80 active:scale-95"
+                            className="bg-background/50 backdrop-blur-md border border-border/50 opacity-0 group-hover/cover:opacity-100 transition-all font-bold text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 h-9 px-4 rounded-xl shadow-xl cursor-pointer hover:bg-background/80 active:scale-95"
                         >
                             <Camera className="size-3.5" />
                             Editar Capa
                         </div>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="w-56 rounded-2xl p-2 border-border/50 bg-background/80 backdrop-blur-xl">
+                        {/* Upload custom image */}
+                        <DropdownMenuGroup>
+                            <DropdownMenuLabel className="px-3 py-2 text-[10px] uppercase font-black tracking-widest text-muted-foreground">Imagem Personalizada</DropdownMenuLabel>
+                            <DropdownMenuItem
+                                className="rounded-xl px-3 py-2 gap-3 cursor-pointer"
+                                onSelect={(e) => {
+                                    e.preventDefault()
+                                    document.getElementById("cover-upload-input")?.click()
+                                }}
+                            >
+                                <Upload className="size-4 text-primary" />
+                                <span className="text-xs font-bold uppercase tracking-tight">Carregar Imagem</span>
+                            </DropdownMenuItem>
+                            <input
+                                id="cover-upload-input"
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                onChange={(e) => {
+                                    const file = e.target.files?.[0]
+                                    if (!file) return
+                                    const url = URL.createObjectURL(file)
+                                    setCoverTheme("custom")
+                                    // store the object URL so the cover renders it
+                                    ;(window as any).__customCoverUrl = url
+                                    e.target.value = ""
+                                }}
+                            />
+                        </DropdownMenuGroup>
+                        <DropdownMenuSeparator />
                         <DropdownMenuGroup>
                             <DropdownMenuLabel className="px-3 py-2 text-[10px] uppercase font-black tracking-widest text-muted-foreground">Temas Disponíveis</DropdownMenuLabel>
                             <DropdownMenuItem onClick={() => setCoverTheme("custom")} className="rounded-xl px-3 py-2 gap-3 cursor-pointer">
@@ -149,11 +184,14 @@ export function UserTaskCenter() {
                         </DropdownMenuGroup>
                     </DropdownMenuContent>
                 </DropdownMenu>
+                </div>
 
                 {/* Profile Identity */}
-                <div className="max-w-7xl mx-auto px-8 relative">
-                    <div className="flex items-end gap-6 -mt-12 pb-6 border-b border-border/40">
-                        <div className="relative group/avatar">
+                <div className="max-w-7xl mx-auto w-full px-8 relative">
+                    <div className="flex items-end justify-between gap-6 -mt-12 pb-6 border-b border-border/40">
+                        {/* Left: Avatar + Identity */}
+                        <div className="flex items-end gap-5">
+                        <div className="relative group/avatar shrink-0">
                             <Avatar className="size-28 rounded-full border-4 border-background shadow-2xl ring-1 ring-border/50 overflow-hidden">
                                 <AvatarImage src="https://github.com/shadcn.png" />
                                 <AvatarFallback className="text-2xl font-black bg-primary/10 text-primary">JS</AvatarFallback>
@@ -162,30 +200,32 @@ export function UserTaskCenter() {
                                 <Camera className="size-6" />
                             </button>
                         </div>
-                        <div className="flex-1 pb-2">
-                            <h1 className="text-4xl font-black font-mono tracking-tighter uppercase mb-1">
+                        <div className="pb-2">
+                            <h1 className="text-4xl font-black font-mono tracking-tighter uppercase mb-1 text-white drop-shadow-lg">
                                 {currentUser.name}
                             </h1>
                             <div className="flex items-center gap-4">
-                                <p className="text-sm font-bold text-muted-foreground uppercase tracking-[0.2em]">
+                                <p className="text-sm font-bold text-white/80 uppercase tracking-[0.2em] drop-shadow">
                                     {currentUser.email}
                                 </p>
-                                <div className="h-1 w-1 rounded-full bg-border" />
-                                <Badge className="bg-primary/10 text-primary border-primary/20 text-[10px] font-black uppercase tracking-widest">
+                                <div className="h-1 w-1 rounded-full bg-white/40" />
+                                <Badge className="bg-white/20 text-white border-white/30 text-[10px] font-black uppercase tracking-widest backdrop-blur-sm">
                                     {currentUser.role}
                                 </Badge>
                             </div>
                         </div>
+                        </div>
 
                         {/* Quick Insights */}
-                        <div className="flex gap-8 px-8 py-3 mb-2 rounded-2xl bg-card/30 backdrop-blur-sm border border-border/50">
+                        {/* Right: Quick Insights */}
+                        <div className="flex gap-8 px-8 py-3 mb-2 rounded-2xl bg-white/95 dark:bg-zinc-900/95 backdrop-blur-sm border border-white/20 shadow-lg shadow-black/20 shrink-0">
                             {[
                                 { label: "Totais", val: stats.total, color: "text-primary" },
                                 { label: "Pendentes", val: stats.pending, color: "text-orange-500" },
-                                { label: "Concluídas", val: stats.done, color: "text-green-500" }
+                                { label: "Concluídas", val: stats.done, color: "text-green-600" }
                             ].map(st => (
                                 <div key={st.label} className="text-center">
-                                    <p className="text-[9px] font-black text-muted-foreground uppercase tracking-widest mb-1">{st.label}</p>
+                                    <p className="text-[9px] font-black text-zinc-500 dark:text-zinc-400 uppercase tracking-widest mb-1">{st.label}</p>
                                     <p className={cn("text-2xl font-black font-mono tracking-tighter", st.color)}>{st.val}</p>
                                 </div>
                             ))}
