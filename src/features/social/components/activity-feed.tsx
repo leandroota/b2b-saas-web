@@ -218,12 +218,12 @@ export function ActivityFeed() {
                                             size="icon-xs"
                                             className="h-7 w-auto px-2 gap-1.5 text-[10px] font-bold uppercase tracking-wider text-muted-foreground hover:text-primary"
                                             onClick={() => useAppStore.getState().openConversation({
-                                                id: activity.userId,
+                                                id: activity.user.id,
                                                 type: 'person',
-                                                name: activity.userName,
+                                                name: activity.user.name,
                                                 context: `Discussão sobre: ${activity.content}`,
                                                 status: 'online',
-                                                avatar: `https://i.pravatar.cc/100?u=${activity.user?.id || activity.userId}`
+                                                avatar: `https://i.pravatar.cc/100?u=${activity.user.id}`
                                             })}
                                         >
                                             <MessageSquare className="size-3" />
