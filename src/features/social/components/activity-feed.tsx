@@ -79,7 +79,11 @@ const getActivityIcon = (type: ActivityType) => {
     }
 };
 
-export function ActivityFeed() {
+interface ActivityFeedProps {
+    projectId?: string | 'all';
+}
+
+export function ActivityFeed({ projectId = 'all' }: ActivityFeedProps) {
     const { currentUser, activities, projects } = useAppStore();
     const [mounted, setMounted] = useState(false);
 
@@ -92,10 +96,19 @@ export function ActivityFeed() {
         .filter(p => p.involvedMembers.includes(currentUser.email))
         .map(p => p.id);
 
-    // Filter activities based on role
-    const displayedActivities = currentUser.role === 'ADMIN'
-        ? activities
-        : activities.filter(a => involvedProjectIds.includes(a.projectId));
+    // Filter activities based on role and projectId
+    const displayedActivities = activities.filter(a => {
+        // 1. Role-based visibility
+        const isVisibleByRole = currentUser.role === 'ADMIN' || involvedProjectIds.includes(a.projectId);
+        if (!isVisibleByRole) return false;
+
+        // 2. Project-based filtering
+        if (projectId && projectId !== 'all') {
+            return a.projectId === projectId;
+        }
+
+        return true;
+    });
 
     return (
         <div className="flex flex-col h-full bg-transparent">

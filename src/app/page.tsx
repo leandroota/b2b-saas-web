@@ -27,11 +27,13 @@ import { PermissionGuard } from "@/components/auth/permission-guard";
 import { NextTasks } from "@/components/home/next-tasks";
 import { ProjectGoalMonitor } from "@/components/home/project-goal-monitor";
 import { RecentChatsWidget } from "@/components/home/recent-chats-widget";
+import { cn } from "@/lib/utils";
 
 export default function Home() {
   const { projects } = useAppStore();
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
+  const [pulseFilter, setPulseFilter] = useState<string>('all');
 
   useEffect(() => {
     setMounted(true);
@@ -126,15 +128,53 @@ export default function Home() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3 text-left">
                     <div className="size-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px] shadow-primary" />
-                    <h2 className="text-[10px] font-black font-mono tracking-[0.3em] uppercase text-muted-foreground">Workspace Pulse</h2>
+                    <div className="flex flex-col">
+                      <h2 className="text-[10px] font-black font-mono tracking-[0.3em] uppercase text-muted-foreground">Workspace Pulse</h2>
+                      <p className="text-[8px] font-bold text-muted-foreground/60 uppercase tracking-widest mt-0.5">Atividade Global</p>
+                    </div>
                   </div>
-                  <Badge variant="outline" className="text-[8px] font-black tracking-[0.2em] uppercase border-primary/20 text-primary">Ao Vivo</Badge>
+
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className="flex h-7 items-center gap-2 rounded-lg border border-primary/20 bg-primary/5 px-3 hover:bg-primary/10 transition-all outline-none">
+                      <Activity className="size-3 text-primary" />
+                      <span className="text-[8px] font-black uppercase tracking-widest text-primary">
+                        {pulseFilter === 'all' ? 'Todos os Projetos' : projects.find(p => p.id === pulseFilter)?.name || 'Projeto'}
+                      </span>
+                      <ChevronDown className="size-3 text-primary transition-transform" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-56 rounded-xl border-border/50 bg-card/90 backdrop-blur-xl shadow-2xl p-1">
+                      <DropdownMenuItem
+                        onClick={() => setPulseFilter('all')}
+                        className={cn(
+                          "rounded-lg py-2 gap-2 cursor-pointer font-bold text-[9px] uppercase tracking-wider",
+                          pulseFilter === 'all' && "bg-primary/10 text-primary"
+                        )}
+                      >
+                        <LayoutDashboard className="size-3" />
+                        Todos os Projetos
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator className="bg-border/50 my-1" />
+                      {projects.map((proj) => (
+                        <DropdownMenuItem
+                          key={proj.id}
+                          onClick={() => setPulseFilter(proj.id)}
+                          className={cn(
+                            "rounded-lg py-2 gap-2 cursor-pointer font-bold text-[9px] uppercase tracking-wider",
+                            pulseFilter === proj.id && "bg-primary/10 text-primary"
+                          )}
+                        >
+                          <FolderKanban className="size-3" />
+                          {proj.name}
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
 
                 <div className="space-y-8">
                   <Publisher />
                   <div className="bg-card/20 rounded-2xl border border-border/40 p-1">
-                    <ActivityFeed />
+                    <ActivityFeed projectId={pulseFilter} />
                   </div>
                 </div>
               </div>
