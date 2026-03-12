@@ -113,14 +113,17 @@ export function ActivityFeed({ projectId = 'all' }: ActivityFeedProps) {
     return (
         <div className="flex flex-col h-full bg-transparent">
             {/* Feed Header */}
-            <div className="py-6 border-b border-border bg-transparent">
-                <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-xl font-bold font-mono uppercase tracking-tight">Atividade do Workspace</h2>
-                    <Badge variant="secondary" className="font-mono text-[10px] uppercase">Ao vivo</Badge>
+            <div className="py-6 border-b border-border bg-transparent px-8">
+                <div className="flex items-center justify-between mb-8">
+                    <div className="flex flex-col gap-1">
+                        <h2 className="text-xl font-bold font-mono uppercase tracking-tight">Atividade do Workspace</h2>
+                        <p className="text-[10px] font-bold text-muted-foreground/60 uppercase tracking-widest">Acompanhamento de Fluxo em Tempo Real</p>
+                    </div>
+                    <Badge variant="secondary" className="font-mono text-[10px] uppercase bg-primary/10 text-primary border-primary/20 animate-pulse px-3 py-1">Ao vivo</Badge>
                 </div>
 
                 {/* Stories/Status Row */}
-                <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+                <div className="flex gap-5 overflow-x-auto pb-4 scrollbar-hide -mx-2 px-2">
                     <div className="flex flex-col items-center gap-2 shrink-0">
                         <div className="size-14 rounded-full border-2 border-dashed border-muted-foreground/30 flex items-center justify-center cursor-pointer hover:border-primary transition-colors">
                             <PlusCircle className="size-5 text-muted-foreground" />

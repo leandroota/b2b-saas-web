@@ -9,6 +9,7 @@ import {
   Zap,
   Activity,
   FolderKanban,
+  UserPlus
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -79,6 +80,14 @@ export default function Home() {
               >
                 +12 ONLINE
               </span>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="size-8 rounded-full border border-dashed border-border/50 hover:border-primary/50 hover:bg-primary/5 transition-all group"
+                title="Convidar Colaborador"
+              >
+                <UserPlus className="size-3.5 text-muted-foreground group-hover:text-primary transition-colors" />
+              </Button>
             </div>
 
             <div className="flex items-center gap-4">

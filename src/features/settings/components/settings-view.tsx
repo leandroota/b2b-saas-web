@@ -65,8 +65,8 @@ export function SettingsView() {
 
             <div className="flex-1 overflow-y-auto p-8">
                 <div className="flex flex-col h-full">
-                    <Tabs defaultValue="profile" className="space-y-10">
-                        <TabsList className="h-11 bg-muted/30 border border-border/50 p-1 gap-1 rounded-xl w-fit justify-start bg-clip-padding backdrop-blur-sm">
+                    <Tabs defaultValue="profile" className="space-y-10 flex flex-col items-center">
+                        <TabsList className="h-11 bg-muted/30 border border-border/50 p-1 gap-1 rounded-xl w-fit flex justify-center bg-clip-padding backdrop-blur-sm mx-auto">
                             <TabsTrigger
                                 value="profile"
                                 className="relative rounded-lg px-4 h-full data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm font-mono font-black text-[9px] uppercase tracking-[0.2em] transition-all hover:bg-background/50 hover:text-primary/70 gap-2"
@@ -114,7 +114,7 @@ export function SettingsView() {
                         </TabsList>
 
                         {/* Profile Tab */}
-                        <TabsContent value="profile" className="space-y-6 animate-in slide-in-from-bottom-2 duration-500">
+                        <TabsContent value="profile" className="w-full space-y-6 animate-in slide-in-from-bottom-2 duration-500">
                             <Card className="bg-card/30 border-border overflow-hidden">
                                 <CardHeader className="border-b border-border/50 bg-card/30">
                                     <CardTitle className="text-lg font-mono uppercase tracking-widest">Informações Pessoais</CardTitle>
@@ -160,7 +160,7 @@ export function SettingsView() {
                         </TabsContent>
 
                         {/* Workspace Tab */}
-                        <TabsContent value="workspace" className="space-y-6 animate-in slide-in-from-bottom-2 duration-500">
+                        <TabsContent value="workspace" className="w-full space-y-6 animate-in slide-in-from-bottom-2 duration-500">
                             <PermissionGuard role="ADMIN" fallback={
                                 <Card className="border-destructive/20 bg-destructive/5">
                                     <CardHeader>
@@ -214,7 +214,7 @@ export function SettingsView() {
                         </TabsContent>
 
                         {/* Team Tab */}
-                        <TabsContent value="team" className="space-y-6 animate-in slide-in-from-bottom-2 duration-500">
+                        <TabsContent value="team" className="w-full space-y-6 animate-in slide-in-from-bottom-2 duration-500">
                             <div className="flex items-center justify-between">
                                 <div className="space-y-1">
                                     <h3 className="text-xl font-mono font-bold uppercase tracking-tight">Membros da Equipe</h3>
@@ -312,7 +312,7 @@ export function SettingsView() {
                         </TabsContent>
 
                         {/* Integrations Tab */}
-                        <TabsContent value="integrations" className="space-y-6 animate-in slide-in-from-bottom-2 duration-500">
+                        <TabsContent value="integrations" className="w-full space-y-6 animate-in slide-in-from-bottom-2 duration-500">
                             <div className="space-y-1">
                                 <h3 className="text-xl font-mono font-bold uppercase tracking-tight">Conectores de Ecossistema</h3>
                                 <p className="text-sm text-muted-foreground">Potencialize seu fluxo de trabalho conectando ferramentas externas.</p>
@@ -321,12 +321,12 @@ export function SettingsView() {
                         </TabsContent>
 
                         {/* Automation Tab */}
-                        <TabsContent value="automation" className="space-y-6 animate-in slide-in-from-bottom-2 duration-500">
+                        <TabsContent value="automation" className="w-full space-y-6 animate-in slide-in-from-bottom-2 duration-500">
                             <AutomationRules />
                         </TabsContent>
 
                         {/* Branding Tab */}
-                        <TabsContent value="branding" className="space-y-6 animate-in slide-in-from-bottom-2 duration-500">
+                        <TabsContent value="branding" className="w-full space-y-6 animate-in slide-in-from-bottom-2 duration-500">
                             <BrandingSettings />
                         </TabsContent>
                     </Tabs>
