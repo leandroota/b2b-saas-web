@@ -42,7 +42,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col h-full bg-background/50 overflow-hidden relative">
-      {/* Unified Hub Header */}
+      {/* 1. Dashboard Header */}
       <header className="shrink-0 border-b border-border/50 bg-card/30 backdrop-blur-md px-8 py-4 z-20">
         <div className="max-w-[1600px] mx-auto flex items-center justify-between">
           <div className="flex items-center gap-6">
@@ -104,86 +104,78 @@ export default function Home() {
 
       <main className="flex-1 overflow-hidden">
         <div className="h-full flex overflow-hidden">
-          {/* Main Content Area: Widescreen Activity Feed */}
-          <ScrollArea className="flex-1">
-            <div className="max-w-4xl mx-auto p-12 space-y-12">
-              <PermissionGuard role="ADMIN">
-                <div className="space-y-10">
-                  <ManagementDashboard />
-                  <div className="pt-10 border-t border-border/30">
-                    <div className="flex items-center gap-3 px-4 mb-4">
-                      <div className="size-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px] shadow-primary" />
-                      <h2 className="text-xs font-black font-mono tracking-[0.3em] uppercase text-muted-foreground">Log Global de Atividades</h2>
-                    </div>
-                    <div className="mb-8">
-                      <Publisher />
-                    </div>
-                    <ActivityFeed />
-                  </div>
-                </div>
-              </PermissionGuard>
 
-              <PermissionGuard role="MEMBER">
-                <div className="space-y-10">
-                  <div className="flex items-center gap-3 px-4">
-                    <div className="size-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px] shadow-primary" />
-                    <h2 className="text-xs font-black font-mono tracking-[0.3em] uppercase text-muted-foreground">A Alma Fly • Pulso da Equipe</h2>
-                  </div>
-                  <Publisher />
-                  <ActivityFeed />
-                </div>
-              </PermissionGuard>
-            </div>
-          </ScrollArea>
-
-          {/* Combined Execution Sidebar (Right) */}
-          <aside className="w-[500px] shrink-0 border-l border-border/50 bg-card/5 flex flex-col overflow-hidden">
+          {/* LADO ESQUERDO (50%): ENGENHO DE EXECUÇÃO */}
+          <div className="w-1/2 h-full flex flex-col border-r border-border/30 bg-card/5">
             <ScrollArea className="flex-1">
-              <div className="p-8 space-y-10">
-                {/* 1. Welcome & Presence */}
-                <div className="space-y-4">
-                  <div className="space-y-1">
-                    <h1 className="text-3xl font-black font-mono tracking-tighter uppercase whitespace-nowrap">Foco no Fluxo</h1>
-                    <p className="text-muted-foreground font-medium uppercase tracking-[0.15em] text-[9px] italic opacity-60">Elite produtiva da Flyprod.</p>
-                  </div>
-                  <div className="flex items-center gap-3 bg-primary/5 p-3 rounded-2xl border border-primary/10">
-                    <div className="flex -space-x-2">
-                      {[1, 2, 3].map(v => (
-                        <div key={v} className="size-7 rounded-full border-2 border-background bg-muted overflow-hidden">
-                          <img src={`https://avatar.vercel.sh/${v}`} alt="" className="size-full object-cover" />
+              <div className="p-10 space-y-12">
+                <PermissionGuard role="ADMIN" fallback={
+                  <div className="space-y-12">
+                    {/* 1. Welcome Header */}
+                    <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-border/30">
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <h1 className="text-4xl font-black font-mono tracking-tighter uppercase">Foco no Fluxo</h1>
+                          <div className="size-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px] shadow-primary" />
                         </div>
-                      ))}
+                        <p className="text-muted-foreground font-medium uppercase tracking-[0.2em] text-[10px] italic">Sua zona de execução elite na Flyprod.</p>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="flex -space-x-2">
+                          {[1, 2, 3].map(v => (
+                            <div key={v} className="size-8 rounded-full border-2 border-background bg-muted overflow-hidden">
+                              <img src={`https://avatar.vercel.sh/${v}`} alt="" className="size-full object-cover" />
+                            </div>
+                          ))}
+                        </div>
+                        <span className="text-[10px] font-black text-muted-foreground uppercase">+12 ONLINE</span>
+                      </div>
                     </div>
-                    <span className="text-[9px] font-black text-primary uppercase tracking-widest">+12 ONLINE</span>
-                  </div>
-                </div>
 
-                {/* 2. Immediate Action: Next 2 Tasks */}
-                <div className="space-y-4">
-                  <NextTasks />
-                </div>
+                    {/* 2. Tasks Grid (Next 2) */}
+                    <NextTasks />
 
-                {/* 3. Execution Monitor Section */}
-                <div className="pt-8 border-t border-border/30">
-                  <ProjectGoalMonitor />
-                </div>
-
-                {/* 4. Impact Card (Only for Member) */}
-                <PermissionGuard role="MEMBER">
-                  <div className="p-6 rounded-2xl border border-primary/20 bg-primary/5 space-y-3 relative overflow-hidden group hover:bg-primary/10 transition-all cursor-pointer">
-                    <div className="size-10 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
-                      <Zap className="size-5 text-white" />
+                    {/* 3. Strategy & Impact Section */}
+                    <div className="space-y-8 pt-4">
+                      <div className="flex items-center gap-3">
+                        <Activity className="size-4 text-primary" />
+                        <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">Monitor de Metas Estratégicas</h2>
+                      </div>
+                      <div className="grid grid-cols-1 gap-4">
+                        <ProjectGoalMonitor />
+                      </div>
                     </div>
-                    <h3 className="font-bold font-mono text-[11px] uppercase tracking-wider">Seu Impacto Semanal</h3>
-                    <p className="text-[10px] text-muted-foreground leading-relaxed uppercase tracking-tight font-medium opacity-80 line-clamp-2">
-                      Você está no Top 5% de entregas esta semana. Mantenha o ritmo de elite!
-                    </p>
-                    <div className="absolute -bottom-4 -right-4 size-20 bg-primary/10 rounded-full blur-2xl" />
                   </div>
+                }>
+                  {/* Admin View: Full Management Dashboard on Left */}
+                  <ManagementDashboard />
                 </PermissionGuard>
               </div>
             </ScrollArea>
-          </aside>
+          </div>
+
+          {/* LADO DIREITO (50%): PULSO DO WORKSPACE */}
+          <div className="w-1/2 h-full flex flex-col bg-background/30">
+            <ScrollArea className="flex-1">
+              <div className="p-10 space-y-10">
+                <div className="flex items-center justify-between px-4">
+                  <div className="flex items-center gap-3">
+                    <div className="size-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px] shadow-primary" />
+                    <h2 className="text-xs font-black font-mono tracking-[0.3em] uppercase text-muted-foreground">Atividades do Workspace</h2>
+                  </div>
+                  <Badge variant="outline" className="text-[8px] font-black tracking-[0.2em] uppercase border-primary/20 text-primary">Ao Vivo</Badge>
+                </div>
+
+                <div className="space-y-8">
+                  <Publisher />
+                  <div className="bg-card/20 rounded-2xl border border-border/40 p-1">
+                    <ActivityFeed />
+                  </div>
+                </div>
+              </div>
+            </ScrollArea>
+          </div>
+
         </div>
       </main>
     </div>
