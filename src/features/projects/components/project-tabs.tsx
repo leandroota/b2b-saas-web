@@ -69,14 +69,14 @@ export function ProjectTabs({ methodology, activeTab, onTabChange }: ProjectTabs
 
     return (
         <Tabs value={activeTab} onValueChange={onTabChange} className="w-full">
-            <TabsList className="bg-transparent border-b border-border rounded-none p-0 h-10 w-full justify-start gap-8">
+            <TabsList className="h-11 bg-muted/30 border border-border/50 p-1 gap-1 rounded-xl w-fit justify-start bg-clip-padding backdrop-blur-sm">
                 {tabs.map((tab) => (
                     <TabsTrigger
                         key={tab.id}
                         value={tab.id}
-                        className="relative rounded-none border-b-2 border-transparent px-0 pb-3 h-full data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-primary font-mono font-black text-[10px] uppercase tracking-[0.2em] transition-all hover:text-primary/70 gap-2"
+                        className="relative rounded-lg px-4 h-full data-[state=active]:bg-background data-[state=active]:text-primary data-[state=active]:shadow-sm font-mono font-black text-[9px] uppercase tracking-[0.2em] transition-all hover:bg-background/50 hover:text-primary/70 gap-2"
                     >
-                        <tab.icon className="size-3.5" />
+                        <tab.icon className="size-3" />
                         {tab.label}
                     </TabsTrigger>
                 ))}

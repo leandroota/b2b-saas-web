@@ -234,7 +234,7 @@ export default function ProjectPage() {
                             </div>
                         </div>
 
-                        <div className="pt-4 mt-2">
+                        <div className="pt-2">
                             <ProjectTabs
                                 methodology={projectData.methodology}
                                 activeTab={activeTab}
