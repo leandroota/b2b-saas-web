@@ -20,6 +20,8 @@ import { TaskListView } from "@/features/projects/components/task-list-view";
 import { Task } from "@/features/projects/lib/task-schema";
 import { ProjectChat } from "@/features/chat/components/project-chat";
 import { WikiView } from "@/features/wiki/components/wiki-view";
+import { ProjectFiles } from "@/features/projects/components/project-files";
+import { ProjectAICockpit } from "@/features/projects/components/project-ai-cockpit";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useAppStore } from "@/store/use-app-store";
@@ -206,6 +208,10 @@ export default function ProjectPage() {
                                 <TaskListView tasks={MOCK_TASKS} />
                             ) : activeTab === "wiki" ? (
                                 <WikiView />
+                            ) : activeTab === "files" ? (
+                                <ProjectFiles />
+                            ) : activeTab === "ai-agents" ? (
+                                <ProjectAICockpit />
                             ) : (
                                 <div className="p-8 h-full overflow-auto">
                                     <div className="rounded-[2.5rem] border-2 border-dashed border-border/40 h-full flex flex-col items-center justify-center text-center p-12 space-y-4 bg-card/5">

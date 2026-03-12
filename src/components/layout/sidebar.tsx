@@ -24,7 +24,6 @@ const navItems = [
     { icon: Home, label: "Home", href: "/" },
     { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
     { icon: FolderKanban, label: "Projetos", href: "/projects" },
-    { icon: Brain, label: "Wiki", href: "/wiki" },
     { icon: Settings, label: "Configurações", href: "/settings" },
 ];
 

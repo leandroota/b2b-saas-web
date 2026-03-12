@@ -8,7 +8,9 @@ import {
     BookText,
     MessageSquare,
     Target,
-    Layers
+    Layers,
+    FileCode,
+    Sparkles
 } from "lucide-react";
 import { ProjectMethodology } from "../lib/project-schema";
 
@@ -23,6 +25,8 @@ export function ProjectTabs({ methodology, activeTab, onTabChange }: ProjectTabs
     const getTabsForMethodology = (method: ProjectMethodology) => {
         const baseTabs = [
             { id: "wiki", label: "Wiki", icon: BookText },
+            { id: "files", label: "Arquivos", icon: FileCode },
+            { id: "ai-agents", label: "Agentes IA", icon: Sparkles },
         ];
 
         switch (method) {
