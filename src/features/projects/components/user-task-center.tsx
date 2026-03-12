@@ -59,7 +59,7 @@ export function UserTaskCenter() {
     const [statusFilter, setStatusFilter] = useState("ALL");
     const [priorityFilter, setPriorityFilter] = useState("ALL");
     const [projectFilter, setProjectFilter] = useState("ALL");
-    const [coverTheme, setCoverTheme] = useState("mesh-1");
+    const [coverTheme, setCoverTheme] = useState("custom");
 
     const filteredTasks = useMemo(() => {
         return tasks.filter(task => {
@@ -105,11 +105,14 @@ export function UserTaskCenter() {
             <div className="relative group/cover shrink-0">
                 {/* Cover Backdrop */}
                 <div className={cn(
-                    "h-48 w-full transition-all duration-700",
-                    coverTheme === "mesh-1" && "bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-primary/30 via-background to-secondary/20",
-                    coverTheme === "mesh-2" && "bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-blue-500/20 via-background to-emerald-500/20",
-                    coverTheme === "mesh-3" && "bg-[conic-gradient(at_top_left,_var(--tw-gradient-stops))] from-purple-500/20 via-background to-rose-500/20"
-                )}>
+                    "absolute inset-0 transition-all duration-700",
+                    coverTheme === "mesh-1" && "bg-[radial-gradient(circle_at_20%_30%,#0ea5e9_0,transparent_50%),radial-gradient(circle_at_80%_70%,#6366f1_0,transparent_50%),linear-gradient(135deg,#020617_0,#0f172a_100%)]",
+                    coverTheme === "mesh-2" && "bg-[radial-gradient(circle_at_80%_20%,#ec4899_0,transparent_50%),radial-gradient(circle_at_20%_80%,#8b5cf6_0,transparent_50%),linear-gradient(135deg,#020617_0,#0f172a_100%)]",
+                    coverTheme === "dark" && "bg-slate-950",
+                    coverTheme === "custom" && "bg-cover bg-center bg-no-repeat"
+                )}
+                    style={coverTheme === "custom" ? { backgroundImage: 'url("/images/task-cover.png")' } : {}}
+                >
                     <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:32px_32px]" />
                 </div>
 
@@ -127,17 +130,21 @@ export function UserTaskCenter() {
                     <DropdownMenuContent align="end" className="w-56 rounded-2xl p-2 border-border/50 bg-background/80 backdrop-blur-xl">
                         <DropdownMenuGroup>
                             <DropdownMenuLabel className="px-3 py-2 text-[10px] uppercase font-black tracking-widest text-muted-foreground">Temas Disponíveis</DropdownMenuLabel>
+                            <DropdownMenuItem onClick={() => setCoverTheme("custom")} className="rounded-xl px-3 py-2 gap-3 cursor-pointer">
+                                <div className="size-4 rounded-full bg-cover bg-center border border-border/50" style={{ backgroundImage: 'url("/images/task-cover.png")' }} />
+                                <span className="text-xs font-bold uppercase tracking-tight">Personalizado</span>
+                            </DropdownMenuItem>
                             <DropdownMenuItem onClick={() => setCoverTheme("mesh-1")} className="rounded-xl px-3 py-2 gap-3 cursor-pointer">
-                                <div className="size-4 rounded-full bg-primary/40" />
-                                <span className="text-xs font-bold uppercase tracking-tight">Neutron Prime</span>
+                                <div className="size-4 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 border border-border/50" />
+                                <span className="text-xs font-bold uppercase tracking-tight">Mesh Blue</span>
                             </DropdownMenuItem>
                             <DropdownMenuItem onClick={() => setCoverTheme("mesh-2")} className="rounded-xl px-3 py-2 gap-3 cursor-pointer">
-                                <div className="size-4 rounded-full bg-blue-500/40" />
-                                <span className="text-xs font-bold uppercase tracking-tight">Hydra Blue</span>
+                                <div className="size-4 rounded-full bg-gradient-to-br from-pink-500 to-purple-600 border border-border/50" />
+                                <span className="text-xs font-bold uppercase tracking-tight">Mesh Pink</span>
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => setCoverTheme("mesh-3")} className="rounded-xl px-3 py-2 gap-3 cursor-pointer">
-                                <div className="size-4 rounded-full bg-purple-500/40" />
-                                <span className="text-xs font-bold uppercase tracking-tight">Nebula Drift</span>
+                            <DropdownMenuItem onClick={() => setCoverTheme("dark")} className="rounded-xl px-3 py-2 gap-3 cursor-pointer">
+                                <div className="size-4 rounded-full bg-slate-950 border border-border/50" />
+                                <span className="text-xs font-bold uppercase tracking-tight">Dark Solid</span>
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                     </DropdownMenuContent>
