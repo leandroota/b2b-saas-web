@@ -235,24 +235,25 @@ export default function ProjectPage() {
                 </motion.header>
 
                 {/* 2. Content Area with Transitions */}
-                <div className="flex-1 overflow-hidden relative">
-                    <AnimatePresence mode="wait">
-                        <motion.div
-                            key={activeTab}
-                            initial={{ opacity: 0, y: 10, scale: 0.99 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            exit={{ opacity: 0, scale: 1.01 }}
-                            transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
-                            className="h-full flex flex-col"
-                        >
-                            <div className="px-8 pt-8 pb-4">
-                                <ProjectTabs
-                                    methodology={projectData.methodology}
-                                    activeTab={activeTab}
-                                    onTabChange={setActiveTab}
-                                />
-                            </div>
-                            <div className="flex-1 overflow-hidden">
+                <div className="flex-1 overflow-hidden relative flex flex-col">
+                    <div className="px-8 pt-8 pb-4 shrink-0">
+                        <ProjectTabs
+                            methodology={projectData.methodology}
+                            activeTab={activeTab}
+                            onTabChange={setActiveTab}
+                        />
+                    </div>
+
+                    <div className="flex-1 overflow-hidden relative">
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={activeTab}
+                                initial={{ opacity: 0, y: 10, scale: 0.99 }}
+                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                exit={{ opacity: 0, scale: 1.01 }}
+                                transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+                                className="h-full"
+                            >
                                 {activeTab === "feed" ? (
                                     <div className="h-full flex flex-col overflow-hidden bg-card/5">
                                         <Publisher />
@@ -296,9 +297,9 @@ export default function ProjectPage() {
                                         </div>
                                     </div>
                                 )}
-                            </div>
-                        </motion.div>
-                    </AnimatePresence>
+                            </motion.div>
+                        </AnimatePresence>
+                    </div>
                 </div>
             </div>
 
