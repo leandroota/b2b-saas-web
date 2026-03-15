@@ -33,7 +33,7 @@ const MOCK_KPIS = [
 const MOCK_PROJECT_HEALTH = [
     { name: "Expansão LATAM", progress: 75, status: "Healthy", team: 5, lastUpdate: "2h atrás" },
     { name: "IA Copilot Engine", progress: 45, status: "At Risk", team: 3, lastUpdate: "30m atrás" },
-    { name: "Flyprod Mobile V1", progress: 90, status: "Healthy", team: 8, lastUpdate: "5h atrás" },
+    { name: "Flyproj Mobile V1", progress: 90, status: "Healthy", team: 8, lastUpdate: "5h atrás" },
     { name: "Refatoração Core", progress: 20, status: "Critical", team: 2, lastUpdate: "1d atrás" },
 ];
 

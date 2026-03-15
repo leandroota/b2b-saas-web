@@ -33,6 +33,16 @@ export function TaskListView({ tasks }: TaskListViewProps) {
         }
     };
 
+    const getPriorityLabel = (priority: string) => {
+        switch (priority) {
+            case "URGENT": return "Urgente";
+            case "HIGH": return "Alta";
+            case "MEDIUM": return "Média";
+            case "LOW": return "Baixa";
+            default: return priority;
+        }
+    };
+
     const getStatusColor = (status: string) => {
         switch (status) {
             case "DONE": return "text-green-500";
@@ -90,7 +100,7 @@ export function TaskListView({ tasks }: TaskListViewProps) {
                                 </TableCell>
                                 <TableCell className="text-center">
                                     <Badge variant="outline" className={`text-[9px] px-1.5 py-0 uppercase tracking-widest font-mono border-0 h-5 ${getPriorityColor(task.priority)}`}>
-                                        {task.priority}
+                                        {getPriorityLabel(task.priority)}
                                     </Badge>
                                 </TableCell>
                                 <TableCell className="text-center">

@@ -17,7 +17,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Flyprod | Workspace Inteligente",
+  title: "Flyproj | Workspace Inteligente",
   description: "O pulso do seu workspace em tempo real.",
 };
 

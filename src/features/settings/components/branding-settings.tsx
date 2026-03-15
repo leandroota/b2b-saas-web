@@ -31,7 +31,7 @@ export function BrandingSettings() {
             <div className="flex items-center justify-between">
                 <div className="space-y-1">
                     <h3 className="text-xl font-mono font-bold uppercase tracking-tight">Identidade Visual (White-label)</h3>
-                    <p className="text-sm text-muted-foreground font-medium">Personalize a interface do Flyprod para combinar com sua marca corporativa.</p>
+                    <p className="text-sm text-muted-foreground font-medium">Personalize a interface do Flyproj para combinar com sua marca corporativa.</p>
                 </div>
             </div>
 
@@ -147,7 +147,7 @@ export function BrandingSettings() {
                                 </div>
                             </div>
                             <div className="absolute inset-x-0 bottom-0 p-4 border-t border-border/30 bg-muted/5">
-                                <p className="text-[8px] font-bold text-muted-foreground uppercase text-center tracking-[0.3em]">Flyprod White-Label Engine</p>
+                                <p className="text-[8px] font-bold text-muted-foreground uppercase text-center tracking-[0.3em]">Flyproj White-Label Engine</p>
                             </div>
                         </div>
                     </div>

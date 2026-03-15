@@ -130,6 +130,10 @@ export function WikiView() {
 
     return (
         <div className="flex h-full bg-background overflow-hidden relative">
+            {/* Global top line across wiki */}
+            <div className="pointer-events-none absolute inset-x-0 top-0 z-30">
+                <div className="h-px w-full bg-gradient-to-r from-transparent via-border to-transparent" />
+            </div>
             {/* Wiki Navigation Sidebar */}
             <div className="w-72 shrink-0 border-r border-border bg-card/30 flex flex-col">
                 {/* Premium Standard Header (Internal) */}

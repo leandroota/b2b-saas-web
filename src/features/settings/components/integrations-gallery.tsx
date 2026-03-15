@@ -41,7 +41,7 @@ const INTEGRATIONS = [
     {
         id: "jira",
         name: "Atlassian Jira",
-        description: "Importe épicos e sprints para visualização executiva no Flyprod.",
+        description: "Importe épicos e sprints para visualização executiva no Flyproj.",
         icon: MessageSquare,
         category: "Gestão",
         status: "pending",
@@ -50,7 +50,7 @@ const INTEGRATIONS = [
     {
         id: "zapier",
         name: "Zapier",
-        description: "Conecte o Flyprod a mais de 5.000 aplicativos externos.",
+        description: "Conecte o Flyproj a mais de 5.000 aplicativos externos.",
         icon: Webhook,
         category: "Automações",
         status: "disconnected",

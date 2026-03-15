@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import React from "react";
 import { useAppStore } from "@/store/use-app-store";
+import { ModeToggle } from "@/components/mode-toggle";
 
 const routeMap: Record<string, string> = {
     projects: "Projetos",
@@ -64,17 +65,8 @@ export function Header() {
             </div>
 
             <div className="flex items-center gap-4">
-                {/* Temporary Role Switcher for Testing */}
-                <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={toggleRole}
-                    className="h-8 text-[10px] font-bold uppercase tracking-widest border-primary/20 hover:bg-primary/5 text-primary"
-                >
-                    Role: {currentUser.role}
-                </Button>
-
                 <div className="flex items-center gap-2">
+                    <ModeToggle />
                     <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
                         <Search className="size-4" />
                         <span className="sr-only">Search</span>

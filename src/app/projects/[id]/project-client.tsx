@@ -40,13 +40,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useAppStore } from "@/store/use-app-store";
 
-// Mock data for project recovery
+// Mock data for project recovery (espelha os IDs definidos em use-app-store)
 const mockProjects: Record<string, { name: string, methodology: ProjectMethodology, description: string, status: string }> = {
     "proj_01": {
         name: "Projeto Alpha",
         methodology: "AGILE",
         description: "Redesign completo do dashboard principal com foco em usabilidade e performance.",
-        status: "Ativo"
+        status: "No Prazo"
     },
     "proj_02": {
         name: "Integração SSO",
@@ -58,7 +58,61 @@ const mockProjects: Record<string, { name: string, methodology: ProjectMethodolo
         name: "Marketing Q3",
         methodology: "LIST",
         description: "Planejamento e execução de campanhas para o terceiro trimestre.",
-        status: "Ativo"
+        status: "Adiantado"
+    },
+    "p4": {
+        name: "Mobile App Refactor",
+        methodology: "AGILE",
+        description: "Refatoração estrutural do aplicativo móvel para melhorar performance e manutenibilidade.",
+        status: "No Prazo"
+    },
+    "p5": {
+        name: "Backend Scalability",
+        methodology: "AGILE",
+        description: "Iniciativa focada em tornar a camada de backend preparada para alto volume de tráfego.",
+        status: "Risco"
+    },
+    "p6": {
+        name: "Customer Portal",
+        methodology: "KANBAN",
+        description: "Portal unificado para clientes acompanharem status de pedidos, tickets e integrações.",
+        status: "No Prazo"
+    },
+    "p7": {
+        name: "Security Audit",
+        methodology: "LIST",
+        description: "Trilha de auditoria de segurança em todas as superfícies críticas do produto.",
+        status: "Adiantado"
+    },
+    "p8": {
+        name: "API Documentation",
+        methodology: "PLANNING",
+        description: "Centralização e padronização da documentação de APIs externas e internas.",
+        status: "No Prazo"
+    },
+    "p9": {
+        name: "User Onboarding Flow",
+        methodology: "AGILE",
+        description: "Reimaginação do fluxo de onboarding para reduzir churn de novos clientes.",
+        status: "Crítico"
+    },
+    "p10": {
+        name: "Payment Gateway v2",
+        methodology: "AGILE",
+        description: "Nova versão do gateway de pagamentos com foco em resiliência e novos métodos.",
+        status: "No Prazo"
+    },
+    "p11": {
+        name: "Legacy Migration",
+        methodology: "PLANNING",
+        description: "Plano de migração gradual de sistemas legados para a nova stack do workspace.",
+        status: "Risco"
+    },
+    "p12": {
+        name: "Partner API",
+        methodology: "KANBAN",
+        description: "Desenvolvimento de uma API dedicada para parceiros estratégicos integrarem rapidamente.",
+        status: "Adiantado"
     }
 };
 
@@ -126,16 +180,7 @@ export default function ProjectPage() {
 
     // Fallback to avoid error if id not in mock
     const projectData = mockProjects[id] || mockProjects["proj_01"];
-    const [activeTab, setActiveTab] = useState("");
-
-    // Set initial tab based on methodology
-    useEffect(() => {
-        if (projectData.methodology === "AGILE") setActiveTab("feed");
-        else if (projectData.methodology === "KANBAN") setActiveTab("feed");
-        else if (projectData.methodology === "LIST") setActiveTab("list");
-        else if (projectData.methodology === "PLANNING") setActiveTab("wiki");
-        else setActiveTab("overview");
-    }, [projectData.methodology]);
+    const [activeTab, setActiveTab] = useState("feed");
 
     return (
         <div className="flex h-full bg-background/50 backdrop-blur-3xl overflow-hidden perspective-1000">

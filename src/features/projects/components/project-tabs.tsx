@@ -49,6 +49,7 @@ export function ProjectTabs({ methodology, activeTab, onTabChange }: ProjectTabs
                 ];
             case "PLANNING":
                 return [
+                    { id: "feed", label: "Atividades", icon: Activity },
                     { id: "wiki", label: "Planejamento (Wiki)", icon: BookText },
                     { id: "goals", label: "Objetivos", icon: Target },
                     { id: "overview", label: "Visão Geral", icon: LayoutDashboard },

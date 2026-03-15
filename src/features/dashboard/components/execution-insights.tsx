@@ -22,7 +22,7 @@ export function ExecutionInsights() {
     const { openConversation, openMessaging } = useAppStore();
 
     const TEAM_MEMBERS = [
-        { id: "user_1", name: "Felipe Designer", avatar: "https://i.pravatar.cc/100?u=user1", role: "UI Designer", context: "Flyprod Dashboard", status: "online" as const },
+        { id: "user_1", name: "Felipe Designer", avatar: "https://i.pravatar.cc/100?u=user1", role: "UI Designer", context: "Flyproj Dashboard", status: "online" as const },
         { id: "user_2", name: "Alex Rivera", avatar: "https://i.pravatar.cc/100?u=user2", role: "Engenheiro Frontend", context: "Marketing Q3", status: "online" as const },
         { id: "user_3", name: "Sarah Jordão", avatar: "https://i.pravatar.cc/100?u=user3", role: "UX Researcher", context: "User Interviews", status: "away" as const },
         { id: "user_4", name: "Ana Clara", avatar: "https://i.pravatar.cc/100?u=user4", role: "Backend Lead", context: "Auth Service", status: "online" as const },

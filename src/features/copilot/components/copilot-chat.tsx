@@ -26,7 +26,7 @@ const INITIAL_MESSAGES: CopilotMessage[] = [
     {
         id: "m1",
         role: "assistant",
-        content: "Olá! Como posso ajudar você no workspace do **Flyprod** hoje?",
+        content: "Olá! Como posso ajudar você no workspace do **Flyproj** hoje?",
         createdAt: new Date().toISOString(),
     }
 ];

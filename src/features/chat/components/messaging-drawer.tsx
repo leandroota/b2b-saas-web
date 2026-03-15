@@ -29,7 +29,7 @@ import { cn } from "@/lib/utils";
 
 // Mock data for Inbox
 const MOCK_DM_CONVS = [
-    { id: "dm1", type: "person", name: "Sarah Jordão", role: "UI Designer", context: "Flyprod Dashboard", avatar: "https://avatar.vercel.sh/sarah", status: "online", lastMsg: "Obrigada pelo feedback!", time: "10:45", unread: 2 },
+    { id: "dm1", type: "person", name: "Sarah Jordão", role: "UI Designer", context: "Flyproj Dashboard", avatar: "https://avatar.vercel.sh/sarah", status: "online", lastMsg: "Obrigada pelo feedback!", time: "10:45", unread: 2 },
     { id: "dm2", type: "person", name: "Felipe Rodrigues", role: "Product Manager", context: "Marketing Q3", avatar: "", status: "away", lastMsg: "Podemos revisar o backlog amanhã?", time: "Ontem", unread: 0 },
     { id: "dm3", type: "person", name: "Ana Clara", role: "Backend Lead", context: "Integração SSO", avatar: "https://avatar.vercel.sh/ana", status: "offline", lastMsg: "As APIs estão prontas.", time: "Segunda", unread: 0 },
 ];

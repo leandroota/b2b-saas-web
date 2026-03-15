@@ -184,13 +184,13 @@ export function SettingsView() {
                                             <div className="space-y-4">
                                                 <div className="space-y-2">
                                                     <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Nome da Organização</Label>
-                                                    <Input defaultValue="Flyprod Acme" className="bg-background/50 h-11" />
+                                                    <Input defaultValue="Flyproj Acme" className="bg-background/50 h-11" />
                                                 </div>
                                                 <div className="space-y-2">
                                                     <Label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Workspace Slug</Label>
                                                     <div className="flex">
                                                         <span className="h-11 flex items-center px-3 rounded-l-md border border-r-0 border-border bg-muted/30 text-muted-foreground text-xs">
-                                                            flyprod.io/
+                                                            flyproj.io/
                                                         </span>
                                                         <Input defaultValue="acme-corp" className="rounded-l-none bg-background/50 h-11" />
                                                     </div>

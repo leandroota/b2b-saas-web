@@ -51,7 +51,7 @@ export default function Home() {
           <div className="flex items-center gap-6">
             <div className="flex flex-col">
               <h1 className="text-4xl font-black font-mono tracking-tighter uppercase">Foco no Fluxo</h1>
-              <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-[0.2em] italic">Sua zona de execução elite na Flyprod.</p>
+              <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-[0.2em] italic">Sua zona de execução elite na Flyproj.</p>
             </div>
           </div>
 
@@ -83,12 +83,12 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="flex-1 overflow-hidden">
-        <div className="h-full flex overflow-hidden">
+      <main className="flex-1 overflow-hidden min-h-0">
+        <div className="h-full flex min-h-0 overflow-hidden">
 
           {/* LADO ESQUERDO (50%): ENGENHO DE EXECUÇÃO - Left Aligned, High Density */}
-          <div className="w-1/2 h-full flex flex-col border-r border-border/30 bg-card/5">
-            <ScrollArea className="flex-1">
+          <div className="w-1/2 h-full min-h-0 flex flex-col border-r border-border/30 bg-card/5">
+            <ScrollArea className="flex-1 h-full">
               <div className="p-8 space-y-10">
                 <PermissionGuard role="ADMIN" fallback={
                   <div className="space-y-10">
@@ -111,8 +111,8 @@ export default function Home() {
           </div>
 
           {/* LADO DIREITO (50%): PULSO DO WORKSPACE - High Density Feed */}
-          <div className="w-1/2 h-full flex flex-col bg-background/30">
-            <ScrollArea className="flex-1">
+          <div className="w-1/2 h-full min-h-0 flex flex-col bg-background/30">
+            <ScrollArea className="flex-1 h-full">
               <div className="p-8 space-y-10">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3 text-left">
