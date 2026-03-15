@@ -7,6 +7,7 @@ export const activityTypeSchema = z.enum([
     "PROJECT_MEMBER_ADDED",
     "PROJECT_MILESTONE",
     "WORKSPACE_UPDATE",
+    "COMMUNITY_POST",
 ]);
 
 export const activitySchema = z.object({

@@ -39,6 +39,12 @@ const MOCK_PROJECT_CONVS = [
     { id: "p2", type: "project", name: "Integração SSO", context: "Core Infra", participants: 4, lastMsg: "Ana: Token de teste expirou.", time: "10:00", unread: 0 },
 ];
 
+const MOCK_GROUP_CONVS = [
+    { id: "g1", type: "group", name: "Frontend Wizards", emoji: "⚡", context: "Tecnologia", participants: 34, lastMsg: "Luiz: Alguém testou o Bun 1.2?", time: "09:30", unread: 5 },
+    { id: "g2", type: "group", name: "Psicologia & UX", emoji: "🧠", context: "Design", participants: 21, lastMsg: "Carla: O artigo sobre viés cognitivo é incrível!", time: "Ontem", unread: 0 },
+    { id: "g3", type: "group", name: "RPG & Fantasia", emoji: "🎲", context: "Hobbies", participants: 18, lastMsg: "Luiz: Quem topa a campanha de sábado?", time: "Segunda", unread: 0 },
+];
+
 export function MessagingDrawer() {
     const { isMessagingOpen, drawerLevel, activeConversation, closeMessaging, openConversation, backToInbox } = useAppStore();
     const [searchQuery, setSearchQuery] = useState("");
@@ -128,9 +134,10 @@ export function MessagingDrawer() {
                     {/* Inbox Tabs */}
                     <Tabs defaultValue="pessoas" className="flex-1 flex flex-col min-h-0">
                         <div className="px-6 py-2 border-b border-border/50 bg-muted/20">
-                            <TabsList className="grid w-full grid-cols-2 h-9 bg-background/50 p-1">
+                            <TabsList className="grid w-full grid-cols-3 h-9 bg-background/50 p-1">
                                 <TabsTrigger value="pessoas" className="text-[10px] font-bold uppercase tracking-wider data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Pessoas</TabsTrigger>
                                 <TabsTrigger value="projetos" className="text-[10px] font-bold uppercase tracking-wider data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Projetos</TabsTrigger>
+                                <TabsTrigger value="grupos" className="text-[10px] font-bold uppercase tracking-wider data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">Grupos</TabsTrigger>
                             </TabsList>
                         </div>
 
@@ -193,6 +200,36 @@ export function MessagingDrawer() {
                                                 <div className="mt-1 flex items-center gap-2">
                                                     <span className="text-[9px] font-bold text-muted-foreground/50 uppercase tracking-widest">{conv.participants} membros</span>
                                                     {conv.unread > 0 && <Badge className="h-3.5 px-1 rounded-sm text-[8px] bg-primary font-bold uppercase transition-all animate-pulse">Novo</Badge>}
+                                                </div>
+                                            </div>
+                                        </button>
+                                    ))}
+                                </div>
+                            </ScrollArea>
+                        </TabsContent>
+
+                        <TabsContent value="grupos" className="flex-1 m-0">
+                            <ScrollArea className="h-full">
+                                <div className="p-2 space-y-1">
+                                    {MOCK_GROUP_CONVS.map((conv) => (
+                                        <button
+                                            key={conv.id}
+                                            onClick={() => openConversation(conv)}
+                                            className="w-full flex items-center gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all group text-left"
+                                        >
+                                            <div className="size-11 rounded-xl bg-primary/5 flex items-center justify-center text-2xl border border-primary/10 shrink-0">
+                                                {conv.emoji}
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <div className="flex items-center justify-between mb-0.5">
+                                                    <p className="text-sm font-bold tracking-tight truncate">{conv.name}</p>
+                                                    <span className="text-[9px] font-mono text-muted-foreground/60">{conv.time}</span>
+                                                </div>
+                                                <p className="text-[11px] text-muted-foreground/80 truncate font-medium">{conv.lastMsg}</p>
+                                                <div className="mt-1 flex items-center gap-2">
+                                                    <Badge variant="outline" className="text-[8px] h-3.5 px-1 border-muted-foreground/20 font-bold uppercase">{conv.context}</Badge>
+                                                    <span className="text-[9px] font-bold text-muted-foreground/50 uppercase tracking-widest">{conv.participants} membros</span>
+                                                    {conv.unread > 0 && <Badge className="size-4 p-0 rounded-full flex items-center justify-center text-[9px] bg-primary ml-auto">{conv.unread}</Badge>}
                                                 </div>
                                             </div>
                                         </button>
